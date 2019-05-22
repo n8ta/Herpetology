@@ -1,0 +1,2 @@
+module CommonNamesHelper
+end

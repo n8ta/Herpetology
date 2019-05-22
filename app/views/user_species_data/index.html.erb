@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>User Species Data</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Species</th>
+      <th>User</th>
+      <th>Seen</th>
+      <th>Correct</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_species_data.each do |user_species_datum| %>
+      <tr>
+        <td><%= user_species_datum.species %></td>
+        <td><%= user_species_datum.user %></td>
+        <td><%= user_species_datum.seen %></td>
+        <td><%= user_species_datum.correct %></td>
+        <td><%= link_to 'Show', user_species_datum %></td>
+        <td><%= link_to 'Edit', edit_user_species_datum_path(user_species_datum) %></td>
+        <td><%= link_to 'Destroy', user_species_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User Species Datum', new_user_species_datum_path %>

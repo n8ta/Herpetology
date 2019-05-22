@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @region.name %>
+</p>
+
+<p>
+  <strong>Image path:</strong>
+  <%= @region.image_path %>
+</p>
+
+<%= link_to 'Edit', edit_region_path(@region) %> |
+<%= link_to 'Back', regions_path %>

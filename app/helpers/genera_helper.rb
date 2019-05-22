@@ -1,0 +1,2 @@
+module GeneraHelper
+end
