@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Snakeid</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>SnakeID</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<body>
 
-  <body>
-    <%= yield %>
-  </body>
+<%= flash[:notice] %>
+<%= flash[:alert] %>
+
+<navbar>
+  <a href="/families">Families</a>
+  <a href="/genera">Genera</a>
+  <a href="/species">Species</a>
+</navbar>
+
+<%= yield %>
+</body>
 </html>
