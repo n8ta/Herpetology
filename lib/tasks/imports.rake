@@ -46,7 +46,7 @@ namespace :imports do
 
           genus_name = genus.xpath("a[@title='genus']").xpath('./strong').text
           puts '    Genus: '+genus_name.to_s
-          gm = Genus.new(name: genus_name, family_name: fm)
+          gm = Genus.new(name: genus_name, family: fm)
           gm.save!
 
           species = genus.xpath(".//a[@title='species']").map { | link | link.parent }
@@ -60,6 +60,17 @@ namespace :imports do
             sm = Species.new(name: specie_name, genus: gm)
             sm.save!
 
+            text=specie.text
+
+            begin
+
+            if text.include?("(")
+              common_name = text.split("(")[0].split(")")[0]
+              cnm = CommonName.new(name:common_name, species: sm)
+              cnm.save!
+            end
+            rescue
+            end
 
           end
 
