@@ -1,2 +1,9 @@
-json.extract! species, :id, :genus_id, :name, :venemous, :created_at, :updated_at
-json.url species_url(species, format: :json)
+json.id species.id
+json.name species.name
+json.genus species.genus
+
+
+json.common_names species.common_names do |name|
+  json.id name.id
+  json.name name.name
+end

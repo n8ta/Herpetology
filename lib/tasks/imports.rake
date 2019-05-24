@@ -32,8 +32,6 @@ namespace :imports do
 
       families.each do |family|
 
-
-
         family_name = family.xpath("a[@title='family']").xpath('./strong').text
         fm = Family.new(name: family_name, superfamily: sfm)
         fm.save!
@@ -65,11 +63,12 @@ namespace :imports do
             begin
 
             if text.include?("(")
-              common_name = text.split("(")[0].split(")")[0]
+              common_name = text.split("(")[1].split(")")[0].split("\n").join(" ").split(" ").join(" ")
               cnm = CommonName.new(name:common_name, species: sm)
               cnm.save!
             end
             rescue
+              # so it goes
             end
 
           end

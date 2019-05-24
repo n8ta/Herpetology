@@ -1,7 +1,4 @@
 class Superfamily < ApplicationRecord
   has_many :families
-  def url
-
-  end
-
+  validates :name, presence: true
 end
