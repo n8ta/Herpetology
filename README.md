@@ -18,4 +18,4 @@ Todo:
 - Fit Splines
 
 Done:
-- Use reddit api to search ALL of a given users posts + their url (May 24, 2019)
+- Use reddit api to search ALL of a given users posts + the posts url (May 24, 2019)
