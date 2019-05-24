@@ -7,11 +7,10 @@ Rails.application.routes.draw do
   resources :user_species_data
   resources :regions
 
-  resources :families do
-    resources :genera do
-      resources :species
-    end
-  end
+  resource :superfamilies
+  resources :families
+  resources :genera
+  resources :species
 
   root 'home#index'
 

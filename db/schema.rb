@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 2019_05_22_220714) do
 
   create_table "common_names", force: :cascade do |t|
-    t.integer "species_id"
-    t.string "name"
+    t.integer "species_id", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["species_id"], name: "index_common_names_on_species_id"
@@ -22,31 +22,33 @@ ActiveRecord::Schema.define(version: 2019_05_22_220714) do
 
   create_table "families", force: :cascade do |t|
     t.string "name"
+    t.integer "superfamily_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["superfamily_id"], name: "index_families_on_superfamily_id"
   end
 
   create_table "genera", force: :cascade do |t|
-    t.string "name"
-    t.integer "family_id"
+    t.string "name", null: false
+    t.integer "family_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["family_id"], name: "index_genera_on_family_id"
   end
 
   create_table "photos", force: :cascade do |t|
-    t.integer "species_id"
-    t.string "image_path"
-    t.bigint "seen", default: 0
-    t.bigint "correct", default: 0
+    t.integer "species_id", null: false
+    t.string "image_path", null: false
+    t.bigint "seen", default: 0, null: false
+    t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["species_id"], name: "index_photos_on_species_id"
   end
 
   create_table "regions", force: :cascade do |t|
-    t.string "name"
-    t.string "image_path"
+    t.string "name", null: false
+    t.string "image_path", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -58,18 +60,24 @@ ActiveRecord::Schema.define(version: 2019_05_22_220714) do
 
   create_table "species", force: :cascade do |t|
     t.integer "genus_id"
-    t.string "name"
-    t.boolean "venomous"
+    t.string "name", null: false
+    t.boolean "venomous", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genus_id"], name: "index_species_on_genus_id"
   end
 
+  create_table "superfamilies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_species_data", force: :cascade do |t|
-    t.integer "species_id"
-    t.integer "user_id"
-    t.bigint "seen", default: 0
-    t.bigint "correct", default: 0
+    t.integer "species_id", null: false
+    t.integer "user_id", null: false
+    t.bigint "seen", default: 0, null: false
+    t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["species_id"], name: "index_user_species_data_on_species_id"

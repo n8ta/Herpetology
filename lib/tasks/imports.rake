@@ -23,6 +23,8 @@ namespace :imports do
     super_families.each do |superfamily|
 
       super_family_name = superfamily.xpath("a[@title='superfamily']").xpath('./strong').text
+      sfm = Superfamily.new(name: super_family_name)
+      sfm.save!
       puts 'Superfamily: '+super_family_name.to_s
 
       families = superfamily.xpath(".//a[@title='family']").map { | fam | fam.parent}
@@ -30,14 +32,22 @@ namespace :imports do
 
       families.each do |family|
 
+
+
         family_name = family.xpath("a[@title='family']").xpath('./strong').text
+        fm = Family.new(name: family_name, superfamily: sfm)
+        fm.save!
         puts '  Family: '+family_name.to_s
 
         genera = family.xpath(".//a[@title='genus']").map { | link | link.parent }
         puts '  Genera: '+genera.length.to_s
         genera.each do | genus |
+
+
           genus_name = genus.xpath("a[@title='genus']").xpath('./strong').text
           puts '    Genus: '+genus_name.to_s
+          gm = Genus.new(name: genus_name, family_name: fm)
+          gm.save!
 
           species = genus.xpath(".//a[@title='species']").map { | link | link.parent }
           puts '    Species: '+species.length.to_s
@@ -46,6 +56,10 @@ namespace :imports do
             specie_name = specie.xpath("a[@title='species']").xpath('./strong').text.split("\n").join(" ").split(" ").join(" ")
             specie_name = specie_name.split(" ")[1] if specie_name.split(" ")[0] == genus_name
             specie_name = specie_name.downcase.capitalize
+
+            sm = Species.new(name: specie_name, genus: gm)
+            sm.save!
+
 
           end
 
