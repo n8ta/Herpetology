@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Superfamilies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @superfamilies.each do |superfamily| %>
+      <tr>
+        <td><%= superfamily.name %></td>
+        <td><%= link_to 'Show', superfamily %></td>
+        <td><%= link_to 'Edit', edit_superfamily_path(superfamily) %></td>
+        <td><%= link_to 'Destroy', superfamily, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Superfamily', new_superfamily_path %>

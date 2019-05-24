@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :superfamilies
   devise_for :users
 
   resources :photos
