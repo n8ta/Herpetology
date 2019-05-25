@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.2'
 
-
+gem 'dotenv-rails'
 gem 'redd'
 gem 'httparty'
 gem 'rails', '~> 5.2.3'
@@ -17,6 +17,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'carrierwave', '~> 1.0'
 gem 'devise'
 gem 'nokogiri'
+gem 'bloomer'
 
 
 group :development, :test do

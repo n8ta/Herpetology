@@ -5,3 +5,28 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+genus = Genus.find_by(name: 'Agkistrodon')
+Species.new(name: 'Laticinctus', genus: genus).save!
+
+genus = Genus.find_by(name: 'Sonora')
+Species.new(name: 'Occipitalis', genus: genus).save!
+
+genus = Genus.find_by(name: 'Agkistrodon')
+Species.new(name: 'Conanti', genus: genus).save!
+
+genus = Genus.find_by(name: 'Pseustes')
+Species.new(name: 'Poecilonotus', genus: genus).save!
+
+genus = Genus.find_by(name: 'Lampropeltis')
+Species.new(name: 'Rhombomaculata', genus: genus).save!
+
+genus = Genus.find_by(name: 'Carphophis')
+Species.new(name: 'Ameonus', genus: genus).save!
+
+genus = Genus.find_by(name: 'Dendrelaphis')
+Species.new(name: 'Inornatus', genus: genus).save!
+
+genus = Genus.find_by(name: 'Carphophis')
+Species.new(name: 'Ameonus', genus: genus).save!
+

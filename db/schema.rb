@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2019_05_22_220714) do
   create_table "photos", force: :cascade do |t|
     t.integer "species_id", null: false
     t.string "image_path", null: false
+    t.string "original_url"
     t.bigint "seen", default: 0, null: false
     t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false

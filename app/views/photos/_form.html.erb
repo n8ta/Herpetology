@@ -13,22 +13,12 @@
 
   <div class="field">
     <%= form.label :species_id %>
-    <%= form.text_field :species_id %>
+    <%= form.collection_select :species_id, Species.all, :id, :name  %>
   </div>
 
   <div class="field">
     <%= form.label :image_path %>
-    <%= form.text_field :image_path %>
-  </div>
-
-  <div class="field">
-    <%= form.label :seen %>
-    <%= form.text_field :seen %>
-  </div>
-
-  <div class="field">
-    <%= form.label :correct %>
-    <%= form.text_field :correct %>
+    <%= form.file_field :image_path %>
   </div>
 
   <div class="actions">
