@@ -12,11 +12,12 @@ Todo:
 - Built report system
 - All the user shit like email passwords
 - Build out admin roles for power users
-- Gameification
+- Gamification
 - Fit Splines
 
 Done:
-- Use reddit api to search ALL of a given users posts + the posts url (May 23, 2019)
+- Get in touch with herpmapper about getting data officially (May 25, 2019)
 - Restructure models to support more detailed taxonomy superfamilies etc. (May 24, 2019)
 - Import taxonomy (May 24, 2019)
 - Import images from reddit with rake task (May 24, 2019)
+- Use reddit api to search ALL of a given users posts + the posts url (May 23, 2019)

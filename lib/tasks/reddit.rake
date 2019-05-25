@@ -1,3 +1,4 @@
+require 'dotenv/load'
 
 def find_species(genus_txt, species_txt)
   ### Search models for the genus / species pair
