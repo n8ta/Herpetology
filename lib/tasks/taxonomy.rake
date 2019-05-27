@@ -11,7 +11,7 @@ namespace :imports do
   # to build out the taxonomy
 
   task taxonomy: :environment do
-    text = IO.read(Rails.root.join('lib', 'tasks', 'taxonomy.html'))
+    text = IO.read(Rails.root.join('lib', 'tasks', 'assets', 'taxonomy.html'))
     html_doc = Nokogiri::HTML(text)
 
     super_families = html_doc.xpath("//a[@title='superfamily']").map {|link| link.parent} # go from the <a> -> <li>
@@ -41,20 +41,27 @@ namespace :imports do
 
 
           genus_name = genus.xpath("a[@title='genus']").xpath('./strong').text
-          puts '    Genus: ' + genus_name.to_s
+          # puts '    Genus: ' + genus_name.to_s
           gm = Genus.new(name: genus_name, family: fm)
           gm.save!
 
           species = genus.xpath(".//a[@title='species']").map {|link| link.parent}
-          puts '    Species: ' + species.length.to_s
+          # puts '    Species: ' + species.length.to_s
 
           species.each do |specie| ## We really need a singular for species....
             specie_name = specie.xpath("a[@title='species']").xpath('./strong').text.split("\n").join(" ").split(" ").join(" ")
-            specie_name = specie_name.split(" ")[1] if specie_name.split(" ")[0] == genus_name
+            if specie_name.split(" ")[0] == genus_name
+              specie_name = specie_name.split(" ")[1]
+              specie_name = specie_name+" "+specie_name.split(" ")[2] if specie_name.split(" ").length == 3
+            end
             specie_name = specie_name.downcase.capitalize
 
-            sm = Species.new(name: specie_name, genus: gm)
-            sm.save!
+            begin
+              sm = Species.new(name: specie_name, genus: gm)
+              sm.save!
+            rescue
+              y = 2
+            end
 
             text = specie.text
 

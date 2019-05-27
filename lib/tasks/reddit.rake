@@ -35,7 +35,13 @@ namespace :imports do
 
     bf = Bloomer.new(20000, 0.001)
 
-    users = [session.user('phylogenizer'), session.user('unknown_name'), session.user('TheChuck42')]
+    users = [session.user('phylogenizer'),
+             session.user('unknown_name'),
+             session.user('TheChuck42'),
+             session.user('shrike1978'),
+             session.user('smee0066'),
+             session.user('Reggietoaster'),
+             session.user('CirceMoon')]
     users.each do |user|
       comments = user.comments()
       while comments.after != nil do
@@ -71,7 +77,7 @@ namespace :imports do
               next unless response.code == 200
               data = response.body
 
-              file_path = Rails.root.join('tmp/reddit/' + species + genus + File.extname(comment.link_url))
+              file_path = Rails.root.join('tmp/reddit/' + SecureRandom.hex(50) + File.extname(comment.link_url))
 
               File.open(file_path, "w") do |file|
                 file.binmode

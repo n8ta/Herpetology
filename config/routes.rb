@@ -4,14 +4,16 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :photos
+  resources :common_names
   resources :user_species_data
-  resources :regions
-
+  resources :regions do
+    member do
+      post 'guess/:guess_index' =>'regions#guess'
+    end
+  end
   resource :superfamilies
   resources :families
   resources :genera
   resources :species
-
-  root 'home#index'
-
+  root 'regions#index'
 end

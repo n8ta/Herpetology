@@ -1,10 +1,9 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# SEEDING:
+# In this order:
+# imports:taxnomy
+# imports:pitt
+# db:seed
+# imports:regions
 
 genus = Genus.find_by(name: 'Agkistrodon')
 Species.new(name: 'Laticinctus', genus: genus).save!
@@ -27,6 +26,7 @@ Species.new(name: 'Ameonus', genus: genus).save!
 genus = Genus.find_by(name: 'Dendrelaphis')
 Species.new(name: 'Inornatus', genus: genus).save!
 
-genus = Genus.find_by(name: 'Carphophis')
-Species.new(name: 'Ameonus', genus: genus).save!
-
+nae = Region.new(name: "North America East")
+naw = Region.new(name: "North America West")
+nae.save!
+naw.save!

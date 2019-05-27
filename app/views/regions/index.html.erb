@@ -6,7 +6,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Image path</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +14,6 @@
     <% @regions.each do |region| %>
       <tr>
         <td><%= region.name %></td>
-        <td><%= region.image_path %></td>
         <td><%= link_to 'Show', region %></td>
         <td><%= link_to 'Edit', edit_region_path(region) %></td>
         <td><%= link_to 'Destroy', region, method: :delete, data: { confirm: 'Are you sure?' } %></td>

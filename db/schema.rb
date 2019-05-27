@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_22_220714) do
+ActiveRecord::Schema.define(version: 2019_05_27_024235) do
 
   create_table "common_names", force: :cascade do |t|
     t.integer "species_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "species_id"], name: "index_common_names_on_name_and_species_id", unique: true
     t.index ["species_id"], name: "index_common_names_on_species_id"
   end
 
@@ -49,7 +50,6 @@ ActiveRecord::Schema.define(version: 2019_05_22_220714) do
 
   create_table "regions", force: :cascade do |t|
     t.string "name", null: false
-    t.string "image_path", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -57,12 +57,12 @@ ActiveRecord::Schema.define(version: 2019_05_22_220714) do
   create_table "regions_species", id: false, force: :cascade do |t|
     t.integer "species_id", null: false
     t.integer "region_id", null: false
+    t.index ["region_id", "species_id"], name: "index_regions_species_on_region_id_and_species_id", unique: true
   end
 
   create_table "species", force: :cascade do |t|
     t.integer "genus_id"
     t.string "name", null: false
-    t.boolean "venomous", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genus_id"], name: "index_species_on_genus_id"

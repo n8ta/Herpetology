@@ -1,3 +1,15 @@
+def find_species(genus_txt, species_txt)
+  ### Search models for the genus / species pair
+  genus = Genus.where('lower(name) = ?', genus_txt.downcase).first
+  species = genus.species.find_by('lower(name) = ?', species_txt.downcase)
+
+  if species.nil?
+    puts '  failed on: ' + genus_txt + ' ' + species_txt
+    raise
+  end
+  return species
+end
+
 namespace :imports do
 
   desc "Import photos from herpmapper"

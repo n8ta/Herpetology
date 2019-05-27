@@ -14,7 +14,7 @@
   <tbody>
     <% @common_names.each do |common_name| %>
       <tr>
-        <td><%= common_name.species %></td>
+        <td><%= common_name.species.name %></td>
         <td><%= common_name.name %></td>
         <td><%= link_to 'Show', common_name %></td>
         <td><%= link_to 'Edit', edit_common_name_path(common_name) %></td>

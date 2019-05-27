@@ -5,10 +5,8 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application' %>
 </head>
 
 <body>
@@ -17,13 +15,18 @@
 <%= flash[:alert] %>
 
 <navbar>
+  <a href="/regions">Regions</a>
   <a href="/superfamilies">Superfamilies</a>
   <a href="/families">Families</a>
   <a href="/genera">Genera</a>
   <a href="/species">Species</a>
   <a href="/photos">Photos</a>
+  <a href="/common_names">Common Names</a>
 </navbar>
 
 <%= yield %>
+<p>SnakeID v0.1 Alpha</br>
+This is an alpha and as such everything is up in the air. APIs are undocumented and subject to frequent change.
+<br/>An open source project @ <a href="https://github.com/n8ta/SnakeID">github.com/n8ta/SnakeID</a>
 </body>
 </html>
