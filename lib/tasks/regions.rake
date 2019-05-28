@@ -62,10 +62,15 @@ namespace :imports do
 
     nae = Region.find_by(name: "North America East")
     naw = Region.find_by(name: "North America West")
-    nae_path = Rails.root.join('lib', 'tasks', 'assets', 'nae.html')
-    naw_path = Rails.root.join('lib', 'tasks', 'assets', 'naw.html')
-    import_region(nae_path,nae)
-    import_region(naw_path, naw)
+    if nae.nil?
+      puts "Run rails db:seed before importing regions as it creates the region models"
+    else
+      nae_path = Rails.root.join('lib', 'tasks', 'assets', 'nae.html')
+      naw_path = Rails.root.join('lib', 'tasks', 'assets', 'naw.html')
+      import_region(nae_path, nae)
+      import_region(naw_path, naw)
+
+    end
 
 
   end
