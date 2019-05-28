@@ -26,5 +26,6 @@ production:
   encoding: utf8
   username: ENV['sql_user']
   password: ENV['sql_pass']
+  socket: ENV['sql_socket']
   host: localhost
   port: 3306
