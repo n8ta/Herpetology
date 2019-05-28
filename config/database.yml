@@ -21,5 +21,10 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  database: ENV['sql_db']
+  encoding: utf8
+  username: ENV['sql_user']
+  password: ENV['sql_pass']
+  host: localhost
+  port: 3306

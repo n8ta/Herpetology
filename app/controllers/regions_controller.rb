@@ -1,5 +1,6 @@
 class RegionsController < ApplicationController
   before_action :set_region, only: [:show, :edit, :update, :destroy, :guess]
+  before_action :authenticate_user!, except: [:index, :show, :guess]
   # GET /regions
   # GET /regions.json
   def index
@@ -7,10 +8,6 @@ class RegionsController < ApplicationController
   end
 
   def guess
-    def subaction
-      sleep 1 # Wait for 3 seconds before responding
-    end
-    subaction
     specie_m = Species.find(session[:specie_id])
     specie_data = {
       'sci_name': specie_m.sci_name.to_s,
