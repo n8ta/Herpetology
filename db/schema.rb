@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_27_024235) do
+ActiveRecord::Schema.define(version: 2019_05_27_024238) do
 
   create_table "common_names", force: :cascade do |t|
     t.integer "species_id", null: false
