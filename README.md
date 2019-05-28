@@ -6,6 +6,7 @@ contributing to the pages on each species. The live version will be hosted @ sna
 when ready for launch. Get in touch with me if you are interested in contributing to this project.
 
 Todo:
+- Ruby version in gemfile
 - Import data from herpmapper
 - Build image quizzing bot
 - Style this shit
