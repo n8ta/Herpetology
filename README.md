@@ -6,6 +6,7 @@ contributing to the pages on each species. The live version will be hosted @ sna
 when ready for launch. Get in touch with me if you are interested in contributing to this project.
 
 Todo:
+- Streamline seeding into one command vs many rake tasks
 - Ruby version in gemfile
 - Import data from herpmapper
 - Build image quizzing bot
@@ -34,4 +35,6 @@ Deployment:
 8. rails imports:reddit RAILS_ENV=production
 9. rails db:seed RAILS_ENV=production
 10. rails imports:regions RAILS_ENV=production  
-11. rails s
+11. rails assets:precompile RAILS_ENV=production 
+12. rails webpacker:compile (? not sure ?)
+12. rails s -e production

@@ -16,6 +16,7 @@ namespace :imports do
   task regions: :environment do
     # https://www.discoverlife.org/mp/20q?guide=Snakes
     def import_region(file_path, region)
+      failed = 0
       region_tagged = 0
       text = IO.read(file_path)
       html = Nokogiri::HTML(text)
@@ -41,7 +42,7 @@ namespace :imports do
           species_m.regions << region
           region_tagged += 1
         rescue
-          puts 'failed'
+          failed += 1
         end
 
 
@@ -56,7 +57,7 @@ namespace :imports do
 
       end
       puts 'Completed, tagged: ' + region_tagged.to_s
-
+      puts "  failed: "+failed.to_s
 
     end
 
