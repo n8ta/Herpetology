@@ -32,5 +32,6 @@ Deployment:
 6. rails imports:taxonomy
 7. rails imports:pitt
 8. rails imports:reddit
-9. rails imports:regions
-19. rails s
+9. rails db:seed
+10. rails imports:regions
+11. rails s
