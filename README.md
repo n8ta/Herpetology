@@ -28,10 +28,10 @@ Deployment:
 2. bundle install
 3. yarn install
 4. mkdir tmp/reddit; mkdir tmp/pitt
-5. rails db:migrate
-6. rails imports:taxonomy
-7. rails imports:pitt
-8. rails imports:reddit
-9. rails db:seed
-10. rails imports:regions
+5. rails db:migrate RAILS_ENV=production
+6. rails imports:taxonomy RAILS_ENV=production
+7. rails imports:pitt RAILS_ENV=production
+8. rails imports:reddit RAILS_ENV=production
+9. rails db:seed RAILS_ENV=production
+10. rails imports:regions RAILS_ENV=production  
 11. rails s
