@@ -37,12 +37,12 @@ namespace :imports do
         end
 
 
-        # begin
+        begin
           species_m.regions << region
           region_tagged += 1
-        # rescue
-        #   puts 'failed'
-        # end
+        rescue
+          puts 'failed'
+        end
 
 
         if common_name
