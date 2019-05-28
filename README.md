@@ -21,3 +21,15 @@ Done:
 - Import taxonomy (May 24, 2019)
 - Import images from reddit with rake task (May 24, 2019)
 - Use reddit api to search ALL of a given users posts + the posts url (May 23, 2019)
+
+Deployment:
+1. Configure rb in .env
+2. bundle install
+3. yarn install
+4. mkdir tmp/reddit; mkdir tmp/pitt
+5. rails db:migrate
+6. rails imports:taxonomy
+7. rails imports:pitt
+8. rails imports:reddit
+9. rails imports:regions
+19. rails s

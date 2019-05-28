@@ -50,7 +50,7 @@ namespace :imports do
       next unless response.code == 200
       data = response.body
 
-      file_path = Rails.root.join('tmp/pitt/' + SecureRandom.hex(50) + File.extname(base_url+url))
+      file_path = Rails.root.join('tmp/pitt/' + SecureRandom.hex(30) + File.extname(base_url+url))
 
       File.open(file_path, "w") do |file|
         file.binmode
