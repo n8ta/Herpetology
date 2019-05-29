@@ -23,7 +23,9 @@ class SpeciesPicker extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-Token': auth_token,
+                'X-Requested-With': 'XMLHttpRequest',
             },
+            credentials: 'same-origin',
         }).then(res => res.json()).then((result) => {
             console.log(result);
             this.state.common_name = result['common_name'];
