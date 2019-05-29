@@ -17,11 +17,13 @@ class SpeciesPicker extends React.Component {
 
     gen_options() {
         let options = new Array
+        let disabled = this.state.mode == 'correct' || this.state.mode == "incorrect"
+        console.log('disabled: ',disabled);
         for (let i = 0; i < this.state.options.length; i++) {
             let tmp = i;
             options.push(
                 <li key={i}>
-                    <button data-index={i} onClick={this.handleClick}>Guess</button>
+                    <button disabled={disabled} data-index={i} onClick={this.handleClick}>Guess</button>
                     {this.state.options[i].common_name} <span
                     className='sci_name'>({this.state.options[i].sci_name})</span>
                 </li>);
@@ -105,9 +107,7 @@ class SpeciesPicker extends React.Component {
 
 SpeciesPicker.propTypes = {
     options: PropTypes.array,
-    next_options: PropTypes.array,
     image_path: PropTypes.string,
-    next_image_path: PropTypes.string,
 };
 
 export default SpeciesPicker

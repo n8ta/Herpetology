@@ -11,24 +11,17 @@ class RegionsController < ApplicationController
   def guess
     species = @region.species.includes(:photos).where.not(photos: {id: nil})
     specie_m = Species.find(session[:specie_id])
+    correct = session[:index].to_s == params['guess_index'].to_s
     hash_and_specie = specie_hash(species)
     specie_data = {
         'sci_name': specie_m.sci_name.to_s,
         'common_name': specie_m.common_names[0].name.to_s,
         'index_was': session[:index].to_s,
         'next_options': hash_and_specie[0],
-        'next_image_path': hash_and_specie[1].photos[rand(hash_and_specie[1].photos.length)].image_path.url
+        'next_image_path': hash_and_specie[1].photos[rand(hash_and_specie[1].photos.length)].image_path.url,
+        'correct': correct
     }
-    specie_data['next_options'] =
-    if session[:index].to_s == params['guess_index'].to_s
-      puts "MATCHED"
-      specie_data[:correct] = true
-      render :json => specie_data
-    else
-      specie_data[:correct] = false
-      render :json => specie_data
-    end
-
+    render :json => specie_data
   end
 
   # GET /regions/1
@@ -42,26 +35,24 @@ class RegionsController < ApplicationController
   end
 
   def specie_hash(species)
-    correct_specie = species[rand(species.length)]
-    options = [0, 1, 2, 3, 4].map {|num|
-      specie = nil
-      while (specie == nil)
-        trial_specie = species[rand(species.length)]
-        if trial_specie != correct_specie
-          specie = trial_specie
+    len = species.length
+    correct_specie = species[rand(len)]
+    picked = [correct_specie]
+    hash_data = []
+    while picked.length != 6
+        trial_specie = species[rand(len)]
+        unless picked.include?(trial_specie)
+          picked.push(trial_specie)
+          hash_data.push({sci_name: trial_specie.sci_name,
+                                   common_name: trial_specie.common_names.any? ? trial_specie.common_names[0].name : ' '})
         end
-      end
-      {
-          sci_name: specie.sci_name,
-          common_name: specie.common_names.any? ? specie.common_names[0].name : ' '
-      }
-    }
+    end
     index = rand(4)
-    options.insert(index, {sci_name: correct_specie.sci_name,
+    hash_data.insert(index, {sci_name: correct_specie.sci_name,
                             common_name: correct_specie.common_names.any? ? correct_specie.common_names[0].name : ' '})
     session[:index] = index
     session[:specie_id] = correct_specie.id
-    return [options,correct_specie] # hash, Species model
+    return [hash_data,correct_specie] # hash, Species model
   end
 
   # GET /regions/new
