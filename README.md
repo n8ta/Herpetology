@@ -6,6 +6,7 @@ contributing to the pages on each species. The live version will be hosted @ sna
 when ready for launch. Get in touch with me if you are interested in contributing to this project.
 
 Todo:
+- Ensure "photos" scraped are actually photos not html pages titled .jpg, lol that was a weird bug.
 - Streamline seeding into one command vs many rake tasks
 - Ruby version in gemfile
 - Import data from herpmapper
