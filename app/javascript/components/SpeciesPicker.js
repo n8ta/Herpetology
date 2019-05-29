@@ -11,6 +11,7 @@ class SpeciesPicker extends React.Component {
     handleClick(e) {
         let index = e.target.attributes[0].nodeValue;
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
+        console.log("Auth token:",auth_token);
         this.setState({mode: 'loading'});
         let region_id = window.location.toString().split("regions/")[1];
         if (region_id[region_id.length - 1] == '/') {
