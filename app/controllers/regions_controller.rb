@@ -44,7 +44,13 @@ class RegionsController < ApplicationController
   def specie_hash(species)
     correct_specie = species[rand(species.length)]
     options = [0, 1, 2, 3, 4].map {|num|
-      specie = species[rand(species.length)]
+      specie = nil
+      while (specie == nil)
+        trial_specie = species[rand(species.length)]
+        if trial_specie != correct_specie
+          specie = trial_specie
+        end
+      end
       {
           sci_name: specie.sci_name,
           common_name: specie.common_names.any? ? specie.common_names[0].name : ' '

@@ -96,7 +96,7 @@ class SpeciesPicker extends React.Component {
                 <ul>{options_html}</ul>
                 {next_button}
                 <br/>
-                <img src={this.props.image_path}></img>
+                <img src={this.state.image_path}></img>
 
             </div>
         )
