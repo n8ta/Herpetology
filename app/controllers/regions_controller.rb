@@ -1,6 +1,7 @@
 class RegionsController < ApplicationController
   before_action :set_region, only: [:show, :edit, :update, :destroy, :guess]
   before_action :authenticate_user!, except: [:index, :show, :guess]
+
   # GET /regions
   # GET /regions.json
   def index
