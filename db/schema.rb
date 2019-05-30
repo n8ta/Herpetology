@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_27_024238) do
+ActiveRecord::Schema.define(version: 2019_05_30_020924) do
 
   create_table "common_names", force: :cascade do |t|
     t.integer "species_id", null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_05_27_024238) do
     t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["original_url"], name: "index_photos_on_original_url", unique: true
     t.index ["species_id"], name: "index_photos_on_species_id"
   end
 

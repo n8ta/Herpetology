@@ -14,9 +14,10 @@
   </thead>
 
   <tbody>
+  <%= Photo.all.length %>
     <% @photos.each do |photo| %>
       <tr>
-        <td><%= link_to photo.species.name, photo.species %></td>
+        <td><%= photo.species.name%></td>
         <td><%= image_tag (photo.image_path.url), {style: 'max-width: 200px' } %></td>
         <td><%= photo.seen %></td>
         <td><%= photo.correct %></td>

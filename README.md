@@ -30,7 +30,7 @@ Deployment:
 1. Configure rb in .env
 2. bundle install
 3. yarn install
-4. mkdir tmp/reddit; mkdir tmp/pitt
+4. mkdir tmp/reddit; mkdir tmp/pitt; mkdir tmp/herpmapper
 5. rails db:migrate RAILS_ENV=production
 6. rails imports:taxonomy RAILS_ENV=production
 7. rails imports:pitt RAILS_ENV=production
