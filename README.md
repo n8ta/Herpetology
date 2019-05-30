@@ -19,6 +19,7 @@ Todo:
 - Fit Splines
 
 Done:
+- Migrate to AWS and import herpmapper data (20k images!) (May 29, 2019)
 - Publish alpha 1.0.0 (May 28, 2019)
 - Get in touch with herpmapper about getting data officially (May 25, 2019)
 - Restructure models to support more detailed taxonomy superfamilies etc. (May 24, 2019)
