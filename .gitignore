@@ -1,4 +1,5 @@
 .env
+public/uploads/tmp
 public/packs/manifest.json
 
 /.bundle
