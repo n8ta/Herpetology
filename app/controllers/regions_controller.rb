@@ -35,16 +35,20 @@ class RegionsController < ApplicationController
   end
 
   def specie_hash(species)
+
     len = species.length
     correct_specie = species[rand(len)]
+
     picked = [correct_specie]
     hash_data = []
     while picked.length != 6
         trial_specie = species[rand(len)]
         unless picked.include?(trial_specie)
+          puts 'adding'
           picked.push(trial_specie)
           hash_data.push({sci_name: trial_specie.sci_name,
                                    common_name: trial_specie.common_names.any? ? trial_specie.common_names[0].name : ' '})
+          puts "Pushed"
         end
     end
     index = rand(4)
