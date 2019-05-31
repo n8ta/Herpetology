@@ -50,6 +50,8 @@ namespace :imports do
           photo.image_path = Pathname.new(file_path).open
           photo.original_url = full_image_path
           photo.save!
+
+          File.delete(file_path)
         rescue
           puts "Failed on " + sci_name + " page: " + page.to_s
           next
