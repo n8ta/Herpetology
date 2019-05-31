@@ -15,14 +15,14 @@
 <%= flash[:alert] %>
 
 <navbar>
-  <h1>SnakeID 1.0.1</h1>
+  <h1>SnakeID <%= ENV['snakeid_version'] %></h1>
 </navbar>
 
 <%= yield %>
 
 <footer>
   <hr>
-  <p>SnakeID 1.0.2 Alpha</br>
+  <p>SnakeID <%= ENV['snakeid_version'] %> Alpha</br>
     This is an alpha and as such everything is up in the air.
     <br/>An open source project @ <a href="https://github.com/n8ta/SnakeID">github.com/n8ta/SnakeID</a>
     <br/>Report any bugs or cool feature ideas on github</p>

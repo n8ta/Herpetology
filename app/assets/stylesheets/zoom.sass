@@ -1,0 +1,17 @@
+#zoom_container
+  width: min-content
+  overflow: hidden
+  #zoom
+    max-width: 100%
+    background-size: contain
+    background-repeat: no-repeat
+    transition: transform .3s ease-out
+    img
+      // This is just used to size #zoom, the background of zoom is the image shown to the user
+      visibility: hidden
+      width: auto
+      height: auto
+
+
+    &:hover
+      transform: scale(2)

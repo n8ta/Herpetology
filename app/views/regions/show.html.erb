@@ -1,6 +1,7 @@
 <h2><%= @region.name.titleize %></h2>
-<p>Current we have <%= @species.length %> species in this region with photos and <%= @region.species.length %> total</p>
+<p>Currently we have <%= @species.length %> species in this region with photos and <%= @region.species.length %> total</p>
 <hr>
+<div clas="hcon">
 <%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
                                       options: @options,
 }) %>

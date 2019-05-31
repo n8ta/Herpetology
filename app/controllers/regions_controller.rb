@@ -20,7 +20,6 @@ class RegionsController < ApplicationController
         'index_was': session[:index].to_s,
         'next_options': hash_and_specie[0],
         'next_image_path': photo.image_path.url,
-        'photo_id': photo.id,
         'correct': correct
     }
     render :json => specie_data
@@ -37,7 +36,9 @@ class RegionsController < ApplicationController
   end
 
   def specie_hash(species)
-
+    if species.length < 6
+      raise "Not enough species"
+    end
     len = species.length
     correct_specie = species[rand(len)]
 
@@ -46,11 +47,9 @@ class RegionsController < ApplicationController
     while picked.length != 6
         trial_specie = species[rand(len)]
         unless picked.include?(trial_specie)
-          puts 'adding'
           picked.push(trial_specie)
           hash_data.push({sci_name: trial_specie.sci_name,
                                    common_name: trial_specie.common_names.any? ? trial_specie.common_names[0].name : ' '})
-          puts "Pushed"
         end
     end
     index = rand(4)

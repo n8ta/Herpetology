@@ -1,4 +1,5 @@
 import React from "react"
+import Zoom from './Zoom.js';
 import PropTypes from "prop-types"
 
 class SpeciesPicker extends React.Component {
@@ -17,7 +18,7 @@ class SpeciesPicker extends React.Component {
 
     gen_options() {
         let options = new Array
-        let disabled = this.state.mode == 'correct' || this.state.mode == "incorrect"
+        let disabled = this.state.mode == 'correct' || this.state.mode == "incorrect";
         console.log('disabled: ',disabled);
         for (let i = 0; i < this.state.options.length; i++) {
             let tmp = i;
@@ -98,7 +99,7 @@ class SpeciesPicker extends React.Component {
                 <ul>{options_html}</ul>
                 {next_button}
                 <br/>
-                <img src={this.state.image_path}></img>
+                <Zoom url={this.state.image_path}/>
 
             </div>
         )
