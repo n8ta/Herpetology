@@ -17,7 +17,7 @@ namespace :imports do
 
     page = 1
     response = HTTParty.get('https://www.herpmapper.org/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
-    while (response.code == 200) and (page < 925)
+    while (response.code == 200) and (page < 2)
       html = Nokogiri::HTML(response.body)
       table = html.xpath(".//div[@id='content']").xpath('.//table').xpath(".//tr").each do |row|
         begin
@@ -45,15 +45,16 @@ namespace :imports do
             file.binmode
             file.write(data)
           end
-
-          photo = Photo.new(species: species_model)
+          photo = Photo.new
+          (species: species_model)
           photo.image_path = Pathname.new(file_path).open
           photo.original_url = full_image_path
           photo.save!
 
           File.delete(file_path)
-        rescue
+        rescue => error
           puts "Failed on " + sci_name + " page: " + page.to_s
+          puts "  error: "+error.to_s
           next
         end
 
