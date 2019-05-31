@@ -13,12 +13,14 @@ class RegionsController < ApplicationController
     specie_m = Species.find(session[:specie_id])
     correct = session[:index].to_s == params['guess_index'].to_s
     hash_and_specie = specie_hash(species)
+    photo = hash_and_specie[1].photos[rand(hash_and_specie[1].photos.length)]
     specie_data = {
         'sci_name': specie_m.sci_name.to_s,
         'common_name': specie_m.common_names[0].name.to_s,
         'index_was': session[:index].to_s,
         'next_options': hash_and_specie[0],
-        'next_image_path': hash_and_specie[1].photos[rand(hash_and_specie[1].photos.length)].image_path.url,
+        'next_image_path': photo.image_path.url,
+        'photo_id': photo.id,
         'correct': correct
     }
     render :json => specie_data

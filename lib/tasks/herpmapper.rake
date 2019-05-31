@@ -17,7 +17,7 @@ namespace :imports do
 
     page = 1
     response = HTTParty.get('https://www.herpmapper.org/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
-    while (response.code == 200) and (page < 925)
+    while (response.code == 200) and (page < 20)
       html = Nokogiri::HTML(response.body)
       table = html.xpath(".//div[@id='content']").xpath('.//table').xpath(".//tr").each do |row|
         begin
@@ -27,8 +27,11 @@ namespace :imports do
           species_name = split[1].titleize
           genus_name = split[0].titleize
           species_model = find_species(genus_name, species_name)
-          voucher_number = row.xpath(".//td[@width='78']").xpath(".//a/@href").to_s.split("/record/")[1]
+          voucher_number = row.xpath(".//td[@width='78']").xpath(".//img/@src").text.split("voucher/")[1].split("/")[0]
+          # puts "voucher:: "+voucher_number
+          puts " --- new ---"
           puts "vnumber: " + voucher_number.to_s
+          puts "species: " + species_model.inspect
 
           full_image_path = "https://www.herpmapper.org/voucher/" + voucher_number + "/full.jpg"
 
@@ -47,7 +50,6 @@ namespace :imports do
           photo.image_path = Pathname.new(file_path).open
           photo.original_url = full_image_path
           photo.save!
-          puts "photo saved"
         rescue
           puts "Failed on " + sci_name + " page: " + page.to_s
           next
