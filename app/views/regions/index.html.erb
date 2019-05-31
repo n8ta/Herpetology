@@ -4,6 +4,3 @@
 <% @regions.each do |region| %>
   <div><%= link_to region.name, region %></div>
 <% end %>
-<%# photo = Photo.all[rand(Photo.all.length)].image_path.url %>
-<% photo = "https://via.placeholder.com/300x150.png" %>
-<%= react_component('Zoom', {url: photo }) %>
