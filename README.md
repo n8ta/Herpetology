@@ -6,6 +6,9 @@ contributing to the pages on each species. The live version will be hosted @ sna
 when ready for launch. Get in touch with me if you are interested in contributing to this project.
 
 Todo:
+- Start using UserSpeciesDatum model
+- Show percentage correct on prior species
+- Variable zoom on zoom-in feature
 - Streamline seeding into one command vs many rake tasks
 - Ruby version in gemfile
 - Import data from herpmapper
@@ -18,6 +21,7 @@ Todo:
 - Fit Splines
 
 Done:
+- Zoom in feature
 - Ensure "photos" scraped are actually photos not html pages titled .jpg, lol that was a weird bug. (May 30, 2019)
 - Migrate to AWS and import herpmapper data (20k images!) (May 29, 2019)
 - Publish alpha 1.0.0 (May 28, 2019)
