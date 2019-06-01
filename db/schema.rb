@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_30_020924) do
+ActiveRecord::Schema.define(version: 2019_06_01_005147) do
 
   create_table "common_names", force: :cascade do |t|
     t.integer "species_id", null: false
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2019_05_30_020924) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["species_id"], name: "index_user_species_data_on_species_id"
+    t.index ["user_id", "species_id"], name: "index_user_species_data_on_user_id_and_species_id", unique: true
     t.index ["user_id"], name: "index_user_species_data_on_user_id"
   end
 

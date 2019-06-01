@@ -18,10 +18,15 @@ class RegionsController < ApplicationController
         'sci_name': specie_m.sci_name.to_s,
         'common_name': specie_m.common_names[0].name.to_s,
         'index_was': session[:index].to_s,
+        'species_id': specie_m.id,
         'next_options': hash_and_specie[0],
         'next_image_path': photo.image_path.url,
         'correct': correct
     }
+    datum = UserSpeciesDatum.find_or_create_by(user: current_user, species: specie_m)
+
+    correct ? datum.guess_correct : datum.guess_incorrect # Increment counter for species
+
     render :json => specie_data
   end
 

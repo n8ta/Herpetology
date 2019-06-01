@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>SnakeID</title>
+  <meta name="description" value="SnakeID teaches people to identify snakes">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%= javascript_pack_tag 'application' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -22,6 +23,12 @@
 
 <footer>
   <hr>
+  <% if not current_user.nil? %>
+    <p>Hi <%= current_user.email %>   <%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
+  <% else %>
+    <p><a href="/users/sign_up">Sign Up</a> <a href="/users/sign_in">Sign In</a></p>
+  <% end %>
+
   <p>SnakeID <%= ENV['snakeid_version'] %> Alpha</br>
     This is an alpha and as such everything is up in the air.
     <br/>An open source project @ <a href="https://github.com/n8ta/SnakeID">github.com/n8ta/SnakeID</a>

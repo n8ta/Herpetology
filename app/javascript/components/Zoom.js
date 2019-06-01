@@ -12,10 +12,7 @@ class Zoom extends React.Component {
         let cont = document.getElementById('zoom_container');
         let pageX = e.clientX-cont.getBoundingClientRect().left;
         let pageY = e.clientY-cont.getBoundingClientRect().top;
-        let lhs = pageX + 'px ';
-        let rhs = pageY + 'px';
-        let origin = lhs + rhs;
-        console.log('origin', origin);
+        let origin = pageX + 'px '+pageY + 'px';
         this.setState({
             mode: 'live',
             origin: origin

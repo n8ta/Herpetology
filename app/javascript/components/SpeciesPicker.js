@@ -1,5 +1,6 @@
 import React from "react"
 import Zoom from './Zoom.js';
+import Datum from './Datum.js';
 import PropTypes from "prop-types"
 
 class SpeciesPicker extends React.Component {
@@ -19,7 +20,7 @@ class SpeciesPicker extends React.Component {
     gen_options() {
         let options = new Array
         let disabled = this.state.mode == 'correct' || this.state.mode == "incorrect";
-        console.log('disabled: ',disabled);
+        console.log('disabled: ', disabled);
         for (let i = 0; i < this.state.options.length; i++) {
             let tmp = i;
             options.push(
@@ -33,7 +34,7 @@ class SpeciesPicker extends React.Component {
     }
 
     next(e) {
-        this.setState ({
+        this.setState({
             common_name: undefined,
             sci_name: undefined,
             mode: 'waiting',
@@ -83,8 +84,8 @@ class SpeciesPicker extends React.Component {
             message = <span>Loading</span>;
             options_html = <img src='/loading.svg'></img>;
         } else if (this.state.mode == 'correct') {
-            message = <span><span className={'correct'}>Correct!</span> {this.state['common_name']} <span
-                className="sci_name">({this.state['sci_name']})</span></span>
+            message = <span><span className={'correct'}>Correct!</span> {this.state['common_name']}
+                <span class="sci_name">{this.state['sci_name']}></span></span>;
             next_button = <button onClick={this.next} id={'next'}>Next</button>
         } else if (this.state.mode == 'incorrect') {
             message = <span><span className={'incorrect'}>Incorrect</span>, it was a: {this.state['common_name']} <span
@@ -95,12 +96,18 @@ class SpeciesPicker extends React.Component {
         }
         return (
             <div className="species">
-                <h2>{message}</h2>
-                <ul>{options_html}</ul>
-                {next_button}
-                <br/>
-                <Zoom url={this.state.image_path}/>
-
+                <div className={"column"}>
+                    <h2>{message}</h2>
+                    <ul>{options_html}</ul>
+                    {next_button}
+                    <br/>
+                    <Zoom url={this.state.image_path}/>
+                </div>
+                <div className={"column"}>
+                    <Datum className={'column'}
+                           species_id={1}>
+                    </Datum>
+                </div>
             </div>
         )
     }

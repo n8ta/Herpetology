@@ -40,7 +40,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [:email]
+  config.authentication_keys = [:email]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -166,7 +166,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 6..128
+  config.password_length = 12..128
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
@@ -192,17 +192,17 @@ Devise.setup do |config|
   # :time  = Re-enables login after a certain amount of time (see :unlock_in below)
   # :both  = Enables both strategies
   # :none  = No unlock strategy. You should handle unlocking by yourself.
-  # config.unlock_strategy = :both
+  config.unlock_strategy = :both
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
-  # config.maximum_attempts = 20
+  config.maximum_attempts = 20
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
-  # config.unlock_in = 1.hour
+  config.unlock_in = 1.hour
 
   # Warn on the last attempt before the account is locked.
-  # config.last_attempt_warning = true
+  config.last_attempt_warning = true
 
   # ==> Configuration for :recoverable
   #
@@ -212,7 +212,7 @@ Devise.setup do |config|
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
-  config.reset_password_within = 6.hours
+  config.reset_password_within = 24.hours
 
   # When set to false, does not sign a user in automatically after their password is
   # reset. Defaults to true, so a user is signed in automatically after a reset.
