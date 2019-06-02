@@ -10,9 +10,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - When variables that are in some order use next and prev as prefixes.
 
 # Todo:
-- Start using UserSpeciesDatum model
-- Show percentage correct on prior species
-- Variable zoom on zoom-in feature
+- Variable zoom on zoom-in feature 
 - Streamline seeding into one command vs many rake tasks
 - Ruby version in gemfile
 - Import data from herpmapper
@@ -25,7 +23,9 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Fit Splines
 
 # Done:
-- Zoom in feature
+- Start using UserSpeciesDatum model (June 1, 2019)
+- Show percentage correct on prior species (June 1, 2019)
+- Zoom in feature (May 31, 2019)
 - Ensure "photos" scraped are actually photos not html pages titled .jpg, lol that was a weird bug. (May 30, 2019)
 - Migrate to AWS and import herpmapper data (20k images!) (May 29, 2019)
 - Publish alpha 1.0.0 (May 28, 2019)
