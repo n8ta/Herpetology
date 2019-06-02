@@ -1,30 +1,39 @@
 body
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
   margin: 0
   padding: 1rem
 
 .species
-  width: 100%
   display: grid
-  grid-template-columns: 1fr 1fr
-  .column
-    grid-area: auto
+  grid-template-columns: auto minmax(200px,400px) minmax(200px,400px) auto
+  grid-template-areas: '. left right .'
+  grid-column-gap: 1rem
+  .spec-left
+    grid-area: left
+  .spec-right
+    grid-area: right
   .correct
     color: green
   .incorrect
     color: darkred
   button
+    width: 100%
     background-color: lightblue
-    margin-right: 1rem
-    padding: .4rem
-    margin-bottom: .2rem
+    padding: .2rem .2rem .2rem .4rem
+    margin: .2rem
+    text-align: left
+    font-size: 1.1rem
+    .correct
+      background-color: green
+    .incorrect
+      bakcground-color: red
   &[type='disabled']
     background-color: grey
   #next
     color: black
     background-color: lightgreen
-    margin-bottom: 1rem
-    width: 20rem
-    height: 2rem
   .sci_name
     font-size: .8em
     font-style: italic

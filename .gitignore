@@ -1,4 +1,5 @@
 .env
+public/uploads
 public/uploads/tmp
 public/packs/manifest.json
 

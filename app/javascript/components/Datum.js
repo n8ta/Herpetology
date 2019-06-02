@@ -1,20 +1,18 @@
 import React from "react"
+import Zoom from './Zoom.js';
 import PropTypes from "prop-types"
 
 class Datum extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'ready',
-            sci_name: 'sci_name',
-            common_name: 'common_name',
-            correct: 10,
-            seen: 100,
-            image_url: "https://i.postimg.cc/XvX90qPf/snek.png"
+            mode: 'waiting',
+            sci_name: 'Loading...',
+            common_name: 'Loading...',
+            correct: 0,
+            seen: 0,
+            image_path: "",
         };
-    }
-
-    componentDidMount() {
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         fetch('/user_species_data/' + this.props.species_id + '.json', {
             method: 'GET',
@@ -26,41 +24,41 @@ class Datum extends React.Component {
             },
             credentials: 'same-origin',
         }).then(res => res.json()).then((result) => {
-            console.log('loaded');
+
             this.setState({
                 mode: 'ready',
-                sci_name: 'sci_name',
-                common_name: 'common_name',
-                correct: 10,
-                seen: 100,
-                image_url: "https://i.postimg.cc/XvX90qPf/snek.png"
+                sci_name: result['species']['genus']['name'] + ' ' + result['species']['name'],
+                common_name: result['species']['common_names'][0]['name'],
+                correct: result['correct'],
+                seen: result['seen'],
             });
+            console.log(result);
         });
     }
 
 
     render() {
         var title = '';
-        console.log('rendering:');
         if (this.state.mode == 'waiting') {
-            console.log('  state: ', this.state.mode);
             title = "Loading..."
         } else if (this.state.mode == 'ready') {
-            console.log(this.state);
-            title = <span><span class="common_name">{this.state.common_name}</span> <span className="sci_name">{this.state.sci_name}</span></span>
-            console.log('  state: ', this.state.mode);
+            title = <span><span className="common_name">{this.state.common_name}</span> <span
+                className="sci_name">{this.state.sci_name}</span></span>
         }
         return (
-            <React.Fragment>
+            <div className={'datum ' + this.state.mode}>
                 <h2>{title}</h2>
-                <img src={this.state.image_url}></img>
-                <p>Correct: {this.state.correct}, Seen: {this.state.seen}</p>
-            </React.Fragment>
+                <p>You've seen this species <strong>{this.state.seen}</strong> time(s), and gotten it
+                    right <strong>{this.state.correct}</strong> time(s).</p>
+                <Zoom url={this.props.image_path}></Zoom>
+
+            </div>
         );
     }
 }
 
 Datum.propTypes = {
-    species_id: PropTypes.number
+    species_id: PropTypes.number,
+    image_path: PropTypes.string,
 };
 export default Datum

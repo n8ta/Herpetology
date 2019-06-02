@@ -1,10 +1,4 @@
 json.extract! user_species_datum, :seen, :correct
-begin
-  json.image_url user_species_datum.species.photos[0].image_path.url
-rescue
-  json.image_url nil
-end
-
 json.species do
   json.id user_species_datum.species.id
   json.name user_species_datum.species.name

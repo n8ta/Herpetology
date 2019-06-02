@@ -5,7 +5,11 @@ I aim to make this a largely crowd sourced project with users uploading their ow
 contributing to the pages on each species. The live version will be hosted @ snakes.n8ta.com
 when ready for launch. Get in touch with me if you are interested in contributing to this project.
 
-Todo:
+# Conventions
+- Code should use specie vs species to differentiate the plural. Same for genus vs genera etc.
+- When variables that are in some order use next and prev as prefixes.
+
+# Todo:
 - Start using UserSpeciesDatum model
 - Show percentage correct on prior species
 - Variable zoom on zoom-in feature
@@ -20,7 +24,7 @@ Todo:
 - Gamification
 - Fit Splines
 
-Done:
+# Done:
 - Zoom in feature
 - Ensure "photos" scraped are actually photos not html pages titled .jpg, lol that was a weird bug. (May 30, 2019)
 - Migrate to AWS and import herpmapper data (20k images!) (May 29, 2019)
@@ -31,7 +35,7 @@ Done:
 - Import images from reddit with rake task (May 24, 2019)
 - Use reddit api to search ALL of a given users posts + the posts url (May 23, 2019)
 
-Deployment:
+# Deployment:
 1. Configure rb in .env
 2. bundle install
 3. yarn install

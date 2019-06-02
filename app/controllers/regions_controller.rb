@@ -12,16 +12,19 @@ class RegionsController < ApplicationController
     species = @region.species.includes(:photos).where.not(photos: {id: nil})
     specie_m = Species.find(session[:specie_id])
     correct = session[:index].to_s == params['guess_index'].to_s
-    hash_and_specie = specie_hash(species)
+    old_index = session[:index]
+    hash_and_specie = specie_hash!(species)
     photo = hash_and_specie[1].photos[rand(hash_and_specie[1].photos.length)]
     specie_data = {
         'sci_name': specie_m.sci_name.to_s,
         'common_name': specie_m.common_names[0].name.to_s,
-        'index_was': session[:index].to_s,
         'species_id': specie_m.id,
         'next_options': hash_and_specie[0],
         'next_image_path': photo.image_path.url,
-        'correct': correct
+        'correct': correct,
+        'correct_index': old_index,
+        'guess_index': params['guess_index'],
+        'prev_species_id': specie_m.id
     }
     datum = UserSpeciesDatum.find_or_create_by(user: current_user, species: specie_m)
 
@@ -34,13 +37,14 @@ class RegionsController < ApplicationController
   # GET /regions/1.json
   def show
     @species = @region.species.includes(:photos).where.not(photos: {id: nil})
-    options = specie_hash(@species)
+    options = specie_hash!(@species)
     correct_specie = options[1]
     @photo = correct_specie.photos[rand(correct_specie.photos.length)]
     @options = options[0]
   end
 
-  def specie_hash(species)
+  def specie_hash!(species)
+    ## session[:index]. session[:specie_id] will be changed
     if species.length < 6
       raise "Not enough species"
     end
