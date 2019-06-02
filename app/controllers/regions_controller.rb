@@ -26,10 +26,10 @@ class RegionsController < ApplicationController
         'guess_index': params['guess_index'],
         'prev_species_id': specie_m.id
     }
-    datum = UserSpeciesDatum.find_or_create_by(user: current_user, species: specie_m)
-
-    correct ? datum.guess_correct : datum.guess_incorrect # Increment counter for species
-
+    if (current_user)
+      datum = UserSpeciesDatum.find_or_create_by(user: current_user, species: specie_m)
+      correct ? datum.guess_correct : datum.guess_incorrect # Increment counter for species
+    end
     render :json => specie_data
   end
 
@@ -54,19 +54,19 @@ class RegionsController < ApplicationController
     picked = [correct_specie]
     hash_data = []
     while picked.length != 6
-        trial_specie = species[rand(len)]
-        unless picked.include?(trial_specie)
-          picked.push(trial_specie)
-          hash_data.push({sci_name: trial_specie.sci_name,
-                                   common_name: trial_specie.common_names.any? ? trial_specie.common_names[0].name : ' '})
-        end
+      trial_specie = species[rand(len)]
+      unless picked.include?(trial_specie)
+        picked.push(trial_specie)
+        hash_data.push({sci_name: trial_specie.sci_name,
+                        common_name: trial_specie.common_names.any? ? trial_specie.common_names[0].name : ' '})
+      end
     end
     index = rand(4)
     hash_data.insert(index, {sci_name: correct_specie.sci_name,
-                            common_name: correct_specie.common_names.any? ? correct_specie.common_names[0].name : ' '})
+                             common_name: correct_specie.common_names.any? ? correct_specie.common_names[0].name : ' '})
     session[:index] = index
     session[:specie_id] = correct_specie.id
-    return [hash_data,correct_specie] # hash, Species model
+    return [hash_data, correct_specie] # hash, Species model
   end
 
   # GET /regions/new
