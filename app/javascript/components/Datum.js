@@ -1,5 +1,6 @@
 import React from "react"
 import Zoom from './Zoom.js';
+import Name from './Name.js';
 import PropTypes from "prop-types"
 
 class Datum extends React.Component {
@@ -42,8 +43,7 @@ class Datum extends React.Component {
         if (this.state.mode == 'waiting') {
             title = "Loading..."
         } else if (this.state.mode == 'ready') {
-            title = <span><span className="common_name">{this.state.common_name}</span> <span
-                className="sci_name">{this.state.sci_name}</span></span>
+            title = <Name sciName={this.state.sci_name} commonName={this.state.common_name}></Name>
         }
         return (
             <div className={'datum ' + this.state.mode}>

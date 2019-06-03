@@ -1,15 +1,20 @@
 html
   display: grid
-  grid-template-columns: auto minmax(600px,1000px) auto
+  grid-template-columns: auto minmax(0px,1000px) auto
   grid-template-areas: '. body .'
 
 body
+  font-size: 1.2rem
+  line-height: 1.5rem
   grid-area: body
   -webkit-box-sizing: border-box
   -moz-box-sizing: border-box
   box-sizing: border-box
   margin: 0
   padding: 1rem
+
+
+
 .species
   display: grid
   grid-template-columns: auto minmax(300px,500px) minmax(300px,500px) auto
@@ -46,8 +51,20 @@ body
     list-style-type: none
     margin-left: 0
     padding-left: 0
+  @media (width < 620px)
+    grid-template-columns: 100%
+    grid-template-rows: auto auto
+    grid-row-gap: 1rem
+    grid-column-gap: 0
+    grid-template-areas: 'top' 'bottom'
+    .spec-left
+      margin: 0
+      grid-area: top
+    .spec-right
+      margin: 0
+      grid-area: bottom
 
 
 footer
-  margin-top: 300pt
+  margin-top: 250pt
 

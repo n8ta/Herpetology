@@ -1,5 +1,6 @@
 import React from "react"
 import Zoom from './Zoom.js';
+import Name from './Name.js';
 import Datum from './Datum.js';
 import PropTypes from "prop-types"
 
@@ -18,15 +19,14 @@ class SpeciesPicker extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.next = this.next.bind(this);
     }
-
     gen_options() {
         let options = new Array
-        let disabled = this.state.mode == 'correct' || this.state.mode == "incorrect";
+        let disabled = this.state.mode == 'correct' || this.state.mode == "incorrect" || this.state.mode == "loading";
         for (let i = 0; i < this.state.options.length; i++) {
             let tmp = i;
             let btn_class = "";
             if (tmp == this.state.correct_index) {
-                console.log(tmp,"correct")
+                console.log(tmp,"correct");
                 btn_class = "correct"
             }
             if (tmp == this.state.incorrect_index) {
@@ -37,8 +37,7 @@ class SpeciesPicker extends React.Component {
                 <li key={i}>
                     <button className={btn_class} disabled={disabled} data-index={i}
                             onClick={this.handleClick}>
-                        {this.state.options[i].common_name}
-                        <span className='sci_name'>({this.state.options[i].sci_name})</span>
+                        <Name sciName={this.state.options[i].sci_name} commonName={this.state.options[i].common_name}></Name>
                     </button>
                 </li>);
         }
