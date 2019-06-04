@@ -44,10 +44,8 @@ class SpeciesPicker extends React.Component {
     }
     preload(image_path) {
         let image = new Image();
-        image.onload = function() {
-            alert("loaded")
-        };
-        image.src = image_path
+        image.onload;
+        image.src = image_path;
     }
     next(e) {
         this.setState({
