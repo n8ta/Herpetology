@@ -13,8 +13,6 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Variable zoom on zoom-in feature 
 - Streamline seeding into one command vs many rake tasks
 - Ruby version in gemfile
-- Import data from herpmapper
-- Build image quizzing bot
 - Style this shit
 - Built report system
 - All the user shit like email passwords
@@ -28,6 +26,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Zoom in feature (May 31, 2019)
 - Ensure "photos" scraped are actually photos not html pages titled .jpg, lol that was a weird bug. (May 30, 2019)
 - Migrate to AWS and import herpmapper data (20k images!) (May 29, 2019)
+- Import data from herpmapper (May 28, 2019)
 - Publish alpha 1.0.0 (May 28, 2019)
 - Get in touch with herpmapper about getting data officially (May 25, 2019)
 - Restructure models to support more detailed taxonomy superfamilies etc. (May 24, 2019)

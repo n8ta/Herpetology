@@ -13,7 +13,6 @@ class SpeciesPicker extends React.Component {
             options: props.options,
             next_image_path: undefined,
             next_options: undefined,
-            prev_species_id: undefined,
             prev_image_path: undefined,
         };
         this.handleClick = this.handleClick.bind(this);
@@ -43,7 +42,13 @@ class SpeciesPicker extends React.Component {
         }
         return options
     }
-
+    preload(image_path) {
+        let image = new Image();
+        image.onload = function() {
+            alert("loaded")
+        };
+        image.src = image_path
+    }
     next(e) {
         this.setState({
             common_name: undefined,
@@ -82,9 +87,14 @@ class SpeciesPicker extends React.Component {
                 sci_name: result['sci_name'],
                 next_options: result['next_options'],
                 next_image_path: result['next_image_path'],
-                prev_species_id: result['prev_species_id'],
+                species_id: result['species_id'],
                 prev_image_path: this.state.image_path
             });
+            this.preload(result['next_image_path']);
+
+
+
+
             if (result['correct'] == true) {
                 this.setState({mode: 'correct'});
             } else {
@@ -115,7 +125,7 @@ class SpeciesPicker extends React.Component {
         }
         if (this.state.mode == "correct" || this.state.mode == "incorrect") {
             right = <Datum className={'column'} image_path={this.state.prev_image_path}
-                           species_id={this.state.prev_species_id}></Datum>
+                           species_id={this.state.species_id}></Datum>
         } else {
             right = <Zoom url={this.state.image_path}/>
         }

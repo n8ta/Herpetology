@@ -24,7 +24,6 @@ class RegionsController < ApplicationController
         'correct': correct,
         'correct_index': old_index,
         'guess_index': params['guess_index'],
-        'prev_species_id': specie_m.id
     }
     if (current_user)
       datum = UserSpeciesDatum.find_or_create_by(user: current_user, species: specie_m)
