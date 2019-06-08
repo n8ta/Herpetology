@@ -4,7 +4,7 @@ def find_species(genus_txt, species_txt)
   species = genus.species.find_by('lower(name) = ?', species_txt.downcase)
 
   if species.nil?
-    puts '  failed on: ' + genus_txt + ' ' + species_txt
+    # puts '  failed on: ' + genus_txt + ' ' + species_txt
     raise
   end
   return species
@@ -15,7 +15,7 @@ namespace :imports do
   desc "Import common names"
   task common_names: :environment do
     # https://www.discoverlife.org/mp/20q?guide=Snakes
-    def import_region(file_path, region)
+    def import_file(file_path)
       failed = 0
       region_tagged = 0
       text = IO.read(file_path)
@@ -48,6 +48,10 @@ namespace :imports do
 
       end
     end
+
+    import_file(Rails.root.join('lib','tasks','assets','naw.html'))
+    import_file(Rails.root.join('lib','tasks','assets','nae.html'))
+
 
   end
 end
