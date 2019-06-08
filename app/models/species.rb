@@ -4,9 +4,9 @@ class Species < ApplicationRecord
   has_many :photos
   has_many :common_names
   has_and_belongs_to_many :user_species_data
-  has_and_belongs_to_many :tier3s
-  has_and_belongs_to_many :tier2s
-  has_and_belongs_to_many :tier1s
+  has_and_belongs_to_many :tier3s, counter_cache: true
+  has_and_belongs_to_many :tier2s, counter_cache: true
+  has_and_belongs_to_many :tier1s, counter_cache: true
 
   validates :genus, presence: true
   validates :name, presence: true,  uniqueness: {scope: :genus}

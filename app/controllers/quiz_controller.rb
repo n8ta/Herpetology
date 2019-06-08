@@ -50,10 +50,6 @@ class QuizController < ApplicationController
     @photo = correct_specie.photos[rand(correct_specie.photos.length)]
     @options = options[0]
 
-    if @tier.class.name == "Tier1"
-      @tier2s = @tier.tier2s.select { |t2| t2.species.includes(:photos).where.not(photos: {id: nil}).length > 6}
-    end
-
   end
 
   def specie_hash(species)

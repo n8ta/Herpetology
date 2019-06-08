@@ -1,17 +1,11 @@
-<% if @tier2s %>
+<% if @tier.class.name == "Tier1" %>
   <h2><%= @tier.name.titleize %></h2>
-<% else %>
+<% elsif @tier.class.name == "Tier2" %>
   <h2><%= link_to @tier.tier1.name.titleize, t1quiz_path(@tier.tier1) %> > <%= @tier.name.titleize %></h2>
 <% end %>
 
-<% if @tier2s && @tier2s.any? %>
-  <h3>Subregions with sufficient species</h3>
-  <ul class="tier-list">
-    <% @tier2s.each do |t2| %>
-      <li><%= link_to t2.name, t2quiz_path(t2) %></li>
-    <% end %>
-
-  </ul>
+<% if @tier.class.name == "Tier1" %>
+  <%= react_component('Tierlist', {id: @tier.id}) %>
 <% end %>
 
 <p>Currently we have <%= @species.length %> species in this region with photos and <%= @tier.species.length %> total</p>
