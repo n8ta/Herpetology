@@ -10,6 +10,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - When variables that are in some order use next and prev as prefixes.
 
 # Todo:
+- Fix whatever in quiz#show is looping
 - Improve region picking 
 - Variable zoom on zoom-in feature 
 - Ruby version in gemfile

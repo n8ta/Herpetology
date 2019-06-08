@@ -50,6 +50,7 @@ class QuizController < ApplicationController
     correct_specie = options[1]
     @photo = correct_specie.photos[rand(correct_specie.photos.length)]
     @options = options[0]
+
   end
 
   def specie_hash!(species)
@@ -62,7 +63,9 @@ class QuizController < ApplicationController
 
     picked = [correct_specie]
     hash_data = []
-    while picked.length != 6
+    i = 0
+    while (picked.length != 6) and (i<100)
+      i += 1
       trial_specie = species[rand(len)]
       unless picked.include?(trial_specie)
         picked.push(trial_specie)
