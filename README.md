@@ -43,11 +43,6 @@ when ready for launch. Get in touch with me if you are interested in contributin
 3. yarn install
 4. mkdir tmp/reddit; mkdir tmp/pitt; mkdir tmp/herpmapper
 5. rails db:migrate RAILS_ENV=production
-6. rails imports:taxonomy RAILS_ENV=production
-7. rails imports:pitt RAILS_ENV=production
-8. rails imports:reddit RAILS_ENV=production
-9. rails db:seed RAILS_ENV=production
-10. rails imports:regions RAILS_ENV=production  
-11. rails assets:precompile RAILS_ENV=production 
-12. rails webpacker:compile (? not sure ?)
-12. rails s -e production
+6. rails db:seed RAILS_ENV=production
+7. rails assets:precompile RAILS_ENV=production 
+8. rails s -e production
