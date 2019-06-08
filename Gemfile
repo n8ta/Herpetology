@@ -28,6 +28,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'debase', '~> 0.2.2'
+  gem 'ruby-debug-ide', '~> 0.6.1'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
