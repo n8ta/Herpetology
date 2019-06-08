@@ -89,6 +89,7 @@ namespace :imports do
           photo.original_url = full_image_path
           photo.save!
 
+          File.delete(file_path) if File.exist?(file_path)
 
         rescue => error
           puts "Failed on " + sci_name + " page: " + page.to_s
