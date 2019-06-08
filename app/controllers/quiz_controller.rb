@@ -59,6 +59,8 @@ class QuizController < ApplicationController
 
   def specie_hash(species)
     puts "reached func"
+    puts species.inspect
+    puts species.length.inspect
     if species.length < 6
       raise "Not enough species"
       puts "not enough species"
