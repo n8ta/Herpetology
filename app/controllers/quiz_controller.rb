@@ -24,7 +24,7 @@ class QuizController < ApplicationController
     specie_m = Species.find(session[:specie_id])
     correct = session[:index].to_s == params['guess_index'].to_s
     old_index = session[:index]
-    hash_and_specie = specie_hash!(species)
+    hash_and_specie = specie_hash(species)
     photo = hash_and_specie[1].photos[rand(hash_and_specie[1].photos.length)]
     specie_data = {
         'sci_name': specie_m.sci_name.to_s,
@@ -47,7 +47,7 @@ class QuizController < ApplicationController
     puts "hit show"
     @species = @tier.species.includes(:photos).where.not(photos: {id: nil})
     puts "start hasing"
-    options = specie_hash!(@species)
+    options = specie_hash(@species)
     puts "done hashing"
     correct_specie = options[1]
     puts "correct"
@@ -57,10 +57,11 @@ class QuizController < ApplicationController
     puts "rendering"
   end
 
-  def specie_hash!(species)
-    ## session[:index]. session[:specie_id] will be changed
+  def specie_hash(species)
+    puts "reached func"
     if species.length < 6
       raise "Not enough species"
+      puts "not enough species"
     end
     puts 'enough species'
     len = species.length
