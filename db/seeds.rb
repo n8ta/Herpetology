@@ -30,5 +30,4 @@ Species.new(name: 'Inornatus', genus: genus).save!
 
 Rake::Task['imports:common_names'].invoke
 Rake::Task['imports:geography'].invoke
-Rake::Task['imports:reddit'].invoke
 Rake::Task['imports:herpmapper'].invoke
