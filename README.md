@@ -10,6 +10,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - When variables are in an order use next and prev as prefixes.
 
 # Todo:
+- Sort out very slow query in tier1.rb to find tier2s with > 6 photograped species
 - Implement points based on number of species in tier
 - Daily scoreboard
 - All time most accurate
