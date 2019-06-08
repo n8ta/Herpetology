@@ -15,11 +15,13 @@ namespace :imports do
   desc "Import photos from herpmapper"
   task herpmapper: :environment do
 
-    page = 1
-    response = HTTParty.get('https://www.herpmapper.org/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
-    while (response.code == 200) and (page < 925)
+    page = 101
+    require 'net/http'
+    response = Net::HTTP.get_response('www.herpmapper.org', '/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
+    while (response.code == "200") and (page < 102)
       html = Nokogiri::HTML(response.body)
       table = html.xpath(".//div[@id='content']").xpath('.//table').xpath(".//tr").each do |row|
+        puts " --- new --- "
         begin
 
 
@@ -38,6 +40,9 @@ namespace :imports do
             tier3_m = Tier3.find_by(name: tier3, tier2: tier2_m)
           rescue
           end
+          puts "tier1: "+tier1_m.inspect
+          puts "tier2: "+tier2_m.inspect
+          puts "tier3: "+tier3_m.inspect
 
           # Find species/genus
 
@@ -65,13 +70,6 @@ namespace :imports do
 
 
           voucher_number = row.xpath(".//td[@width='78']").xpath(".//img/@src").text.split("voucher/")[1].split("/")[0]
-          # puts "voucher:: "+voucher_number
-          puts " --- new ---"
-          puts "vnumber: " + voucher_number.to_s
-          puts "species: " + species_model.inspect
-          puts 'added to region '+tier1_m.name
-
-
           full_image_path = "https://www.herpmapper.org/voucher/" + voucher_number + "/full.jpg"
 
           image_response = HTTParty.get(full_image_path)
@@ -99,8 +97,8 @@ namespace :imports do
         end
 
       end
-      response = HTTParty.get('https://www.herpmapper.org/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
       page += 1
+      response = Net::HTTP.get('https://www.herpmapper.org', '/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
     end
   end
 end

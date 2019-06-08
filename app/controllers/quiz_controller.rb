@@ -15,10 +15,9 @@ class QuizController < ApplicationController
   def index
 
     @tier1s = Tier1.all
-    @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and (t1.species.length > 6)  }
+    @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and (t1.species.includes(:photos).where.not(photos: {id: nil}).length > 6)  }
 
   end
-
   def guess
     species = @tier.species.includes(:photos).where.not(photos: {id: nil})
     specie_m = Species.find(session[:specie_id])
@@ -44,11 +43,17 @@ class QuizController < ApplicationController
   end
 
   def show
+
     @species = @tier.species.includes(:photos).where.not(photos: {id: nil})
     options = specie_hash(@species)
     correct_specie = options[1]
     @photo = correct_specie.photos[rand(correct_specie.photos.length)]
     @options = options[0]
+
+    if @tier.class.name == "Tier1"
+      @tier2s = @tier.tier2s.select { |t2| t2.species.includes(:photos).where.not(photos: {id: nil}).length > 6}
+    end
+
   end
 
   def specie_hash(species)

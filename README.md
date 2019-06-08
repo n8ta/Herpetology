@@ -2,15 +2,18 @@
 SnakeID is a WIP tool to teach people to identify snakes based on their photos.
 
 I aim to make this a largely crowd sourced project with users uploading their own photos and 
-contributing to the pages on each species. The live version will be hosted @ snakes.n8ta.com
-when ready for launch. Get in touch with me if you are interested in contributing to this project.
+contributing to the pages on each species. The live version is hosted @ snakeid.n8ta.com
+when ready for launch. Get in touch with me if you are interested in contributing to this project. Or feel free to submit a PR.
 
 # Conventions
 - Code should use specie vs species to differentiate the plural. Same for genus vs genera etc.
-- When variables that are in some order use next and prev as prefixes.
+- When variables are in an order use next and prev as prefixes.
 
 # Todo:
-- Fix whatever in quiz#show is looping (appears to be database related, doesn't happen with sqlite but does with mysql)
+- Implement points based on number of species in tier
+- Daily scoreboard
+- All time most accurate
+- Properly handle when there is no common name
 - Improve region picking 
 - Variable zoom on zoom-in feature 
 - Ruby version in gemfile
@@ -22,6 +25,9 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Fit Splines
 
 # Done:
+- Fix whatever in quiz#show is looping (appears to be database related, doesn't happen with sqlite but does with mysql)
+  - Turned out to be duplicates the tier-species join table (20k entires crashed everything) after removing the dupes all is well
+  - https://www.n8ta.com/guides/unique-constraint-with-existing-data-rails 
 - Tag species by reigon from HerpMapper (June 7, 2019)
 - Streamline seeding into one command vs many rake tasks (June 7, 2019)
 - Start using UserSpeciesDatum model (June 1, 2019)

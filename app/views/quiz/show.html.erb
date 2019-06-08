@@ -1,5 +1,20 @@
-<h2><%= @tier.name.titleize %></h2>
+<% if @tier2s %>
+  <h2><%= @tier.name.titleize %></h2>
+<% else %>
+  <h2><%= link_to @tier.tier1.name.titleize, t1quiz_path(@tier.tier1) %> > <%= @tier.name.titleize %></h2>
+<% end %>
+
+<% if @tier2s && @tier2s.any? %>
+  <h3>Subregions with sufficient species</h3>
+  <ul class="tier-list">
+    <% @tier2s.each do |t2| %>
+      <li><%= link_to t2.name, t2quiz_path(t2) %></li>
+    <% end %>
+
+  </ul>
+<% end %>
+
 <p>Currently we have <%= @species.length %> species in this region with photos and <%= @tier.species.length %> total</p>
 <hr>
 <%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
-                                      options: @options, }) %>
+                                      options: @options}) %>
