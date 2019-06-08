@@ -66,11 +66,8 @@ class SpeciesPicker extends React.Component {
         console.log("index: ",index);
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         this.setState({mode: 'loading'});
-        let region_id = window.location.toString().split("regions/")[1];
-        if (region_id[region_id.length - 1] == '/') {
-            region_id = region_id.substring(0, region_id.length - 1);
-        }
-        fetch('/regions/' + region_id + '/guess/' + index, {
+
+        fetch(window.location + '/guess/' + index, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

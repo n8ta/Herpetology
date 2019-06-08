@@ -28,12 +28,7 @@ Species.new(name: 'Ameonus', genus: genus).save!
 genus = Genus.find_by(name: 'Dendrelaphis')
 Species.new(name: 'Inornatus', genus: genus).save!
 
-nae = Region.new(name: "North America East")
-naw = Region.new(name: "North America West")
-nae.save!
-naw.save!
-
-Rake::Task['imports:regions'].invoke
-
+Rake::Task['imports:common_names'].invoke
+Rake::Task['imports:geography'].invoke
 Rake::Task['imports:reddit'].invoke
 Rake::Task['imports:herpmapper'].invoke

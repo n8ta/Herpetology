@@ -21,17 +21,56 @@ namespace :imports do
       html = Nokogiri::HTML(response.body)
       table = html.xpath(".//div[@id='content']").xpath('.//table').xpath(".//tr").each do |row|
         begin
+
+
+          # Get tier info for geography
+          geography = row.xpath(".//td[@class='hidden-xs']").text # Get the <td> with the geograpgy info
+          geography = geography.split("\t").join(" ").split("\n")
+          tier1 = geography[1].split(" ").join(" ")
+          tier2 = geography[2].split(" ").join(" ")
+          tier3 = geography[3].split(" ").join(" ")
+
+          tier1_m = Tier1.find_by(name: tier1)
+          tier2_m = nil
+          tier3_m = nil
+          begin
+            tier2_m = Tier2.find_by(name: tier2, tier1: tier1_m)
+            tier3_m = Tier3.find_by(name: tier3, tier2: tier2_m)
+          rescue
+          end
+
+          # Find species/genus
+
           links = row.xpath('.//a')
           sci_name = links[2].text.split(" ").join(" ").split("\n").join(" ")
           split = sci_name.split(" ")
           species_name = split[1].titleize
           genus_name = split[0].titleize
           species_model = find_species(genus_name, species_name)
+
+
+          # Add to all regions that we could identify, rescue in case it's already marked for that region
+          begin
+            unless tier3_m.nil?
+              tier3_m.species << species_model
+            end
+            unless tier2_m.nil?
+              tier2_m.species << species_model
+            end
+            tier1_m.species << species_model
+
+          rescue
+          end
+
+
+
           voucher_number = row.xpath(".//td[@width='78']").xpath(".//img/@src").text.split("voucher/")[1].split("/")[0]
           # puts "voucher:: "+voucher_number
           puts " --- new ---"
           puts "vnumber: " + voucher_number.to_s
           puts "species: " + species_model.inspect
+          puts 'added to region '+tier1_m.name
+
 
           full_image_path = "https://www.herpmapper.org/voucher/" + voucher_number + "/full.jpg"
 
@@ -50,12 +89,13 @@ namespace :imports do
           photo.original_url = full_image_path
           photo.save!
 
+
         rescue => error
           puts "Failed on " + sci_name + " page: " + page.to_s
-          puts "  error: "+error.to_s
+          puts "  error: " + error.to_s
+          puts "  trace: "+ error.backtrace.to_s
           next
         end
-
 
       end
       response = HTTParty.get('https://www.herpmapper.org/records?taxon=Serpentes&deceased=no&p=' + page.to_s)

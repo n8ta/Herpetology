@@ -1,0 +1,5 @@
+<h2><%= @tier.name.titleize %></h2>
+<p>Currently we have <%= @species.length %> species in this region with photos and <%= @tier.species.length %> total</p>
+<hr>
+<%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
+                                      options: @options, }) %>

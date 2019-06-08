@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :tier3s, only: [:show]
-  resources :tier2s, only: [:show]
-  resources :tier1s, only: [:show, :index]
-
   devise_for :users
   resources :user_species_data, only: [:show]
   resources :regions do
@@ -11,7 +7,20 @@ Rails.application.routes.draw do
       post 'guess/:guess_index' =>'regions#guess'
     end
   end
-  root 'regions#index'
+
+  root 'quiz#index'
+  get 'quiz/tier1/:tier1_id' => 'quiz#show', as: 't1quiz'
+  get 'quiz/tier2/:tier2_id' => 'quiz#show', as: 't2quiz'
+  get 'quiz/tier3/:tier3_id' => 'quiz#show', as: 't3quiz'
+  post 'quiz/tier1/:tier1_id/guess/:guess_index' => 'quiz#guess', as: 't1quiz_guess'
+  post 'quiz/tier2/:tier2_id/guess/:guess_index' => 'quiz#guess', as: 't2quiz_guess'
+  post 'quiz/tier3/:tier3_id/guess/:guess_index' => 'quiz#guess', as: 't3quiz_guess'
+
+
+
+
+  resources :tier1s
+  resources :tier2s
 
   resources :species, only: [:show, :index]
   resources :genera, only: [:show, :index]

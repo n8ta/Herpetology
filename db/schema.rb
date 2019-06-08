@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_07_230240) do
+ActiveRecord::Schema.define(version: 2019_06_08_005816) do
 
   create_table "common_names", force: :cascade do |t|
     t.integer "species_id", null: false
@@ -49,24 +49,30 @@ ActiveRecord::Schema.define(version: 2019_06_07_230240) do
     t.index ["species_id"], name: "index_photos_on_species_id"
   end
 
-  create_table "regions", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "regions_species", id: false, force: :cascade do |t|
-    t.integer "species_id", null: false
-    t.integer "region_id", null: false
-    t.index ["region_id", "species_id"], name: "index_regions_species_on_region_id_and_species_id", unique: true
-  end
-
   create_table "species", force: :cascade do |t|
     t.integer "genus_id"
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genus_id"], name: "index_species_on_genus_id"
+  end
+
+  create_table "species_tier1s", id: false, force: :cascade do |t|
+    t.integer "species_id", null: false
+    t.integer "tier1_id", null: false
+    t.index ["species_id", "tier1_id"], name: "index_species_tier1s_on_species_id_and_tier1_id"
+  end
+
+  create_table "species_tier2s", id: false, force: :cascade do |t|
+    t.integer "species_id", null: false
+    t.integer "tier2_id", null: false
+    t.index ["species_id", "tier2_id"], name: "index_species_tier2s_on_species_id_and_tier2_id"
+  end
+
+  create_table "species_tier3s", id: false, force: :cascade do |t|
+    t.integer "species_id", null: false
+    t.integer "tier3_id", null: false
+    t.index ["species_id", "tier3_id"], name: "index_species_tier3s_on_species_id_and_tier3_id"
   end
 
   create_table "superfamilies", force: :cascade do |t|

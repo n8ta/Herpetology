@@ -12,8 +12,8 @@ end
 
 namespace :imports do
 
-  desc "Import Regions + common names"
-  task regions: :environment do
+  desc "Import common names"
+  task common_names: :environment do
     # https://www.discoverlife.org/mp/20q?guide=Snakes
     def import_region(file_path, region)
       failed = 0
@@ -37,15 +37,6 @@ namespace :imports do
           next
         end
 
-
-        begin
-          species_m.regions << region
-          region_tagged += 1
-        rescue
-          failed += 1
-        end
-
-
         if common_name
           begin
             cnm = CommonName.new(name: common_name, species: species_m)
@@ -56,23 +47,7 @@ namespace :imports do
 
 
       end
-      puts 'Completed, tagged: ' + region_tagged.to_s
-      puts "  failed: "+failed.to_s
-
     end
-
-    nae = Region.find_by(name: "North America East")
-    naw = Region.find_by(name: "North America West")
-    if nae.nil?
-      puts "Run rails db:seed before importing regions as it creates the region models"
-    else
-      nae_path = Rails.root.join('lib', 'tasks', 'assets', 'nae.html')
-      naw_path = Rails.root.join('lib', 'tasks', 'assets', 'naw.html')
-      import_region(nae_path, nae)
-      import_region(naw_path, naw)
-
-    end
-
 
   end
 end

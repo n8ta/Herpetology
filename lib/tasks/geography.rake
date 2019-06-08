@@ -23,6 +23,8 @@ namespace :imports do
       end
     end
 
+    puts "Finished Countries"
+
     json.each do |id, geo|
       if t1_id_to_model.key?(geo['parent'])
         t2_model = Tier2.new(name: geo['name'],
@@ -31,6 +33,8 @@ namespace :imports do
         t2_id_to_model[id] = t2_model
       end
     end
+
+    puts "Finished sub-country regions"
 
     json.each do |id,geo|
       if t2_id_to_model.key?(geo['parent'])
@@ -41,6 +45,8 @@ namespace :imports do
 
       end
     end
+
+    puts "Finished sub-sub-country regions"
 
     puts "Created "+t1_id_to_model.length.to_s+' t1s'
     puts "Created "+t2_id_to_model.length.to_s+' t2s'
