@@ -10,8 +10,8 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - When variables that are in some order use next and prev as prefixes.
 
 # Todo:
+- Improve region picking 
 - Variable zoom on zoom-in feature 
-- Streamline seeding into one command vs many rake tasks
 - Ruby version in gemfile
 - Style this shit
 - Built report system
@@ -21,6 +21,8 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Fit Splines
 
 # Done:
+- Tag species by reigon from HerpMapper (June 7, 2019)
+- Streamline seeding into one command vs many rake tasks (June 7, 2019)
 - Start using UserSpeciesDatum model (June 1, 2019)
 - Show percentage correct on prior species (June 1, 2019)
 - Zoom in feature (May 31, 2019)
