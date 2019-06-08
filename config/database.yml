@@ -7,16 +7,23 @@ development:
   <<: *default
   database: db/development.sqlite3
 
+production:
+  <<: *default
+  database: db/development.sqlite3
+
+
 test:
   <<: *default
   database: db/test.sqlite3
 
-production:
-  adapter: mysql2
-  database: <%= ENV['sql_db'] %>
-  encoding: utf8
-  username: <%= ENV['sql_user'] %>
-  password: <%= ENV['sql_pass'] %>
-#  socket: ENV['sql_socket']
-  host: 127.0.0.1
-  port: 3306
+#
+#
+#production:
+#  adapter: mysql2
+#  database: <%= ENV['sql_db'] %>
+#  encoding: utf8
+#  username: <%= ENV['sql_user'] %>
+#  password: <%= ENV['sql_pass'] %>
+##  socket: ENV['sql_socket']
+#  host: 127.0.0.1
+#  port: 3306
