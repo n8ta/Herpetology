@@ -13,7 +13,10 @@ class QuizController < ApplicationController
   end
 
   def index
-    @tier1s = Tier1.all
+
+    @tier1s = Species.all.map {|sp| sp.tier1s[0] }.compact.uniq
+    @tier1s = @tier1s.select {|t1| t1.name != "United States of America" }
+
   end
 
   def guess

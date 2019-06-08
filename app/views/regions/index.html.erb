@@ -1,9 +1,0 @@
-<h2>Regions</h2>
-
-<% unless current_user %>
-  <p>You must be <a href="/users/sign_up">signed up</a> if you want statics on your accuracy. <br/>
-  Choose a region and you will be quizzed on identifying snakes from that region.</p>
-<% end %>
-<% @regions.each do |region| %>
-  <div><%= link_to region.name, region %></div>
-<% end %>
