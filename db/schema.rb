@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_01_005147) do
+ActiveRecord::Schema.define(version: 2019_06_07_230240) do
 
   create_table "common_names", force: :cascade do |t|
     t.integer "species_id", null: false
@@ -73,6 +73,28 @@ ActiveRecord::Schema.define(version: 2019_06_01_005147) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tier1s", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tier2s", force: :cascade do |t|
+    t.string "name"
+    t.integer "tier1_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tier1_id"], name: "index_tier2s_on_tier1_id"
+  end
+
+  create_table "tier3s", force: :cascade do |t|
+    t.string "name"
+    t.integer "tier2_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tier2_id"], name: "index_tier3s_on_tier2_id"
   end
 
   create_table "user_species_data", force: :cascade do |t|

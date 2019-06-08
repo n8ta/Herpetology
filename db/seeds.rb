@@ -5,6 +5,8 @@
 # db:seed
 # imports:regions
 
+Rake::Task['imports:taxonomy'].invoke
+
 genus = Genus.find_by(name: 'Agkistrodon')
 Species.new(name: 'Laticinctus', genus: genus).save!
 
@@ -30,3 +32,8 @@ nae = Region.new(name: "North America East")
 naw = Region.new(name: "North America West")
 nae.save!
 naw.save!
+
+Rake::Task['imports:regions'].invoke
+
+Rake::Task['imports:reddit'].invoke
+Rake::Task['imports:herpmapper'].invoke

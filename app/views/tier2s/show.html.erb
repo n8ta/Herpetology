@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tier2.name %>
+</p>
+
+<p>
+  <strong>Tier1:</strong>
+  <%= link_to @tier2.tier1.name, @tier2.tier1 %>
+</p>
+
+<ul>
+  <% @tier2.tier3s.each do | t3 | %>
+    <li><%= link_to t3.name, tier3_url(t3) %></li>
+  <% end %>
+</ul>
