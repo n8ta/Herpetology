@@ -44,13 +44,17 @@ class QuizController < ApplicationController
   end
 
   def show
-
+    puts "hit show"
     @species = @tier.species.includes(:photos).where.not(photos: {id: nil})
+    puts "start hasing"
     options = specie_hash!(@species)
+    puts "done hashing"
     correct_specie = options[1]
+    puts "correct"
     @photo = correct_specie.photos[rand(correct_specie.photos.length)]
+    puts "correct photo found"
     @options = options[0]
-
+    puts "rendering"
   end
 
   def specie_hash!(species)
@@ -58,26 +62,38 @@ class QuizController < ApplicationController
     if species.length < 6
       raise "Not enough species"
     end
+    puts 'enough species'
     len = species.length
     correct_specie = species[rand(len)]
-
+    puts 'picked correct'
     picked = [correct_specie]
+    puts 'array'
     hash_data = []
+    puts 'hash array'
     i = 0
-    while (picked.length != 6) and (i<100)
+    while (picked.length < 7) and (i<100)
       i += 1
+      puts "loop i: "+i.to_s
       trial_specie = species[rand(len)]
+      puts "trial spec"
       unless picked.include?(trial_specie)
+        puts "trial is a new species adding"
         picked.push(trial_specie)
+        puts "pushed to array"
         hash_data.push({sci_name: trial_specie.sci_name,
                         common_name: trial_specie.common_names.any? ? trial_specie.common_names[0].name : ' '})
+        puts "added to hash"
       end
     end
+    puts "done looping"
     index = rand(4)
+    puts "pick index"
     hash_data.insert(index, {sci_name: correct_specie.sci_name,
                              common_name: correct_specie.common_names.any? ? correct_specie.common_names[0].name : ' '})
+    puts "insert correct specie"
     session[:index] = index
     session[:specie_id] = correct_specie.id
+    puts "set session and return"
     return [hash_data, correct_specie] # hash, Species model
   end
 
