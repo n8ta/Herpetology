@@ -15,7 +15,7 @@ class QuizController < ApplicationController
   def index
 
     @tier1s = Tier1.all
-    @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and tier1.species.length > 6  }
+    @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and (t1.species.length > 6)  }
 
   end
 
