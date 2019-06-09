@@ -9,13 +9,13 @@ Rails.application.routes.draw do
   end
 
   root 'quiz#index'
+  get 'quiz/scoreboard.json' => 'quiz#scoreboard', as: 'scoreboard'
   get 'quiz/tier1/:tier1_id' => 'quiz#show', as: 't1quiz'
   get 'quiz/tier2/:tier2_id' => 'quiz#show', as: 't2quiz'
   get 'quiz/tier3/:tier3_id' => 'quiz#show', as: 't3quiz'
   post 'quiz/tier1/:tier1_id/guess/:guess_index' => 'quiz#guess', as: 't1quiz_guess'
   post 'quiz/tier2/:tier2_id/guess/:guess_index' => 'quiz#guess', as: 't2quiz_guess'
   post 'quiz/tier3/:tier3_id/guess/:guess_index' => 'quiz#guess', as: 't3quiz_guess'
-
 
 
 

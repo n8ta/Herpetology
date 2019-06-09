@@ -1,6 +1,18 @@
 class QuizController < ApplicationController
   before_action :set_tier, only: [:show, :guess]
 
+  def scoreboard
+    if current_user
+      ranks = [{'rank': 1, 'name': 'Nate', 'score': 142},
+               {'rank': 2, 'name': 'Avita', 'score': 134},
+               {'rank': 3, 'name': 'Kurt', 'score': 120}
+      ]
+      render :json => ranks
+    else
+      render :json, 'You must sign in'
+    end
+  end
+
   def set_tier
     @tier = nil
     if params.keys.include?("tier1_id")
@@ -15,9 +27,10 @@ class QuizController < ApplicationController
   def index
 
     @tier1s = Tier1.all
-    @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and (t1.species.includes(:photos).where.not(photos: {id: nil}).length > 6)  }
+    @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and (t1.species.includes(:photos).where.not(photos: {id: nil}).length > 6)}
 
   end
+
   def guess
     species = @tier.species.includes(:photos).where.not(photos: {id: nil})
     specie_m = Species.find(session[:specie_id])
@@ -61,7 +74,7 @@ class QuizController < ApplicationController
     picked = [correct_specie]
     hash_data = []
     i = 0
-    while (picked.length < 7) and (i<100)
+    while (picked.length < 7) and (i < 100)
       i += 1
       trial_specie = species[rand(len)]
       unless picked.include?(trial_specie)

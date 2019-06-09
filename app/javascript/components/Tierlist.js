@@ -47,8 +47,6 @@ class Tierlist extends React.Component {
                 <h3>Failed to load subregions, try reloading?</h3>
             );
         } else {
-            console.log('ready');
-            console.log(this.state)
             let subregions = [];
             for (let i = 0; i < this.state.tier2s.length; i ++) {
                 let t2 = this.state.tier2s[i];
