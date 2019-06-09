@@ -1,4 +1,5 @@
 .env
+config/credentials.ymc.enc
 .DS_Store
 public/uploads
 public/uploads/tmp

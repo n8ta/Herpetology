@@ -16,6 +16,9 @@
 
 <navbar>
   <a href="/"><h1>SnakeID <%= ENV['snakeid_version'] %></h1></a>
+  <% if current_user %>
+    <%= react_component('Scoreboard', {'id': current_user.id}) %>
+  <% end %>
 </navbar>
 
 <%= yield %>
