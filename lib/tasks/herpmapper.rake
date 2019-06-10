@@ -7,7 +7,7 @@ namespace :imports do
     base_urls.each do |base_url|
       page = 0
       response = HTTParty.get(base_url + page.to_s)
-      while (response.code == 200) and (page < 4)
+      while (response.code == 200) and (page < 1000)
         html = Nokogiri::HTML(response.body)
         table = html.xpath(".//div[@id='content']").xpath('.//table').xpath(".//tr").each do |row|
           puts " --- new --- "
