@@ -1,8 +1,8 @@
 <% if @tier.class.name == "Tier1" %>
-  <h2><%= @tier.name.titleize %></h2>
+  <h2><%= link_to @taxon.common_names[0], quiz_taxon_path(@taxon) %> > <%= @tier.name.titleize %></h2>
 <% elsif @tier.class.name == "Tier2" %>
   <h2>
-    <%= link_to @taxon.name, quiz_taxon_path(@taxon) %> >
+    <%= link_to @taxon.common_names[0], quiz_taxon_path(@taxon) %> >
     <%= link_to @tier.tier1.name.titleize, t1_taxon_quiz_path(@taxon,@tier.tier1) %> > <%= @tier.name.titleize %></h2>
 <% end %>
 
