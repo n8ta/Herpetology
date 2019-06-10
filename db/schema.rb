@@ -13,72 +13,48 @@
 ActiveRecord::Schema.define(version: 2019_06_08_005816) do
 
   create_table "common_names", force: :cascade do |t|
-    t.integer "species_id", null: false
+    t.integer "taxon_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name", "species_id"], name: "index_common_names_on_name_and_species_id", unique: true
-    t.index ["species_id"], name: "index_common_names_on_species_id"
-  end
-
-  create_table "families", force: :cascade do |t|
-    t.string "name"
-    t.integer "superfamily_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["superfamily_id"], name: "index_families_on_superfamily_id"
-  end
-
-  create_table "genera", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "family_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["family_id"], name: "index_genera_on_family_id"
+    t.index ["name", "taxon_id"], name: "index_common_names_on_name_and_taxon_id", unique: true
+    t.index ["taxon_id"], name: "index_common_names_on_taxon_id"
   end
 
   create_table "photos", force: :cascade do |t|
-    t.integer "species_id", null: false
+    t.integer "taxon_id", null: false
     t.string "image_path", null: false
     t.string "original_url"
     t.bigint "seen", default: 0, null: false
     t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["original_url"], name: "index_photos_on_original_url", unique: true
-    t.index ["species_id"], name: "index_photos_on_species_id"
+    t.index ["taxon_id"], name: "index_photos_on_taxon_id"
   end
 
-  create_table "species", force: :cascade do |t|
-    t.integer "genus_id"
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["genus_id"], name: "index_species_on_genus_id"
-  end
-
-  create_table "species_tier1s", id: false, force: :cascade do |t|
-    t.integer "species_id", null: false
-    t.integer "tier1_id", null: false
-    t.index ["species_id", "tier1_id"], name: "index_species_tier1s_on_species_id_and_tier1_id"
-  end
-
-  create_table "species_tier2s", id: false, force: :cascade do |t|
-    t.integer "species_id", null: false
-    t.integer "tier2_id", null: false
-    t.index ["species_id", "tier2_id"], name: "index_species_tier2s_on_species_id_and_tier2_id"
-  end
-
-  create_table "species_tier3s", id: false, force: :cascade do |t|
-    t.integer "species_id", null: false
-    t.integer "tier3_id", null: false
-    t.index ["species_id", "tier3_id"], name: "index_species_tier3s_on_species_id_and_tier3_id"
-  end
-
-  create_table "superfamilies", force: :cascade do |t|
+  create_table "taxons", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "taxon_id"
+    t.integer "rank"
+    t.index ["taxon_id"], name: "index_taxons_on_taxon_id"
+  end
+
+  create_table "taxons_tier1s", id: false, force: :cascade do |t|
+    t.integer "taxon_id", null: false
+    t.integer "tier1_id", null: false
+    t.index ["taxon_id", "tier1_id"], name: "index_taxons_tier1s_on_taxon_id_and_tier1_id", unique: true
+  end
+
+  create_table "taxons_tier2s", id: false, force: :cascade do |t|
+    t.integer "taxon_id", null: false
+    t.integer "tier2_id", null: false
+    t.index ["taxon_id", "tier2_id"], name: "index_taxons_tier2s_on_taxon_id_and_tier2_id", unique: true
+  end
+
+  create_table "taxons_tier3s", id: false, force: :cascade do |t|
+    t.integer "taxon_id", null: false
+    t.integer "tier3_id", null: false
+    t.index ["taxon_id", "tier3_id"], name: "index_taxons_tier3s_on_taxon_id_and_tier3_id", unique: true
   end
 
   create_table "tier1s", force: :cascade do |t|
@@ -103,16 +79,16 @@ ActiveRecord::Schema.define(version: 2019_06_08_005816) do
     t.index ["tier2_id"], name: "index_tier3s_on_tier2_id"
   end
 
-  create_table "user_species_data", force: :cascade do |t|
-    t.integer "species_id", null: false
+  create_table "user_taxon_data", force: :cascade do |t|
+    t.integer "taxon_id", null: false
     t.integer "user_id", null: false
     t.bigint "seen", default: 0, null: false
     t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["species_id"], name: "index_user_species_data_on_species_id"
-    t.index ["user_id", "species_id"], name: "index_user_species_data_on_user_id_and_species_id", unique: true
-    t.index ["user_id"], name: "index_user_species_data_on_user_id"
+    t.index ["taxon_id"], name: "index_user_taxon_data_on_taxon_id"
+    t.index ["user_id", "taxon_id"], name: "index_user_taxon_data_on_user_id_and_taxon_id", unique: true
+    t.index ["user_id"], name: "index_user_taxon_data_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

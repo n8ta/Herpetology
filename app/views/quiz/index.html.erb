@@ -1,10 +1,6 @@
-<H1>Pick your region:</H1>
-
-<% unless current_user %>
-  <p>You must be <a href="/users/sign_up">signed up</a> if you want statics on your accuracy. <br/>
-    Choose a region and you will be quizzed on identifying snakes from that region.</p>
-<% end %>
-<div><%= link_to Tier1.find_by(name: "United States of America").name, t1quiz_path(Tier1.find_by(name: "United States of America"))  %></div>
-<% @tier1s.each do |t1| %>
-  <div><%= link_to t1.name, t1quiz_path(t1) %></div>
-<% end %>
+<h2>Pick your Taxon</h2>
+<ul>
+  <% @taxons.each do |txn| %>
+    <li><%= link_to txn.common_names[0].name, quiz_taxon_path(txn) %></li>
+  <% end %>
+</ul>

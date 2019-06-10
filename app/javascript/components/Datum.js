@@ -15,7 +15,7 @@ class Datum extends React.Component {
             image_path: "",
         };
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
-        fetch('/user_species_data/' + this.props.species_id + '.json', {
+        fetch('/user_taxon_data/' + this.props.species_id + '.json', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

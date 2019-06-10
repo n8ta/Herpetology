@@ -1,14 +1,14 @@
 <% if @tier.class.name == "Tier1" %>
   <h2><%= @tier.name.titleize %></h2>
 <% elsif @tier.class.name == "Tier2" %>
-  <h2><%= link_to @tier.tier1.name.titleize, t1quiz_path(@tier.tier1) %> > <%= @tier.name.titleize %></h2>
+  <h2><%= link_to @tier.tier1.name.titleize, t1_taxon_quiz_path(@taxon,@tier.tier1) %> > <%= @tier.name.titleize %></h2>
 <% end %>
 
 <% if @tier.class.name == "Tier1" %>
-  <%= react_component('Tierlist', {id: @tier.id}) %>
+  <%= react_component('Tierlist', {taxon_id: @taxon.id, id: @tier.id}) %>
 <% end %>
 
-<p>Currently we have <%= @species.length %> species in this region with photos and <%= @tier.species.length %> total</p>
+<p>Currently we have <%= @species.length %> species in this region with photos and <%= @tier.taxons.species.length %> total</p>
 <hr>
 <%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
                                       options: @options}) %>

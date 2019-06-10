@@ -1,8 +1,9 @@
-class CreateSuperfamilies < ActiveRecord::Migration[5.2]
+class CreateTaxons < ActiveRecord::Migration[5.2]
   def change
-    create_table :superfamilies do |t|
+    create_table :taxons do |t|
       t.string :name
-      t.timestamps
+      t.references :taxon, foreign_key: true
+      t.integer :rank
     end
   end
 end

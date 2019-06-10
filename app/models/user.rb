@@ -7,6 +7,6 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :encrypted_password, presence: true
 
-  has_and_belongs_to_many :user_species_data
+  has_and_belongs_to_many :user_taxon_data
 
 end

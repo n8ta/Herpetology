@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SnakeID</title>
-  <meta name="description" value="SnakeID teaches people to identify snakes">
+  <title>HerpID</title>
+  <meta name="description" value="HerpID teaches people to identify snakes">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -15,10 +15,10 @@
 <%= flash[:alert] %>
 
 <navbar>
-  <a href="/"><h1>SnakeID <%= ENV['snakeid_version'] %></h1></a>
-  <% if current_user %>
-    <%= react_component('Scoreboard', {'id': current_user.id}) %>
-  <% end %>
+  <a href="/"><h1>HerpID <%= ENV['herpid_version'] %></h1></a>
+  <%# if current_user %>
+    <%#= react_component('Scoreboard', {'id': current_user.id}) %>
+  <%# end %>
 </navbar>
 
 <%= yield %>
@@ -31,7 +31,7 @@
     <p><a href="/users/sign_up">Sign Up</a> <a href="/users/sign_in">Sign In</a></p>
   <% end %>
 
-  <p>SnakeID <%= ENV['snakeid_version'] %> Alpha</br>
+  <p>HerpID <%= ENV['herpid_version'] %> Alpha</br>
     This is an alpha and as such everything is up in the air.
     <br/>An open source project @ <a href="https://github.com/n8ta/SnakeID">github.com/n8ta/SnakeID</a>
     <br/>Report any bugs or cool feature ideas on github</p>

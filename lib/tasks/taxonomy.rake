@@ -1,90 +1,102 @@
+require 'json'
+
 namespace :imports do
-  desc "Import taxonomy from html file"
-
-  debug = true
-  unless debug
-    def puts(text)
-    end
-  end
-
-  # Imports data from https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
-  # to build out the taxonomy
-
+  desc "Download herpmapper taxonomy"
   task taxonomy: :environment do
-    text = IO.read(Rails.root.join('lib', 'tasks', 'assets', 'taxonomy.html'))
-    html_doc = Nokogiri::HTML(text)
 
-    super_families = html_doc.xpath("//a[@title='superfamily']").map {|link| link.parent} # go from the <a> -> <li>
+    puts "Import herpmapper taxonomy from lib/tasks/assets/taxons.json"
+    Taxon.destroy_all
 
-    puts 'Superfamilies: ' + super_families.length.to_s
-
-    super_families.each do |superfamily|
-
-      super_family_name = superfamily.xpath("a[@title='superfamily']").xpath('./strong').text
-      sfm = Superfamily.new(name: super_family_name)
-      sfm.save!
-      puts 'Superfamily: ' + super_family_name.to_s
-
-      families = superfamily.xpath(".//a[@title='family']").map {|fam| fam.parent}
-      puts "Families: " + families.length.to_s
-
-      families.each do |family|
-
-        family_name = family.xpath("a[@title='family']").xpath('./strong').text
-        fm = Family.new(name: family_name, superfamily: sfm)
-        fm.save!
-        puts '  Family: ' + family_name.to_s
-
-        genera = family.xpath(".//a[@title='genus']").map {|link| link.parent}
-        puts '  Genera: ' + genera.length.to_s
-        genera.each do |genus|
+    file = File.open(Rails.root.join('lib', 'tasks', 'assets', 'taxons.json'), 'r')
+    json = JSON.parse file.read()
+    x = 1
 
 
-          genus_name = genus.xpath("a[@title='genus']").xpath('./strong').text
-          # puts '    Genus: ' + genus_name.to_s
-          gm = Genus.new(name: genus_name, family: fm)
-          gm.save!
+    roots = []
+    families = []
+    genera = []
+    species = []
 
-          species = genus.xpath(".//a[@title='species']").map {|link| link.parent}
-          # puts '    Species: ' + species.length.to_s
+    # key: 'name'
+    # val: [common_name, parent_name, rank]
+    json.each do |key, val|
+      common_name = val[0]
+      parent = val[1]
+      rank = val[2]
+      if rank == "root"
+        roots << [key, common_name, parent]
+      elsif rank == "family"
+        families << [key, common_name, parent]
+      elsif rank == "genus"
+        genera << [key, common_name, parent]
+      elsif rank == "species"
+        species << [key, common_name, parent]
+      end
+    end
 
-          species.each do |specie| ## We really need a singular for species....
-            specie_name = specie.xpath("a[@title='species']").xpath('./strong').text.split("\n").join(" ").split(" ").join(" ")
-            if specie_name.split(" ")[0] == genus_name
-              specie_name = specie_name.split(" ")[1]
-              specie_name = specie_name+" "+specie_name.split(" ")[2] if specie_name.split(" ").length == 3
-            end
-            specie_name = specie_name.downcase.capitalize
 
-            begin
-              sm = Species.new(name: specie_name, genus: gm)
-              sm.save!
-            rescue
-              y = 2
-            end
+    # [name, common_name, parent]
+    puts "starting root herps"
+    roots.each do | root |
+      root_m = Taxon.new(name: root[0], rank: "root")
+      root_m.save
+      begin
+      cn_m = CommonName.new(taxon: root_m, name: root[1])
+      cn_m.save!
+      rescue => error
+        puts "bad common name "
+      end
+    end
 
-            text = specie.text
+    puts "starting families"
+    families.each do | fam |
+      fam_m = Taxon.new(name: fam[0], rank: "family", taxon: Taxon.find_by(name: fam[2]))
+      fam_m.save
+      begin
+        cn_m = CommonName.new(taxon: fam_m, name: fam[1])
+        cn_m.save
+      rescue => error
+        puts "bad common name "
+        puts fam.inspect
+        puts "  error: " + error.to_s
+        puts "  trace: "+ error.backtrace.to_s
+      end
+    end
 
-            begin
-
-              if text.include?("(")
-                common_name = text.split("(")[1].split(")")[0].split("\n").join(" ").split(" ").join(" ")
-                cnm = CommonName.new(name: common_name, species: sm)
-                cnm.save!
-              end
-            rescue
-              # so it goes
-            end
-
-          end
-
-        end
+    puts "starting genuses"
+    genera.each do | genus |
+      genus_m = Taxon.new(name: genus[0], rank: "genus", taxon: Taxon.find_by(name: genus[2]))
+      genus_m.save
+      begin
+        cn_m = CommonName.new(taxon: genus_m, name: genus[1])
+        cn_m.save
+      rescue => error
+        puts "bad common name "
+        puts genus.inspect
+        puts "  error: " + error.to_s
+        puts "  trace: "+ error.backtrace.to_s
 
       end
-
-
     end
-    puts 'done'
-    x = 1
+
+    puts "starting species"
+    species.each do | specie |
+      specie_m = Taxon.new(name: specie[0], rank: "species", taxon: Taxon.find_by(name: specie[2]))
+      specie_m.save
+      begin
+        cn_m = CommonName.new(taxon: specie_m, name: specie[1])
+        cn_m.save
+      rescue => error
+        puts "bad common name "
+        puts species.inspect
+        puts "  error: " + error.to_s
+        puts "  trace: "+ error.backtrace.to_s
+
+      end
+    end
+
+    puts "Done importing taxonomy from herpmapper (local cache)"
+
+
   end
 end

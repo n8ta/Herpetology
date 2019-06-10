@@ -1,24 +1,11 @@
-def find_species(genus_txt, species_txt)
-  ### Search models for the genus / species pair
-  genus = Genus.where('lower(name) = ?', genus_txt.downcase).first
-  species = genus.species.find_by('lower(name) = ?', species_txt.downcase)
-
-  if species.nil?
-    puts '  failed on: ' + genus_txt + ' ' + species_txt
-    raise
-  end
-  return species
-end
-
 namespace :imports do
 
   desc "Import photos from herpmapper"
   task herpmapper: :environment do
 
-    page = 101
-    require 'net/http'
-    response = Net::HTTP.get_response('www.herpmapper.org', '/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
-    while (response.code == "200") and (page < 102)
+    page = 105
+    response = HTTParty.get('https://www.herpmapper.org/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
+    while (response.code == 200) and (page < 110)
       html = Nokogiri::HTML(response.body)
       table = html.xpath(".//div[@id='content']").xpath('.//table').xpath(".//tr").each do |row|
         puts " --- new --- "
@@ -44,25 +31,23 @@ namespace :imports do
           puts "tier2: "+tier2_m.inspect
           puts "tier3: "+tier3_m.inspect
 
-          # Find species/genus
+          # Find species taxon model
 
           links = row.xpath('.//a')
           sci_name = links[2].text.split(" ").join(" ").split("\n").join(" ")
-          split = sci_name.split(" ")
-          species_name = split[1].titleize
-          genus_name = split[0].titleize
-          species_model = find_species(genus_name, species_name)
 
+          puts sci_name
+          species_model = Taxon.all.species.find_by(name: sci_name.titleize)
 
           # Add to all regions that we could identify, rescue in case it's already marked for that region
           begin
             unless tier3_m.nil?
-              tier3_m.species << species_model
+              tier3_m.taxons << species_model
             end
             unless tier2_m.nil?
-              tier2_m.species << species_model
+              tier2_m.taxons << species_model
             end
-            tier1_m.species << species_model
+            tier1_m.taxons << species_model
 
           rescue
           end
@@ -82,7 +67,7 @@ namespace :imports do
             file.binmode
             file.write(data)
           end
-          photo = Photo.new(species: species_model)
+          photo = Photo.new(taxon: species_model)
           photo.image_path = Pathname.new(file_path).open
           photo.original_url = full_image_path
           photo.save!
@@ -98,7 +83,7 @@ namespace :imports do
 
       end
       page += 1
-      response = Net::HTTP.get('https://www.herpmapper.org', '/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
+      response = HTTParty.get('https://www.herpmapper.org/records?taxon=Serpentes&deceased=no&p=' + page.to_s)
     end
   end
 end

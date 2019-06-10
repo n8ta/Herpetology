@@ -13,7 +13,7 @@ class Tierlist extends React.Component {
 
     load() {
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
-        fetch( '/tier1s/' + this.props.id+'.json', {
+        fetch( '/taxons/' + this.props.taxon_id + '/tier1s/' + this.props.id+'.json', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -64,6 +64,7 @@ class Tierlist extends React.Component {
 }
 
 Tierlist.propTypes = {
-    id: PropTypes.number
+    id: PropTypes.number,
+    taxon_id: PropTypes.number
 };
 export default Tierlist

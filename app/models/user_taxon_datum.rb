@@ -1,5 +1,5 @@
-class UserSpeciesDatum < ApplicationRecord
-  belongs_to :species
+class UserTaxonDatum < ApplicationRecord
+  belongs_to :taxon
   belongs_to :user
   def guess_correct
     self.correct += 1

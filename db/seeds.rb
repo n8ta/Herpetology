@@ -28,6 +28,7 @@ Species.new(name: 'Ameonus', genus: genus).save!
 genus = Genus.find_by(name: 'Dendrelaphis')
 Species.new(name: 'Inornatus', genus: genus).save!
 
-Rake::Task['imports:common_names'].invoke
+# Rake::Task['imports:common_names'].invoke
 Rake::Task['imports:geography'].invoke
+Rake::Task['imports:taxonomy'].invoke
 Rake::Task['imports:herpmapper'].invoke
