@@ -16,8 +16,8 @@ class QuizController < ApplicationController
 
   def taxon
     # @tier1s = Tier1.all.select { |t1| t1.taxons.includes(:photos).where.not(photos: {id: nil}).length > 6 }
-
-    @tier1s = Tier1.all
+    @tier1s = Tier1.all.select { |t1| t1.taxons.species.select { |sp| sp.num_photos > 0 and sp.root == @taxon  }.count > 6 and t1.name != "United States of America" }
+    # @tier1s = Tier1.all.select { |t1| t1.taxons.species.select{|tx| tx.root == @taxon }.includes(:photos).where.not(photos: {id: nil}).length > 6}
     # @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and }
 
   end
@@ -28,7 +28,7 @@ class QuizController < ApplicationController
   end
 
   def guess
-    species = @tier.taxons.species.includes(:photos).where.not(photos: {id: nil})
+    species = @tier.taxons.species.select{ |sp| sp.num_photos > 0 and sp.root == @taxon }
     specie_m = Taxon.all.species.find(session[:specie_id])
     correct = session[:index].to_s == params['guess_index'].to_s
     old_index = session[:index]
@@ -53,7 +53,7 @@ class QuizController < ApplicationController
 
   def show
 
-    @species = @tier.taxons.includes(:photos).where.not(photos: {id: nil})
+    @species = @tier.taxons.species.select{ |sp| sp.num_photos > 0 and sp.root == @taxon }
     options = specie_hash(@species)
     correct_specie = options[1]
     @photo = correct_specie.photos[rand(correct_specie.photos.length)]

@@ -10,7 +10,15 @@ class Taxon < ApplicationRecord
   scope :families, -> { where(rank: :family) }
   scope :roots, -> { where(rank: :root) }
 
+  def num_photos
+    self.photos.count
+  end
+
   before_create :title
+
+  def root
+    taxon.nil? ? self : self.taxon.root
+  end
 
   def title
     self.name = self.name.titleize

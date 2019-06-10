@@ -38,7 +38,7 @@ namespace :imports do
     # [name, common_name, parent]
     puts "starting root herps"
     roots.each do | root |
-      root_m = Taxon.new(name: root[0], rank: "root")
+      root_m = Taxon.new(name: root[0], rank: "root", taxon: Taxon.find_by(name: root[2]))
       root_m.save
       begin
       cn_m = CommonName.new(taxon: root_m, name: root[1])
@@ -50,7 +50,7 @@ namespace :imports do
 
     puts "starting families"
     families.each do | fam |
-      fam_m = Taxon.new(name: fam[0], rank: "family", taxon: Taxon.find_by(name: fam[2]))
+      fam_m = Taxon.new(name: fam[0], rank: "family", taxon: Taxon.find_by(name: fam[2].titleize))
       fam_m.save
       begin
         cn_m = CommonName.new(taxon: fam_m, name: fam[1])
@@ -65,7 +65,7 @@ namespace :imports do
 
     puts "starting genuses"
     genera.each do | genus |
-      genus_m = Taxon.new(name: genus[0], rank: "genus", taxon: Taxon.find_by(name: genus[2]))
+      genus_m = Taxon.new(name: genus[0], rank: "genus", taxon: Taxon.find_by(name: genus[2].titleize))
       genus_m.save
       begin
         cn_m = CommonName.new(taxon: genus_m, name: genus[1])
@@ -81,7 +81,7 @@ namespace :imports do
 
     puts "starting species"
     species.each do | specie |
-      specie_m = Taxon.new(name: specie[0], rank: "species", taxon: Taxon.find_by(name: specie[2]))
+      specie_m = Taxon.new(name: specie[0], rank: "species", taxon: Taxon.find_by(name: specie[2].titleize))
       specie_m.save
       begin
         cn_m = CommonName.new(taxon: specie_m, name: specie[1])

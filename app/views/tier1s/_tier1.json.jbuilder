@@ -3,7 +3,7 @@ json.extract! tier1, :id, :name
 
 @taxon = Taxon.find(params[:taxon_id])
 
-json.tier2s tier1.tier2s_with_6_photographed_species.each do |t2|
+json.tier2s tier1.tier2s_with_6_photographed_species_for_taxon(@taxon).each do |t2|
   json.id t2.id
   json.name t2.name
   json.url taxon_tier2_url(@taxon, t2.id, format: :json)
