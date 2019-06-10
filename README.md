@@ -10,12 +10,11 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - When variables are in an order use next and prev as prefixes.
 
 # Todo:
+- Figure out how to load all the herpmapper photos from a downloaded version so I don't have to keep re'dl'ing them
 - Sort out very slow query in tier1.rb to find tier2s with > 6 photograped species
 - Implement points based on number of species in tier
 - Daily scoreboard
 - All time most accurate
-- Properly handle when there is no common name
-- Improve region picking 
 - Variable zoom on zoom-in feature 
 - Ruby version in gemfile
 - Style this shit
@@ -26,6 +25,9 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Fit Splines
 
 # Done:
+- Properly handle when there is no common name (June 10, 2019)
+  - Herpmapper had common names for all their species
+- Improve region picking (June 10, 2019)
 - Fix whatever in quiz#show is looping (appears to be database related, doesn't happen with sqlite but does with mysql)
   - Turned out to be duplicates the tier-species join table (20k entires crashed everything) after removing the dupes all is well
   - https://www.n8ta.com/guides/unique-constraint-with-existing-data-rails 
