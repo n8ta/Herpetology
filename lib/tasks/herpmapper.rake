@@ -68,6 +68,7 @@ namespace :imports do
               file.binmode
               file.write(data)
             end
+
             photo = Photo.new(taxon: species_model)
             photo.image_path = Pathname.new(file_path).open
             photo.original_url = full_image_path
