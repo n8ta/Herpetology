@@ -1,13 +1,17 @@
 class Taxon < ApplicationRecord
   belongs_to :taxon, optional: true
+  belongs_to :taxon, class_name: 'Taxon', :foreign_key => :root_taxon_id, optional: true
+
+
   has_many :taxons
   has_many :common_names
   has_many :photos
-  enum rank: [:root,:family,:genus,:species]
+  enum rank: [:root,:family,:subfamily,:genus,:species]
 
   scope :species, -> { where(rank: :species) }
   scope :genera, -> { where(rank: :genus) }
   scope :families, -> { where(rank: :family) }
+  scope :subfamilies, -> { where(rank: :subfamilies) }
   scope :roots, -> { where(rank: :root) }
 
   def num_photos

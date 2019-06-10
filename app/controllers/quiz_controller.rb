@@ -15,10 +15,7 @@ class QuizController < ApplicationController
   end
 
   def taxon
-    # @tier1s = Tier1.all.select { |t1| t1.taxons.includes(:photos).where.not(photos: {id: nil}).length > 6 }
     @tier1s = Tier1.all.select { |t1| t1.taxons.species.select { |sp| sp.num_photos > 0 and sp.root == @taxon  }.count > 6 and t1.name != "United States of America" }
-    # @tier1s = Tier1.all.select { |t1| t1.taxons.species.select{|tx| tx.root == @taxon }.includes(:photos).where.not(photos: {id: nil}).length > 6}
-    # @tier1s = @tier1s.select {|t1| (t1.name != "United States of America") and }
 
   end
 

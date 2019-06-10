@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_08_005816) do
+ActiveRecord::Schema.define(version: 2019_06_10_214524) do
 
   create_table "common_names", force: :cascade do |t|
     t.integer "taxon_id", null: false
@@ -24,9 +24,8 @@ ActiveRecord::Schema.define(version: 2019_06_08_005816) do
   create_table "photos", force: :cascade do |t|
     t.integer "taxon_id", null: false
     t.string "image_path", null: false
-    t.string "original_url"
-    t.bigint "seen", default: 0, null: false
-    t.bigint "correct", default: 0, null: false
+    t.integer "seen", default: 0, null: false
+    t.integer "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["taxon_id"], name: "index_photos_on_taxon_id"
@@ -36,6 +35,7 @@ ActiveRecord::Schema.define(version: 2019_06_08_005816) do
     t.string "name"
     t.integer "taxon_id"
     t.integer "rank"
+    t.integer "root_taxon_id"
     t.index ["taxon_id"], name: "index_taxons_on_taxon_id"
   end
 
