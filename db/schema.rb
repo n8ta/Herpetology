@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_06_10_214524) do
     t.string "name"
     t.integer "taxon_id"
     t.integer "rank"
-    t.integer "root_taxon_id"
+    t.bigint "root_taxon_id"
     t.index ["taxon_id"], name: "index_taxons_on_taxon_id"
   end
 
