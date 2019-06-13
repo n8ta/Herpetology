@@ -7,12 +7,14 @@ namespace :imports do
     Dir.entries(base).each do |species_dir|
       next if species_dir == "." or species_dir == ".."
       name = species_dir.titleize
-      specie = Taxon.find_by(name: name.titleize)
+      specie = Taxon.find_by(name: name)
       Dir.entries(base + species_dir).each do |photo_name|
         next if photo_name == "." or photo_name == ".."
         photo = Photo.new(taxon: specie)
         path = base + species_dir + '/' + photo_name
         photo.image_path = Pathname.new(path).open
+        puts species_dir
+        puts photo_name
         puts photo.inspect
         puts specie.inspect
         photo.save!
