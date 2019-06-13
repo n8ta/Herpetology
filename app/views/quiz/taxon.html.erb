@@ -4,7 +4,6 @@
   <p>You must be <a href="/users/sign_up">signed up</a> if you want statics on your accuracy. <br/>
     Choose a region and you will be quizzed on identifying snakes from that region.</p>
 <% end %>
-<div><%= link_to Tier1.find_by(name: "United States of America").name, t1_taxon_quiz_path(@taxon,Tier1.find_by(name: "United States of America"))  %></div>
 <% @tier1s.each do |t1| %>
   <div><%= link_to t1.name, t1_taxon_quiz_path(@taxon,t1) %></div>
 <% end %>

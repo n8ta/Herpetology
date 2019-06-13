@@ -15,7 +15,7 @@ class QuizController < ApplicationController
   end
 
   def taxon
-    @tier1s = Tier1.all.select { |t1| t1.taxons.species.select { |sp| sp.num_photos > 0 and sp.root == @taxon  }.count > 6 and t1.name != "United States of America" }
+    @tier1s = Tier1.all.select { |t1| t1.taxons.species.select { |sp| sp.num_photos > 0 and sp.root == @taxon  }.count > 6 }
 
   end
 
