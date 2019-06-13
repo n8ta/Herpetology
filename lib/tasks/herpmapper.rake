@@ -13,6 +13,8 @@ namespace :imports do
         photo = Photo.new(taxon: specie)
         path = base + species_dir + '/' + photo_name
         photo.image_path = Pathname.new(path).open
+        puts photo.inspect
+        puts specie.inspect
         photo.save!
         done += 1
       end
