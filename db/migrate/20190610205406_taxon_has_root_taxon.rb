@@ -1,7 +1,7 @@
 class TaxonHasRootTaxon < ActiveRecord::Migration[5.2]
   def up
     # add_column :taxons, :root_taxon_id, :integer
-    add_foreign_key :taxons, :taxons, column: :root_taxon_id
+    add_foreign_key :taxons, :taxons,  column: :root_taxon_id, type: :bigint
 
     # Taxon.all.each do |txn|
     #   txn.root_taxon = txn.root
