@@ -2,7 +2,7 @@ namespace :imports do
 
   desc "Import photos from herpmapper"
   task herpmapper: :environment do
-    base = '/herp/species/'
+    base = '/Users/n8ta/Desktop/herp/species/'
     done = 0
     Dir.entries(base).each do |species_dir|
       next if species_dir == "." or species_dir == ".."
