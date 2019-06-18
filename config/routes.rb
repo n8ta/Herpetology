@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   post 'quiz/taxon/:taxon_id/tier2/:tier2_id/guess/:guess_index' => 'quiz#guess', as: 't2_taxon_quiz_guess'
   post 'quiz/taxon/:taxon_id/tier3/:tier3_id/guess/:guess_index' => 'quiz#guess', as: 't3_taxon_quiz_guess'
 
-
   resources :taxons do
     resources :tier1s
     resources :tier2s

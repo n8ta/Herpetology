@@ -70,6 +70,20 @@ class QuizController < ApplicationController
       i += 1
       trial_specie = species[rand(len)]
       unless picked.include?(trial_specie)
+
+        if current_user
+          data = UserTaxonDatum.find_or_create_by(user: current_user, taxon: trial_specie)
+
+          if data.seen != 0
+            if (rand(1000).to_f/1000) < [data.correct/data.seen,0.85].min
+              next
+            end
+            # skip with probability 1-ratio, with ratio capped at .85
+          end
+
+
+        end
+
         picked.push(trial_specie)
         hash_data.push({sci_name: trial_specie.name,
                         common_name: trial_specie.common_names.any? ? trial_specie.common_names[0].name : ' '})
