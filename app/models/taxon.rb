@@ -7,6 +7,7 @@ class Taxon < ApplicationRecord
   has_many :taxons
   has_many :common_names
   has_many :photos
+
   enum rank: [:root,:family,:subfamily,:genus,:species]
 
   scope :species, -> { where(rank: :species) }

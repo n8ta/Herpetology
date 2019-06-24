@@ -3,6 +3,7 @@ class QuizController < ApplicationController
   before_action :set_region, only: [:game, :guess]
 
   def pick_region
+      @regions = Region.countries.select { |reg| reg.taxons.species.select{ |sp| sp.root_taxon_id = @taxon.id && sp.photos.any? } .count > 6 }
   end
 
   def scoreboard

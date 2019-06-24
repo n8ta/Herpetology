@@ -5,13 +5,13 @@ namespace :imports do
     base = '/Users/n8ta/Desktop/herp/species/'
     done = 0
     Dir.entries(base).each do |species_dir|
-      next if species_dir == "." or species_dir == ".."
+      next if species_dir == "." or species_dir == ".." or species_dir == ".DS_Store"
       name = species_dir.titleize
       begin
         specie = Taxon.find_by(name: name)
         Dir.entries(base + species_dir).each do |photo_name|
           begin
-            next if photo_name == "." or photo_name == ".."
+            next if photo_name == "." or photo_name == ".." or species_dir == ".DS_Store"
             photo = Photo.new(taxon: specie)
             path = base + species_dir + '/' + photo_name
             photo.image_path = Pathname.new(path).open
