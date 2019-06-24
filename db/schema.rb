@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_10_214524) do
+ActiveRecord::Schema.define(version: 2019_06_24_041041) do
 
-  create_table "common_names", force: :cascade do |t|
-    t.integer "taxon_id", null: false
+  create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "taxon_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -21,67 +21,51 @@ ActiveRecord::Schema.define(version: 2019_06_10_214524) do
     t.index ["taxon_id"], name: "index_common_names_on_taxon_id"
   end
 
-  create_table "photos", force: :cascade do |t|
-    t.integer "taxon_id", null: false
+  create_table "photos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "taxon_id", null: false
     t.string "image_path", null: false
-    t.integer "seen", default: 0, null: false
-    t.integer "correct", default: 0, null: false
+    t.bigint "seen", default: 0, null: false
+    t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["taxon_id"], name: "index_photos_on_taxon_id"
   end
 
-  create_table "taxons", force: :cascade do |t|
+  create_table "regions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.integer "taxon_id"
+    t.bigint "region_id"
+    t.index ["region_id"], name: "index_regions_on_region_id"
+  end
+
+  create_table "regions_taxons", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "region_id", null: false
+    t.bigint "taxon_id", null: false
+    t.index ["taxon_id", "region_id"], name: "index_regions_taxons_on_taxon_id_and_region_id", unique: true
+  end
+
+  create_table "taxons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.bigint "taxon_id"
     t.integer "rank"
     t.bigint "root_taxon_id"
+    t.index ["root_taxon_id"], name: "fk_rails_795ac0b1ff"
     t.index ["taxon_id"], name: "index_taxons_on_taxon_id"
   end
 
-  create_table "taxons_tier1s", id: false, force: :cascade do |t|
-    t.integer "taxon_id", null: false
-    t.integer "tier1_id", null: false
-    t.index ["taxon_id", "tier1_id"], name: "index_taxons_tier1s_on_taxon_id_and_tier1_id", unique: true
-  end
-
-  create_table "taxons_tier2s", id: false, force: :cascade do |t|
-    t.integer "taxon_id", null: false
-    t.integer "tier2_id", null: false
-    t.index ["taxon_id", "tier2_id"], name: "index_taxons_tier2s_on_taxon_id_and_tier2_id", unique: true
-  end
-
-  create_table "taxons_tier3s", id: false, force: :cascade do |t|
-    t.integer "taxon_id", null: false
-    t.integer "tier3_id", null: false
-    t.index ["taxon_id", "tier3_id"], name: "index_taxons_tier3s_on_taxon_id_and_tier3_id", unique: true
-  end
-
-  create_table "tier1s", force: :cascade do |t|
-    t.string "name"
+  create_table "tips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.text "content"
+    t.bigint "taxon_id"
+    t.boolean "approved", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["taxon_id"], name: "index_tips_on_taxon_id"
+    t.index ["user_id"], name: "index_tips_on_user_id"
   end
 
-  create_table "tier2s", force: :cascade do |t|
-    t.string "name"
-    t.integer "tier1_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tier1_id"], name: "index_tier2s_on_tier1_id"
-  end
-
-  create_table "tier3s", force: :cascade do |t|
-    t.string "name"
-    t.integer "tier2_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tier2_id"], name: "index_tier3s_on_tier2_id"
-  end
-
-  create_table "user_taxon_data", force: :cascade do |t|
-    t.integer "taxon_id", null: false
-    t.integer "user_id", null: false
+  create_table "user_taxon_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "taxon_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "seen", default: 0, null: false
     t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
@@ -91,7 +75,7 @@ ActiveRecord::Schema.define(version: 2019_06_10_214524) do
     t.index ["user_id"], name: "index_user_taxon_data_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -100,8 +84,17 @@ ActiveRecord::Schema.define(version: 2019_06_10_214524) do
     t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "type"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "common_names", "taxons"
+  add_foreign_key "photos", "taxons"
+  add_foreign_key "taxons", "taxons"
+  add_foreign_key "taxons", "taxons", column: "root_taxon_id"
+  add_foreign_key "tips", "taxons"
+  add_foreign_key "tips", "users"
+  add_foreign_key "user_taxon_data", "taxons"
+  add_foreign_key "user_taxon_data", "users"
 end

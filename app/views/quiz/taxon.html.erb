@@ -1,9 +1,0 @@
-<H1>Pick your region:</H1>
-
-<% unless current_user %>
-  <p>You must be <a href="/users/sign_up">signed up</a> if you want statics on your accuracy. <br/>
-    Choose a region and you will be quizzed on identifying snakes from that region.</p>
-<% end %>
-<% @tier1s.each do |t1| %>
-  <div><%= link_to t1.name, t1_taxon_quiz_path(@taxon,t1) %></div>
-<% end %>

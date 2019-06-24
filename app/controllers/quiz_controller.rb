@@ -1,6 +1,9 @@
 class QuizController < ApplicationController
-  before_action :set_tier, only: [:show, :guess]
-  before_action :set_taxon, only: [:guess, :show, :taxon]
+  before_action :set_taxon, only: [:pick_region, :game, :guess]
+  before_action :set_region, only: [:game, :guess]
+
+  def pick_region
+  end
 
   def scoreboard
     if current_user
@@ -14,17 +17,8 @@ class QuizController < ApplicationController
     end
   end
 
-  def taxon
-    @tier1s = Tier1.all.select { |t1| t1.taxons.species.select{ |sp| sp.root_taxon_id = @taxon.id && sp.photos.any? } .count > 5 }
-  end
-
-
-  def index
-    @taxons = Taxon.all.roots
-  end
-
   def guess
-    species = @tier.taxons.species.select{ |sp| sp.num_photos > 0 and sp.root == @taxon }
+    species = @region.taxons.species.select{ |sp| sp.num_photos > 0 and sp.root == @taxon }
     specie_m = Taxon.all.species.find(session[:specie_id])
     correct = session[:index].to_s == params['guess_index'].to_s
     old_index = session[:index]
@@ -47,15 +41,22 @@ class QuizController < ApplicationController
     render :json => specie_data
   end
 
-  def show
 
-    @species = @tier.taxons.species.select{ |sp| sp.num_photos > 0 and sp.root == @taxon }
+  def game
+    @regions = @region.regions
+    @species = @region.taxons.species.select{ |sp| sp.num_photos > 0 and sp.root == @taxon }
     options = specie_hash(@species)
     correct_specie = options[1]
     @photo = correct_specie.photos[rand(correct_specie.photos.length)]
     @options = options[0]
-
   end
+
+  def pick_taxon
+    @taxons = Taxon.roots
+  end
+
+  private
+
 
   def specie_hash(species)
     if species.length < 6
@@ -97,19 +98,11 @@ class QuizController < ApplicationController
     return [hash_data, correct_specie] # hash, Species model
   end
 
-  private
   def set_taxon
-    @taxon = Taxon.find params['taxon_id']
+    @taxon = Taxon.find params[:taxon_id]
   end
 
-  def set_tier
-    @tier = nil
-    if params.keys.include?("tier1_id")
-      @tier = Tier1.find params['tier1_id']
-    elsif params.keys.include?("tier2_id")
-      @tier = Tier2.find params['tier2_id']
-    elsif params.keys.include?("tier3_id")
-      @tier = Tier3.find params['tier3_id']
-    end
+  def set_region
+    @region = Region.find params[:region_id]
   end
 end

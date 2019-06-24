@@ -9,4 +9,15 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :user_taxon_data
 
+  enum type: ["user","contributor","admin"]
+
+  def admin?
+    type == "admin"
+  end
+  def contributor?
+    type == "contributor"
+  end
+  def admin_or_contributor?
+    admin? or contributor?
+  end
 end

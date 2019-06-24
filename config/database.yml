@@ -4,8 +4,14 @@ default: &default
   timeout: 5000
 
 development:
-  <<: *default
-  database: db/development.sqlite3
+    <<: *default
+    adapter: mysql2
+    database: herpid
+    encoding: utf8
+    username: root
+    password: rootrootroot
+    host: localhost
+
 #
 #production:
 #  <<: *default
@@ -22,6 +28,6 @@ production:
   encoding: utf8
   username: <%= ENV['sql_user'] %>
   password: <%= ENV['sql_pass'] %>
-#  socket: ENV['sql_socket']
+  #  socket: ENV['sql_socket']
   host: 127.0.0.1
   port: 3306

@@ -2,9 +2,7 @@ class Taxon < ApplicationRecord
   belongs_to :taxon, optional: true
   belongs_to :taxon, class_name: 'Taxon', :foreign_key => :root_taxon_id, optional: true
 
-  has_and_belongs_to_many :tier1s
-  has_and_belongs_to_many :tier2s
-  has_and_belongs_to_many :tier3s
+  has_and_belongs_to_many :regions
 
   has_many :taxons
   has_many :common_names

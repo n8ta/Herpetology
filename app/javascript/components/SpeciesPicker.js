@@ -67,7 +67,7 @@ class SpeciesPicker extends React.Component {
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         this.setState({mode: 'loading'});
 
-        fetch(window.location + '/guess/' + index, {
+        fetch(window.location + '/guess/'+index, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -75,7 +75,9 @@ class SpeciesPicker extends React.Component {
                 'X-CSRF-Token': auth_token,
                 'X-Requested-With': 'XMLHttpRequest',
             },
+            params: {'guess': index},
             credentials: 'same-origin',
+
         }).then(res => res.json()).then((result) => {
             this.setState({
                 common_name: result['common_name'],
