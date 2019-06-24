@@ -7,9 +7,12 @@ class QuizController < ApplicationController
 
   def scoreboard
     if current_user
-      ranks = [{'rank': 1, 'name': 'Nate', 'score': 142},
-               {'rank': 2, 'name': 'Avita', 'score': 134},
-               {'rank': 3, 'name': 'Kurt', 'score': 120}
+      user_ranks = User.all.sort { |a, b| b.score <=> a.score }
+
+
+      ranks = [{'rank': 1, 'name': user_ranks[0].username, 'score':  user_ranks[0].score},
+               {'rank': 2, 'name':  user_ranks[1].username, 'score':  user_ranks[1].score},
+               {'rank': 3, 'name':  user_ranks[2].username, 'score':  user_ranks[2].score}
       ]
       render :json => ranks
     else

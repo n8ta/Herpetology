@@ -8,10 +8,15 @@ when ready for launch. Get in touch with me if you are interested in contributin
 # Conventions
 - Code should use specie vs species to differentiate the plural. Same for genus vs genera etc.
 - When variables are in an order use next and prev as prefixes.
+- Data is plural, datum is singular
+- Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Figure out how to load all the herpmapper photos from a downloaded version so I don't have to keep re'dl'ing them
-- Sort out very slow query in tier1.rb to find tier2s with > 6 photograped species
+- Show tips on species picker after guess
+- Tip approvals
+- Tip submissions
+- All photo contributions
+- Sort out very slow query in region.rb to find subregions with > 6 photograped species
 - Implement points based on number of species in tier
 - Daily scoreboard
 - All time most accurate
@@ -20,11 +25,14 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Style this shit
 - Built report system
 - All the user shit like email passwords
-- Build out admin roles for power users
 - Gamification
 - Fit Splines
+- Write some tests xD
 
 # Done:
+- Cache the regions a taxon in found in json so we can import with the seed w/o scraping herpmapper (June 24, 2019)
+- Figure out how to load all the herpmapper photos from a downloaded version so I don't have to keep re'dl'ing them (June 24 ,2019)
+- Build out admin roles for power users (June 23, 2019)
 - Properly handle when there is no common name (June 10, 2019)
   - Herpmapper had common names for all their species
 - Improve region picking (June 10, 2019)

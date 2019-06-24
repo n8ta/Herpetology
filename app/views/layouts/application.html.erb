@@ -11,22 +11,24 @@
 </head>
 <body>
 
-<%= flash[:notice] %>
-<%= flash[:alert] %>
+<% console %>
 
 <navbar>
   <a href="/"><h1>HerpID </h1></a>
-  <%# if current_user %>
-    <%#= react_component('Scoreboard', {'id': current_user.id}) %>
-  <%# end %>
+  <% if current_user %>
+    <%= react_component('Scoreboard', {'id': current_user.id}) %>
+  <% end %>
 </navbar>
+
+<%= flash[:notice] %>
+<%= flash[:alert] %>
 
 <%= yield %>
 
 <footer>
   <hr>
   <% if not current_user.nil? %>
-    <p>Hi <%= current_user.email %>   <%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
+    <p>Hi <%= current_user.username %>   <%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
   <% else %>
     <p><a href="/users/sign_up">Sign Up</a> <a href="/users/sign_in">Sign In</a></p>
   <% end %>
