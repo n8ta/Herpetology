@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_041456) do
+ActiveRecord::Schema.define(version: 2019_06_25_161333) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_041456) do
   create_table "regions_taxons", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "region_id", null: false
     t.bigint "taxon_id", null: false
+    t.index ["region_id"], name: "fk_rails_fa98b95512"
     t.index ["taxon_id", "region_id"], name: "index_regions_taxons_on_taxon_id_and_region_id", unique: true
   end
 
@@ -93,6 +94,8 @@ ActiveRecord::Schema.define(version: 2019_06_25_041456) do
 
   add_foreign_key "common_names", "taxons"
   add_foreign_key "photos", "taxons"
+  add_foreign_key "regions_taxons", "regions"
+  add_foreign_key "regions_taxons", "taxons"
   add_foreign_key "taxons", "taxons"
   add_foreign_key "taxons", "taxons", column: "root_taxon_id"
   add_foreign_key "tips", "taxons"
