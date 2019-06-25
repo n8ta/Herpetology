@@ -30,6 +30,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Write some tests xD
 
 # Done:
+- Seperate scientific name and common name accuracy (June 25, 2019)
 - Cache the regions a taxon in found in json so we can import with the seed w/o scraping herpmapper (June 24, 2019)
 - Figure out how to load all the herpmapper photos from a downloaded version so I don't have to keep re'dl'ing them (June 24 ,2019)
 - Build out admin roles for power users (June 23, 2019)

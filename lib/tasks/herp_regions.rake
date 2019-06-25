@@ -7,15 +7,12 @@ namespace :imports do
     json = JSON.parse file.read()
 
 
-    puts json.length
-    x = 0
 
     name_to_id = {}
     def lookup (region_name,name_to_id)
       return nil if region_name == ""
       id = name_to_id[region_name]
       if id.nil?
-        puts name_to_id.keys.length
         begin
         reg = Region.find_by!(name: region_name)
         rescue
@@ -27,29 +24,32 @@ namespace :imports do
         return Region.find id
       end
     end
-
-
+    puts json.length
+    x=0
     json.each do |herp|
-      puts "---- HERP ----" + x.to_s
-      x += 1
-      puts "num regions: "+herp[1].length.to_s
+      x+=1
+      puts x
 
       s = Time.now.to_i
-      taxon = Taxon.find_by(name: herp[0])
-      puts "lookup taxon: " + (Time.now.to_i - s).to_s
+      name =  herp[0]
+      split = name.split(" ")
+      if split.length == 3
+        name = split[0]+' '+split[1]
+      end
+      taxon = Taxon.find_by(name: name.titleize)
+
+      next if taxon.nil?
       herp[1].each do |regions|
         s = Time.now.to_i
 
         country = lookup regions[0], name_to_id
         state = lookup regions[1], name_to_id
         county = lookup regions[2], name_to_id
-        # puts "lookup regions: " + (Time.now.to_i - s).to_s
         begin
           s = Time.now.to_i
           taxon.regions << country
           taxon.regions << state
           taxon.regions << county
-          puts "add regions: " + (Time.now.to_i - s).to_s
         rescue
         end
       end
