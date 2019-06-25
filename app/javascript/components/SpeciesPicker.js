@@ -14,39 +14,76 @@ class SpeciesPicker extends React.Component {
             next_image_path: undefined,
             next_options: undefined,
             prev_image_path: undefined,
+            num_chosen: 0,
+            sci_chosen: undefined,
+            common_chosen: undefined,
         };
         this.handleClick = this.handleClick.bind(this);
         this.next = this.next.bind(this);
     }
+
     gen_options() {
-        let options = new Array
-        let disabled = this.state.mode == 'correct' || this.state.mode == "incorrect" || this.state.mode == "loading";
-        for (let i = 0; i < this.state.options.length; i++) {
+        let options = {'sci': [], 'common': []};
+        let sci_disabled = this.state.mode == 'answered' || this.state.mode == "loading" || this.state.sci_chosen != undefined;
+        let common_disabled = this.state.mode == 'answered' || this.state.mode == "loading" || this.state.common_chosen != undefined;
+
+        for (let i = 0; i < this.state.options['sci'].length; i++) {
             let tmp = i;
-            let btn_class = "";
-            if (tmp == this.state.correct_index) {
-                console.log(tmp,"correct");
-                btn_class = "correct"
+            let sci_btn_class = "";
+            let common_btn_class = "";
+
+            if (this.state.mode == "answered") {
+                if (tmp == this.state.sci_correct_index) {
+                    sci_btn_class = "correct"
+                } else if (tmp == this.state.sci_chosen) {
+                    sci_btn_class = "incorrect"
+                } else {
+                    console.log('tmp sci', tmp)
+                }
+                if (tmp == this.state.common_correct_index) {
+                    common_btn_class = "correct"
+                } else if (tmp == this.state.common_chosen) {
+                    common_btn_class = "incorrect"
+                } else {
+                    console.log('tmp com', tmp)
+                }
+
+            } else {
+
+                if (tmp == this.state.sci_chosen) {
+                    sci_btn_class = "guess"
+                }
+                if (tmp == this.state.common_chosen) {
+                    common_btn_class = "guess"
+                }
             }
-            if (tmp == this.state.incorrect_index) {
-                console.log(tmp,"incorrect");
-                btn_class = "incorrect"
-            }
-            options.push(
+
+            options['sci'].push(
                 <li key={i}>
-                    <button className={btn_class} disabled={disabled} data-index={i}
+                    <button className={sci_btn_class} disabled={sci_disabled} data-type={'sci'} data-index={i}
                             onClick={this.handleClick}>
-                        <Name sciName={this.state.options[i].sci_name} commonName={this.state.options[i].common_name}></Name>
+                        <span className="common_name">{this.state.options['sci'][i]}</span>
+                    </button>
+                </li>);
+
+            options['common'].push(
+                <li key={i}>
+                    <button className={common_btn_class} disabled={common_disabled} data-type={'common'} data-index={i}
+                            onClick={this.handleClick}>
+                        <span className="sci_name">{this.state.options['common'][i]}</span>
                     </button>
                 </li>);
         }
+
         return options
     }
+
     preload(image_path) {
         let image = new Image();
         image.onload;
         image.src = image_path;
     }
+
     next(e) {
         this.setState({
             common_name: undefined,
@@ -58,16 +95,38 @@ class SpeciesPicker extends React.Component {
             next_image_path: undefined,
             correct_index: undefined,
             incorrect_index: undefined,
+            sci_chosen: undefined,
+            common_chosen: undefined,
+            num_chosen: 0,
         });
     }
 
     handleClick(e) {
+
         let index = e.currentTarget.dataset.index;
-        console.log("index: ",index);
+        let type = e.currentTarget.dataset.type;
+        if (type == 'sci') {
+            this.setState({sci_chosen: index});
+        } else if (type == 'common') {
+            this.setState({common_chosen: index});
+        }
+
+        if (this.state.num_chosen == 1) {
+            this.setState({mode: "loading", num_chosen: 1});
+        } else {
+            this.state.num_chosen += 1;
+            return
+        }
+
+
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         this.setState({mode: 'loading'});
-
-        fetch(window.location + '/guess/'+index, {
+        let data = {
+            'common_guess': this.state.common_chosen || index, // SetState is async so we may not have it in the state yet, so if it's undefined use the index
+            'sci_guess': this.state.sci_chosen || index,
+        };
+        console.log("data:",data);
+        fetch(window.location, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -75,7 +134,8 @@ class SpeciesPicker extends React.Component {
                 'X-CSRF-Token': auth_token,
                 'X-Requested-With': 'XMLHttpRequest',
             },
-            params: {'guess': index},
+            body: JSON.stringify(
+                data),
             credentials: 'same-origin',
 
         }).then(res => res.json()).then((result) => {
@@ -85,42 +145,31 @@ class SpeciesPicker extends React.Component {
                 next_options: result['next_options'],
                 next_image_path: result['next_image_path'],
                 species_id: result['species_id'],
-                prev_image_path: this.state.image_path
+                prev_image_path: this.state.image_path,
+                sci_correct_index: result['correct_sci_index'],
+                common_correct_index: result['correct_common_index'],
+                mode: 'answered',
             });
             this.preload(result['next_image_path']);
-
-
-
-
-            if (result['correct'] == true) {
-                this.setState({mode: 'correct'});
-            } else {
-                this.setState({
-                    mode: 'incorrect',
-                    incorrect_index: result['guess_index']
-                });
-            }
-            this.setState({correct_index: result['correct_index']});
         })
     };
 
     render() {
-        let options_html = this.gen_options();
+        let options = this.gen_options();
+        let sci_options = options['sci'];
+        let common_options = options['common'];
         let next_button = '';
         let message = '';
         let right = '';
         if (this.state.mode == 'loading') {
             message = "Loading";
-        } else if (this.state.mode == 'correct') {
+        } else if (this.state.mode == 'answered') {
             message = <span className={'correct'}>Correct!</span>;
             next_button = <button onClick={this.next} id={'next'}>Next</button>
-        } else if (this.state.mode == 'incorrect') {
-            message = <span className={'incorrect'}>Incorrect</span>;
-            next_button = <button onClick={this.next} id={'next'}>Next</button>
         } else if (this.state.mode == 'waiting') {
-            message = "Make your best guess"
+            message = "Make your best guess for scientific and common names"
         }
-        if (this.state.mode == "correct" || this.state.mode == "incorrect") {
+        if (this.state.mode == "answered") {
             right = <Datum className={'column'} image_path={this.state.prev_image_path}
                            species_id={this.state.species_id}></Datum>
         } else {
@@ -130,8 +179,12 @@ class SpeciesPicker extends React.Component {
             <div className="species">
                 <div className="spec-left">
                     <h2>{message}</h2>
-                    <ul>{options_html}</ul>
+                    <div className='spec-buttons'>
+                        <ul>{sci_options}</ul>
+                        <ul>{common_options}</ul>
+                    </div>
                     {next_button}
+
                     <br/>
                 </div>
                 <div className="spec-right">
@@ -143,7 +196,7 @@ class SpeciesPicker extends React.Component {
 }
 
 SpeciesPicker.propTypes = {
-    options: PropTypes.array,
+    options: PropTypes.object,
     image_path: PropTypes.string,
 };
 

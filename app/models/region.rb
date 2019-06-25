@@ -21,6 +21,6 @@ class Region < ApplicationRecord
   end
 
   def subregions_with_6(taxon)
-    self.regions.select {|t2| t2.taxons.species.select{|sp| sp.photos.any? and sp.root_taxon_id == taxon.id }.count > 5 }
+    self.regions.select {|t2| t2.taxons.species.where(root_taxon_id: taxon  .id).select{|sp| sp.photos.any? }.count > 5 }
   end
 end

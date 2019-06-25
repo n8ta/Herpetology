@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/quiz' => 'quiz#pick_taxon', as: 'pick_taxon'
   get '/quiz/taxon/:taxon_id' => 'quiz#pick_region', as: 'pick_region'
   get '/quiz/taxon/:taxon_id/region/:region_id' => 'quiz#game', as: 'game'
-  post '/quiz/taxon/:taxon_id/region/:region_id/guess/:guess_index' => 'quiz#guess', as: 'guess'
+  post '/quiz/taxon/:taxon_id/region/:region_id' => 'quiz#guess', as: 'guess'
 
   resources :taxons do
     resources :regions, only: [:show] do

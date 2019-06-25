@@ -38,14 +38,26 @@ navbar
   grid-template-columns: auto minmax(300px,500px) minmax(300px,500px) auto
   grid-template-areas: '. left right .'
   .spec-left
+    h2
+      margin-bottom: 0
     grid-area: left
     margin-right: 1rem
+    .spec-buttons
+      display: flex
+      flex-direction: row
+      flex-wrap: wrap
+      width: 100%
+      ul:first-child
+        margin-right: 1rem
   .spec-right
     grid-area: right
   .correct
     color: green
+    font-weight: 700
   .incorrect
     color: darkred
+  .guess
+    color: black
   button
     width: 100%
     background-color: lightblue

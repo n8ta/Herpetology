@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_24_041041) do
+ActiveRecord::Schema.define(version: 2019_06_25_041456) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -66,10 +66,12 @@ ActiveRecord::Schema.define(version: 2019_06_24_041041) do
   create_table "user_taxon_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
     t.bigint "user_id", null: false
-    t.bigint "seen", default: 0, null: false
-    t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "sci_seen", default: 0, null: false
+    t.bigint "sci_correct", default: 0, null: false
+    t.bigint "common_seen", default: 0, null: false
+    t.bigint "common_correct", default: 0, null: false
     t.index ["taxon_id"], name: "index_user_taxon_data_on_taxon_id"
     t.index ["user_id", "taxon_id"], name: "index_user_taxon_data_on_user_id_and_taxon_id", unique: true
     t.index ["user_id"], name: "index_user_taxon_data_on_user_id"
