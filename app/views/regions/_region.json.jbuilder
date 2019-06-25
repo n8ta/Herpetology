@@ -5,5 +5,5 @@ json.extract! region, :id, :name
 json.subregions region.subregions_with_6(@taxon).each do |subregion|
   json.id subregion.id
   json.name subregion.name
-  json.quiz_url game_path(@taxon, subregion.id, format: :json)
+  json.quiz_url game_path(@taxon, subregion.id)
 end
