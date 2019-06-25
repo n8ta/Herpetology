@@ -8,7 +8,8 @@ module Quiz
         flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
         redirect_to '/'
       end
-      @regions = Region.countries.includes(:taxons).select {|reg| reg.taxons.species.includes(:photos).where(root_taxon_id: @taxon.id).select {|sp| sp.photos.length > 0 }.length > 5}
+      @regions = @taxon.valid_regions
+      # @regions = Region.countries.select {|reg| reg.taxons.species.where(root_taxon_id: @taxon.id).select {|sp| sp.photos.size > 0 }.size > 5}
     end
 
     def scoreboard
@@ -85,7 +86,7 @@ module Quiz
     end
 
     def pick_taxon
-      @taxons = Taxon.roots
+      @taxons = Taxon.roots.includes(:common_names)
     end
 
     private
@@ -122,7 +123,7 @@ module Quiz
           hash_data['sci'].push(trial_specie.name)
           hash_data['common'].push(trial_specie.common_names[0].name)
         end
-        puts "i: "+i
+        puts "i: "+i.to_s
       end
 
       sci_index = rand(4)

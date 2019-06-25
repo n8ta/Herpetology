@@ -8,6 +8,8 @@ class Taxon < ApplicationRecord
   has_many :common_names
   has_many :photos
 
+  has_and_belongs_to_many :valid_regions, join_table: 'regions_root_taxons', class_name: 'Region'
+
   enum rank: [:root,:family,:subfamily,:genus,:species]
 
   scope :species, -> { where(rank: :species) }
