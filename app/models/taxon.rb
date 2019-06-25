@@ -17,7 +17,7 @@ class Taxon < ApplicationRecord
   scope :roots, -> { where(rank: :root) }
 
   def num_photos
-    self.photos.count
+    self.photos.size
   end
 
   before_create :title

@@ -13,7 +13,7 @@
 <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
 
 <p>Currently we have <%= @species.length %> species in this region with photos
-  and <%= @region.taxons.species.select {|sp| sp.root == @taxon}.length %> total</p>
+  and <%= @region.taxons.species.where(root_taxon_id: @taxon.id).size %> total</p>
 <hr>
 <%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
                                       options: @options}) %>
