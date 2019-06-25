@@ -7,7 +7,7 @@ class QuizController < ApplicationController
       flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
       redirect_to '/'
     end
-    @regions = Region."G".select {|reg| reg.taxons.species.select {|sp| sp.root_taxon_id = @taxon.id && sp.photos.any?}.count > 6}
+    @regions = Region.countries.select {|reg| reg.taxons.species.select {|sp| sp.root_taxon_id = @taxon.id && sp.photos.any?}.count > 6}
   end
 
   def scoreboard
