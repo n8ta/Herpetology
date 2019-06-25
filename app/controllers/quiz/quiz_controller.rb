@@ -8,7 +8,7 @@ module Quiz
         flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
         redirect_to '/'
       end
-      @regions = Region.countries..includes(:taxons).select {|reg| reg.taxons.species.includes(:photos).where(root_taxon_id: @taxon.id).select {|sp| sp.photos.count > 0 }.size > 5}
+      @regions = Region.countries.includes(:taxons).select {|reg| reg.taxons.species.includes(:photos).where(root_taxon_id: @taxon.id).select {|sp| sp.photos.count > 0 }.size > 5}
     end
 
     def scoreboard
