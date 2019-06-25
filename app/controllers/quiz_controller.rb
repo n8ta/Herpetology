@@ -29,7 +29,20 @@ class QuizController < ApplicationController
     body = JSON.parse request.body.read
     species = @region.taxons.species.select {|sp| sp.num_photos > 0 and sp.root == @taxon}
     specie_m = Taxon.all.species.find(session[:specie_id])
-    correct = session[:index].to_s == params['guess_index'].to_s
+    sci_correct = session[:sci_index].to_s == body['sci_guess']
+    common_correct = session[:common_index].to_s == body['common_guess']
+    if sci_correct and common_correct
+
+      message = "Both correct!"
+    elsif sci_correct
+      message = "You got the scientific name correct but not the common"
+    elsif common_correct
+      message = "You got the common name correct but not the scientific"
+    else
+      message = "Zero for two I'm afraid"
+    end
+    puts "---"
+    puts sci_correct,common_correct
     old_sci_index = session[:sci_index]
     old_common_index = session[:common_index]
     hash_and_specie = specie_hash(species)
@@ -42,11 +55,20 @@ class QuizController < ApplicationController
         'next_image_path': photo.image_path.url,
         'correct_sci_index': old_sci_index,
         'correct_common_index':  old_common_index,
+        'message': message,
     }
-    if (current_user)
-      datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
-
-      correct ? datum.guess_correct : datum.guess_incorrect # Increment counter for species
+    datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
+    if current_user
+      if sci_correct
+        datum.sci_guess_correct
+      else
+        datum.sci_guess_incorrect
+      end
+      if common_correct
+        datum.common_guess_correct
+      else
+        datum.common_guess_incorrect
+      end
     end
     render :json => specie_data
   end

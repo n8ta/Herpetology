@@ -1,4 +1,4 @@
-json.extract! user_taxon_datum, :seen, :correct
+json.extract! user_taxon_datum, :sci_seen, :sci_correct, :common_seen, :common_correct
 json.species do
   json.id user_taxon_datum.taxon.id
   json.name user_taxon_datum.taxon.name

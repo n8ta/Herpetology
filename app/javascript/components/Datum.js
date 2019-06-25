@@ -10,8 +10,10 @@ class Datum extends React.Component {
             mode: 'waiting',
             sci_name: 'Loading...',
             common_name: 'Loading...',
-            correct: 0,
-            seen: 0,
+            sci_correct: 0,
+            common_correct: 0,
+            sci_seen: 0,
+            common_seen: 0,
             image_path: "",
         };
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
@@ -30,8 +32,10 @@ class Datum extends React.Component {
                 mode: 'ready',
                 sci_name: result['species']['genus']['name'] + ' ' + result['species']['name'],
                 common_name: result['species']['common_names'][0]['name'],
-                correct: result['correct'],
-                seen: result['seen'],
+                sci_correct: result['sci_correct'],
+                common_correct: result['common_correct'],
+                sci_seen: result['sci_seen'],
+                common_seen: result['common_seen'],
             });
             console.log(result);
         });
@@ -48,8 +52,8 @@ class Datum extends React.Component {
         return (
             <div className={'datum ' + this.state.mode}>
                 <h2>{title}</h2>
-                <p>You've seen this species <strong>{this.state.seen}</strong> time(s), and gotten it
-                    right <strong>{this.state.correct}</strong> time(s).</p>
+                <p>Scientific: {this.state.sci_correct}/{this.state.sci_seen}</p>
+                <p>Common: {this.state.common_correct}/{this.state.common_seen}</p>
                 <Zoom url={this.props.image_path}></Zoom>
 
             </div>
