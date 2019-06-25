@@ -5,10 +5,10 @@
    cur=cur.region
  end
   region_array = region_array.reverse
-  region_array = region_array.map { |ra| "<a href='#{taxon_region_path(@taxon,ra)}'>#{ra.name}</a>" }.join(" > ")
+  region_array = region_array.map { |ra| "<a href='#{quiz_game_path(@taxon,ra)}'>#{ra.name}</a>" }.join(" > ")
 %>
 
-<h2><%= link_to @taxon.common_names[0].name, pick_region_path(@taxon) %> > <%= region_array.html_safe %></h2>
+<h2><%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %> > <%= region_array.html_safe %></h2>
 
 <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
 

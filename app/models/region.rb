@@ -6,12 +6,6 @@ class Region < ApplicationRecord
 
   has_and_belongs_to_many :taxons
   validate :not_own_parent
-  before_create :extra_spaces
-
-  def extra_spaces
-    return if self.name == "" or self.name.nil?
-    self.name = self.name.split(' ').join(' ')
-  end
 
   scope :countries, -> {where(region: nil)}
 
@@ -28,6 +22,6 @@ class Region < ApplicationRecord
   end
 
   def subregions_with_6(taxon)
-    self.regions.select {|t2| t2.taxons.species.where(root_taxon_id: taxon.id).select {|sp| sp.photos.any?}.count > 5}
+    self.regions.select {|reg| reg.taxons.species.where(root_taxon_id: taxon.id).select {|sp| sp.photos.any?}.count > 5 }
   end
 end

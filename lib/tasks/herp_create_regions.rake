@@ -35,6 +35,7 @@ namespace :imports do
       end
     end
 
+    puts "Finished states"
 
     json.each do |id, geo|
       if t2_id_to_model.key?(geo['parent'])
