@@ -77,7 +77,7 @@ module Quiz
 
     def game
       @regions = @region.regions
-      @species = @region.taxons.species.includes(:common_names, :photos).where(:root_taxon_id => @taxon.id).select {|sp| sp.photos.size > 0}
+      @species = @region.taxons.species.includes(:common_names, :photos).where(:root_taxon_id => @taxon.id).select {|sp| sp.photos.any? }
       options = specie_hash(@species)
       correct_specie = options[1]
       @photo = correct_specie.photos[rand(correct_specie.photos.size)]
