@@ -1,6 +1,6 @@
 <h2>Pick your Taxon</h2>
 <ul>
   <% @taxons.each do |txn| %>
-    <li><%= link_to txn.common_names[0].name, quiz_pick_taxon_path(txn) %></li>
+    <li><%= link_to txn.common_names[0].name, quiz_pick_region_path(txn) %></li>
   <% end %>
 </ul>
