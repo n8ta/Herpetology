@@ -4,7 +4,7 @@
    region_array << cur
    cur=cur.region
  end
-  region_array.reverse
+  region_array = region_array.reverse
   region_array = region_array.map { |ra| "<a href='#{taxon_region_path(@taxon,ra)}'>#{ra.name}</a>" }.join(" > ")
 %>
 
