@@ -8,7 +8,7 @@ module Quiz
         flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
         redirect_to '/'
       end
-      @regions = Region.countries.select {|reg| reg.taxons.species.select {|sp| sp.root_taxon_id = @taxon.id && sp.photos.any?}.count > 6}
+      @regions = Region.countries.select {|reg| reg.taxons.species.includes(:photos).where(root_taxon_id: @taxon.id).select {|sp| sp.photos.any?}.size > 5}
     end
 
     def scoreboard
@@ -28,7 +28,7 @@ module Quiz
 
     def guess
       body = JSON.parse request.body.read
-      species = @region.taxons.species.select {|sp| sp.num_photos > 0 and sp.root == @taxon}
+      species = @region.taxons.species.includes(:photos).where(root_taxon_id: @taxon.id).select {|sp| sp.photos.size > 0}
       specie_m = Taxon.all.species.find(session[:specie_id])
       sci_correct = session[:sci_index].to_s == body['sci_guess']
       common_correct = session[:common_index].to_s == body['common_guess']

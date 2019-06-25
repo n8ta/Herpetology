@@ -22,7 +22,7 @@ class Region < ApplicationRecord
   end
 
   def subregions_with_6(taxon)
-    res = self.regions.select {|reg| reg.taxons.species.includes(:photos).where(root_taxon_id: taxon.id).select { |sp| sp.photos.any? }.count > 5 }
+    res = self.regions.select {|reg| reg.taxons.species.includes(:photos).where(root_taxon_id: taxon.id).select { |sp| sp.photos.any? }.size > 5 }
     return res
   end
 end
