@@ -12,6 +12,7 @@ gem 'redd'
 gem 'httparty'
 gem 'rails', '~> 5.2.3'
 gem 'bullet', group: 'development'
+gem "lograge"
 gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
