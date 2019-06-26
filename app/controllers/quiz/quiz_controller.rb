@@ -102,7 +102,7 @@ module Quiz
       i = 0
       while (picked.length < 7) and (i < 100)
         i += 1
-        Rails.logger "skipping: "+i.to_s
+        puts "I: "+i.to_s
         trial_specie = species[rand(len)]
         unless picked.include?(trial_specie)
 
