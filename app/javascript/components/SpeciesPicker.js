@@ -179,6 +179,9 @@ class SpeciesPicker extends React.Component {
         }
         return (
             <div className="species">
+                <div className="spec-right">
+                    {right}
+                </div>
                 <div className="spec-left">
                     <h2>{message}</h2>
                     <div className='spec-buttons'>
@@ -189,9 +192,7 @@ class SpeciesPicker extends React.Component {
 
                     <br/>
                 </div>
-                <div className="spec-right">
-                    {right}
-                </div>
+
             </div>
         )
     }

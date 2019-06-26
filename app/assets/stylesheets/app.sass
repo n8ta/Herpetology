@@ -1,6 +1,6 @@
 html
   display: grid
-  grid-template-columns: auto minmax(0px,1150px) auto
+  grid-template-columns: auto minmax(0px,65rem) auto
   grid-template-areas: '. body .'
 
 body
@@ -35,7 +35,9 @@ navbar
 
 .species
   display: grid
-  grid-template-columns: auto minmax(300px,625px) minmax(300px,625px) auto
+  grid-template-columns: auto minmax(2rem,32rem) minmax(2rem,32rem) auto
+  grid-column-gap: .5rem
+  grid-row-gap: .5rem
   grid-template-areas: '. left right .'
   .spec-left
     h2
@@ -43,12 +45,13 @@ navbar
     grid-area: left
     margin-right: 1rem
     .spec-buttons
-      display: flex
-      flex-direction: row
-      flex-wrap: wrap
-      width: 100%
+      display: grid
+      grid-template-columns: 50% 50%
+      ul
+        grid-template-area: auto
+        flex-basis: 50%
       ul:first-child
-        margin-right: 1rem
+        margin-right: .2em
   .spec-right
     grid-area: right
   .correct
@@ -78,15 +81,17 @@ navbar
   ul
     list-style-type: none
     padding-left: 0
-  @media (width < 620px)
+
+@media (width < 700px)
+  .species
     grid-template-columns: 100%
     grid-template-rows: auto auto
     grid-row-gap: 1rem
     grid-template-areas: 'top' 'bottom'
     .spec-left
-      grid-area: top
-    .spec-right
       grid-area: bottom
+    .spec-right
+      grid-area: top
 
 footer
   margin-top: 200pt
