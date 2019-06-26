@@ -9,7 +9,6 @@ module Quiz
         redirect_to '/'
       end
       @regions = @taxon.valid_regions
-      # @regions = Region.countries.select {|reg| reg.taxons.species.where(root_taxon_id: @taxon.id).select {|sp| sp.photos.size > 0 }.size > 5}
     end
 
     def scoreboard

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_232208) do
+ActiveRecord::Schema.define(version: 2019_06_25_161333) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -35,14 +35,6 @@ ActiveRecord::Schema.define(version: 2019_06_25_232208) do
     t.string "name"
     t.bigint "region_id"
     t.index ["region_id"], name: "index_regions_on_region_id"
-  end
-
-  create_table "regions_root_taxons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "region_id"
-    t.bigint "taxon_id"
-    t.index ["region_id"], name: "index_regions_root_taxons_on_region_id"
-    t.index ["taxon_id", "region_id"], name: "index_regions_root_taxons_on_taxon_id_and_region_id", unique: true
-    t.index ["taxon_id"], name: "index_regions_root_taxons_on_taxon_id"
   end
 
   create_table "regions_taxons", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -102,8 +94,6 @@ ActiveRecord::Schema.define(version: 2019_06_25_232208) do
 
   add_foreign_key "common_names", "taxons"
   add_foreign_key "photos", "taxons"
-  add_foreign_key "regions_root_taxons", "regions"
-  add_foreign_key "regions_root_taxons", "taxons"
   add_foreign_key "regions_taxons", "regions"
   add_foreign_key "regions_taxons", "taxons"
   add_foreign_key "taxons", "taxons"
