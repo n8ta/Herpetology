@@ -28,7 +28,7 @@ module Quiz
 
     def guess
       body = JSON.parse request.body.read
-      species = @region.taxons.species.where(root_taxon_id: @taxon.id, photograped: true)
+      species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
       specie_m = Taxon.all.species.find(session[:specie_id])
       sci_correct = session[:sci_index].to_s == body['sci_guess']
       common_correct = session[:common_index].to_s == body['common_guess']
