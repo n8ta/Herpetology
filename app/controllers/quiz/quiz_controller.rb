@@ -28,7 +28,7 @@ module Quiz
 
     def guess
       body = JSON.parse request.body.read
-      species = @region.taxons.species.includes(:photos).where(root_taxon_id: @taxon.id).select {|sp| sp.photos.size > 0}
+      species = @region.taxons.species.where(root_taxon_id: @taxon.id, photograped: true)
       specie_m = Taxon.all.species.find(session[:specie_id])
       sci_correct = session[:sci_index].to_s == body['sci_guess']
       common_correct = session[:common_index].to_s == body['common_guess']
@@ -77,7 +77,7 @@ module Quiz
 
     def game
       @regions = @region.regions
-      @species = @region.taxons.species.includes(:common_names, :photos).where(:root_taxon_id => @taxon.id).select {|sp| sp.photos.any? }
+      @species = @region.taxons.species.includes(:common_names, :photos).where(root_taxon_id: @taxon.id, photographed: true )
       options = specie_hash(@species)
       correct_specie = options[1]
       @photo = correct_specie.photos[rand(correct_specie.photos.size)]
