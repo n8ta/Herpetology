@@ -14,6 +14,7 @@
 
 <p>Currently we have <%= @species.length %> species in this region with photos
   and <%= @region.taxons.species.where(root_taxon_id: @taxon.id).size %> total</p>
+<p><strong>Warning </strong>: There are photos of dead animals and a significant number of snakes that were hit by vehciles. </p>
 <hr>
 <%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
                                       options: @options}) %>

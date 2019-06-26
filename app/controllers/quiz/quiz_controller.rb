@@ -102,7 +102,6 @@ module Quiz
       i = 0
       while (picked.length < 7) and (i < 100)
         i += 1
-        puts "I: "+i.to_s
         trial_specie = species[rand(len)]
         unless picked.include?(trial_specie)
 
@@ -123,7 +122,6 @@ module Quiz
           hash_data['sci'].push(trial_specie.name)
           hash_data['common'].push(trial_specie.common_names[0].name)
         end
-        puts "i: "+i.to_s
       end
 
       sci_index = rand(4)
