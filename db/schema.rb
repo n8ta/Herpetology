@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_232208) do
+ActiveRecord::Schema.define(version: 2019_06_26_003007) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_232208) do
     t.bigint "taxon_id"
     t.integer "rank"
     t.bigint "root_taxon_id"
+    t.boolean "photograped", default: false, null: false
     t.index ["root_taxon_id"], name: "fk_rails_795ac0b1ff"
     t.index ["taxon_id"], name: "index_taxons_on_taxon_id"
   end
