@@ -16,7 +16,6 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Tip approvals
 - Tip submissions
 - All photo contributions
-- Sort out very slow query in region.rb to find subregions with > 6 photograped species
 - Implement points based on number of species in tier
 - Daily scoreboard
 - All time most accurate
@@ -30,6 +29,8 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Write some tests xD
 
 # Done:
+- Sort out very slow query in region.rb to find subregions with > 6 photograped species (June 25, 2019)
+  - This ended up being one of those normalization vs speed problems and the data is quite denormalized now, upside is the queries are lightning fast (:
 - Seperate scientific name and common name accuracy (June 25, 2019)
 - Cache the regions a taxon in found in json so we can import with the seed w/o scraping herpmapper (June 24, 2019)
 - Figure out how to load all the herpmapper photos from a downloaded version so I don't have to keep re'dl'ing them (June 24 ,2019)
