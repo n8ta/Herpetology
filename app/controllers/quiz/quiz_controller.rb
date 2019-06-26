@@ -8,7 +8,7 @@ module Quiz
         flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
         redirect_to '/'
       end
-      @regions = @taxon.valid_regions
+      @regions = @taxon.valid_regions.countries
     end
 
     def scoreboard
