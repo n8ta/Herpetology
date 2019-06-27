@@ -1,3 +1,8 @@
+<% content_for :title do %>
+  <%= @taxon.common_names[0].name %>
+<% end %>
+
+
 <h2>Pick your Region</h2>
 <ul>
   <% @regions.each do |reg| %>
