@@ -12,6 +12,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
+- Toggle showing photos of deceased animals 
 - Reporting feature, types:
   - Content ID
   - No Snake
