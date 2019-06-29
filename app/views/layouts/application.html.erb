@@ -11,46 +11,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <% unless Rails.env == "development" %>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-111016820-5');
-</script>
+      function gtag() {
+          dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+
+      gtag('config', 'UA-111016820-5');
+  </script>
 <% end %>
+
+
 <body>
 
-<navbar>
+
+<div id="logo">
   <a href="/"><h1>HerpID</h1></a>
-  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>
+  <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
   <% if current_user %>
     <%#= react_component('Scoreboard', {'id': current_user.id}) %>
   <% end %>
-</navbar>
+</div>
 
-<%= flash[:notice] %>
-<%= flash[:alert] %>
-
-<%= yield %>
-
-<footer>
-  <hr>
-  <p><strong>Warning </strong>: There are photos of dead animals and a significant number of snakes that were hit by vehciles. </p>
-
-  <% if not current_user.nil? %>
-    <p>Hi <%= current_user.username %>   <%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
-  <% else %>
-    <p><a href="/users/sign_up">Sign Up</a> <a href="/users/sign_in">Sign In</a></p>
-  <% end %>
-  <p>HerpID <%= ENV['herpid_version'] %> Alpha</br>
-    This is an alpha and as such everything is up in the air.
-    <br/>Report any bugs or cool feature ideas on github</p>
-  <a href="https://github.com/n8ta/SnakeID"><img src="<%= asset_path('github.png') %>"></a>
+<div id="content">
 
 
-</footer>
+  <%= flash[:notice] %>
+  <%= flash[:alert] %>
+
+  <%= yield %>
+
+
+<!--  <footer>-->
+    <%# if not current_user.nil? %>
+<!--      <p>Hi <%#= current_user.username %>   <%#= link_to "Sign out", destroy_user_session_path, method: :delete %></p>-->
+    <%# else %>
+<!--      <p><a href="/users/sign_up">Sign Up</a> <a href="/users/sign_in">Sign In</a></p>-->
+    <%# end %>
+<!--    <a href="https://github.com/n8ta/SnakeID"><img src="<%#= asset_path('github.png') %>"></a>-->
+
+
+<!--  </footer>-->
+
+
+</div>
+
 </body>
+
 </html>

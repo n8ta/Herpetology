@@ -1,3 +1,5 @@
+@import 'vars'
+
 @font-face
   font-family: 'bd-bold'
   src: url('/fonts/bdbold.otf') format('otf'), url('/fonts/bdbold.woff') format('woff'), url('/fonts/bdbold.woff2') format('woff2')
@@ -16,28 +18,30 @@
   font-weight: normal
   font-style: normal
 
+html
+  font-size: 62.5%
 
-$darker-green: #406649
-$dark-green: #466F56
-$mid-green: #70A480
-$light-green: #9ACCAA
+body
+  font-size: 2rem
 
-$blue: #004683
-
-$brown: #231A1E
-
+h1,h2,h3
+  margin: 0
+  padding: 0
+  text-align: center
 
 h1
   font-family: bd-bold
   color: white
+  font-size: 8rem
 
 h2
   font-family: bd-book-italic
   color: white
+  font-size: 5rem
 
-h3, a
-  font-size: 2rem
+h3
   color: $brown
+  font-size: 2.5rem
   font-family: bd-smallcap-book
 
 
@@ -46,39 +50,18 @@ body
   background-color: $mid-green
 
 a
+  font-family: bd-smallcap-book
+  font-size: 2.5rem
   color: $brown
-  text-decoration: none
-
-
-a.main
-  .prebutton
-    width: 100%
-    height: .5rem
-    background: linear-gradient(to right, $dark-green, $blue)
   &:hover
-    cursor: pointer
-    h3
-      color: $blue !important
-    .prebutton
-      background: linear-gradient(to left, $dark-green, $blue)
-  button
-    margin-top: .5rem
-    width: 100%
-    background-color: $light-green
-    border: solid 1rem transparent
-    &:hover
-      cursor: pointer
+    color: $darker-green !important
+
+.center
+  display: flex
+  justify-content: center
+  flex-direction: row
 
 
-
-#pick_taxons
-  li
-    margin-top: 3rem
-    display: grid
-    grid-template-columns: 50% 50%
-
-    h3, img
-      grid-area: auto
-
-  img
-    box-shadow: -.5rem .5rem $blue
+@media (width > 35rem)
+  h3
+    font-size: 4rem !important

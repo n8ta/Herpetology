@@ -73,8 +73,13 @@ module Quiz
       @options = options[0]
     end
 
-    def pick_taxon
+    def pick_taxon_all
       @taxons = Taxon.roots.includes(:common_names)
+      render 'pick_taxon'
+    end
+
+    def pick_taxon
+      @taxons = [Taxon.find(5), Taxon.find(4), Taxon.find(7), Taxon.find(2)]
     end
 
     private

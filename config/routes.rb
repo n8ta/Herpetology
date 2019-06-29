@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   namespace 'quiz' do
     root :to => 'quiz#pick_taxon'
     get '/' => 'quiz#pick_taxon', as: 'pick_taxon'
+    get '/pick_taxon' => 'quiz#pick_taxon_all', as: 'pick_taxon_all'
     get 'scoreboard.json' => 'quiz#scoreboard', as: 'scoreboard'
     get 'taxon/:taxon_id' => 'quiz#pick_region', as: 'pick_region'
     get 'taxon/:taxon_id/region/:region_id' => 'quiz#game', as: 'game'

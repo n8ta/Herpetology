@@ -1,25 +1,35 @@
-html
-  display: grid
-  grid-template-columns: auto minmax(0px,65rem) auto
-  grid-template-areas: '. body .'
+@import 'vars'
 
 body
+  display: grid
+  grid-template-rows: auto auto
+  grid-template-columns: auto minmax(30rem,75rem) auto
+  grid-template-areas: '. logo .' '. content .'
+  padding: 0
+  margin: 0
   font-size: 1.2rem
-  grid-area: body
   -webkit-box-sizing: border-box
   -moz-box-sizing: border-box
   box-sizing: border-box
-  margin: 0
-  padding: 1rem
+  #content
+    grid-area: content
+    padding: 2rem
+  #logo
+    grid-area: logo
 
-navbar
+#logo
+  background-color: $dark-green
+  text-align: center
+  border-bottom: 1rem solid $darker-green
   #info
     font-size: .8em
     color: black
     text-decoration-color: black
     text-decoration-style: unset
+  a
+    text-decoration: none
   h1
-    margin-bottom: 0
+    margin-bottom: -1.5rem
     margin-top: 1rem
 
 
@@ -83,7 +93,7 @@ navbar
     list-style-type: none
     padding-left: 0
 
-@media (width < 700px)
+  @media (width < 700px)
   .species
     grid-template-columns: 100%
     grid-template-rows: auto auto
@@ -95,7 +105,7 @@ navbar
       grid-area: top
 
 footer
-  margin-top: 200pt
+  margin-top: 5rem
   img
-    width: 2rem
-    height: 2rem
+    width: 5rem
+    height: 5rem

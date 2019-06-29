@@ -1,21 +1,30 @@
 <% content_for :title do %>
-  Pick your taxon
+  Pick your Herp
 <% end %>
 
 <h2>Pick your Herp</h2>
 <ul id="pick_taxons">
   <% @taxons.each do |txn| %>
-
-    <li>
-
-      <%= image_tag txn.photo.url  %>
-      <%= link_to quiz_pick_region_path(txn), class: 'main' do %>
+    <%= link_to quiz_pick_region_path(txn), class: 'main_link_wrap' do %>
+      <li>
+        <%= image_tag txn.photo.url %>
         <div class="prebutton">
-        <%= button_tag do %>
-          <h3><%= txn.common_names[0].name %></h3>
-        <% end %>
+          <%= button_tag do %>
+            <h3><%= txn.common_names[0].name %></h3>
+          <% end %>
         </div>
-      <% end %>
-    </li>
+      </li>
+    <% end %>
   <% end %>
 </ul>
+<div class="center">
+<% if @taxons.size != Taxon.roots.size %>
+
+    <%= link_to "More", quiz_pick_taxon_all_path, class: 'main' %>
+
+<% else %>
+
+    <%= link_to "Less", quiz_pick_taxon_path, class: 'main' %>
+
+
+<% end %></div>

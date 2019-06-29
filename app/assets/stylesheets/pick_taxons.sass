@@ -1,2 +1,42 @@
-img
-  width: 300px
+@import 'vars'
+
+#pick_region
+  list-style: none
+  padding-left: 0
+  text-align: center
+  a
+    color: white
+
+#pick_taxons
+  margin-bottom: 4rem
+  list-style: none
+  padding-left: 0
+  li
+    width: 100%
+    display: grid
+    grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr)
+    grid-template-areas: 'left right'
+    grid-column-gap: 1rem
+    margin-top: 3rem
+    img
+      grid-area: left
+      box-shadow: -.8rem .8rem $blue
+      max-width: 100%
+      min-width: 100%
+    .prebutton
+      grid-area: right
+      background: linear-gradient(to right, $dark-green, $blue)
+      text-decoration: underline
+      &:hover
+        background: linear-gradient(to left, $dark-green, $blue)
+        h3
+          color: $dark-blue
+      button
+        padding: .5rem
+        margin-top: .5rem
+        width: 100%
+        background-color: $light-green
+        border: solid 1rem transparent
+        height: 100%
+        &:hover
+          cursor: pointer
