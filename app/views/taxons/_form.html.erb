@@ -1,0 +1,27 @@
+<%= form_with(model: taxon, local: true) do |form| %>
+  <% if taxon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(taxon.errors.count, "error") %> prohibited this user_species_datum from being saved:</h2>
+
+      <ul>
+        <% taxon.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :photo %>
+    <%= form.file_field :photo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

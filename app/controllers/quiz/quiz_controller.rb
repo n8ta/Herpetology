@@ -32,18 +32,6 @@ module Quiz
       specie_m = Taxon.all.species.find(session[:specie_id])
       sci_correct = session[:sci_index].to_s == body['sci_guess']
       common_correct = session[:common_index].to_s == body['common_guess']
-      if sci_correct and common_correct
-
-        message = "Both correct!"
-      elsif sci_correct
-        message = "You got the scientific name correct but not the common"
-      elsif common_correct
-        message = "You got the common name correct but not the scientific"
-      else
-        message = "Zero for two I'm afraid"
-      end
-      puts "---"
-      puts sci_correct, common_correct
       old_sci_index = session[:sci_index]
       old_common_index = session[:common_index]
       hash_and_specie = specie_hash(species)
@@ -56,7 +44,8 @@ module Quiz
           'next_image_path': photo.image_path.url,
           'correct_sci_index': old_sci_index,
           'correct_common_index': old_common_index,
-          'message': message,
+          'sci_correct': sci_correct,
+          'common_correct': common_correct,
       }
       datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
       if current_user

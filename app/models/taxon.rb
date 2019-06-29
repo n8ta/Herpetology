@@ -1,4 +1,7 @@
 class Taxon < ApplicationRecord
+
+  mount_uploader :photo, TaxonPhotoUploader
+
   belongs_to :taxon, optional: true
   belongs_to :taxon, class_name: 'Taxon', :foreign_key => :root_taxon_id, optional: true
 

@@ -2,9 +2,20 @@
   Pick your taxon
 <% end %>
 
-<h2>Pick your Taxon</h2>
-<ul>
+<h2>Pick your Herp</h2>
+<ul id="pick_taxons">
   <% @taxons.each do |txn| %>
-    <li><%= link_to txn.common_names[0].name, quiz_pick_region_path(txn) %></li>
+
+    <li>
+
+      <%= image_tag txn.photo.url  %>
+      <%= link_to quiz_pick_region_path(txn), class: 'main' do %>
+        <div class="prebutton">
+        <%= button_tag do %>
+          <h3><%= txn.common_names[0].name %></h3>
+        <% end %>
+        </div>
+      <% end %>
+    </li>
   <% end %>
 </ul>

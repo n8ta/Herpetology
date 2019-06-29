@@ -12,13 +12,13 @@
   <%= @taxon.common_names[0].name %> in <%= @region.name %>
 <% end %>
 
-<h2><%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %> > <%= region_array.html_safe %></h2>
+<h2><%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %> >
+  <%= region_array.html_safe %>
+  <%= " "+@region.taxons.species.where(root_taxon_id: @taxon.id).size.to_s %> species
+</h2>
 
 <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
 
-<p>Currently we have <%= @species.length %> species in this region with photos
-  and <%= @region.taxons.species.where(root_taxon_id: @taxon.id).size %> total</p>
-<p><strong>Warning </strong>: There are photos of dead animals and a significant number of snakes that were hit by vehciles. </p>
 <hr>
 <%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
                                       options: @options}) %>

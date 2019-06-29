@@ -149,7 +149,8 @@ class SpeciesPicker extends React.Component {
                 sci_correct_index: result['correct_sci_index'],
                 common_correct_index: result['correct_common_index'],
                 mode: 'answered',
-                message: result['message']
+                sci_correct: result['sci_correct'],
+                common_correct: result['common_correct'],
             });
             this.preload(result['next_image_path']);
         })
@@ -173,7 +174,21 @@ class SpeciesPicker extends React.Component {
         if (this.state.mode == "answered") {
             right = <Datum className={'column'} image_path={this.state.prev_image_path}
                            species_id={this.state.species_id}></Datum>;
-            message = this.state.message;
+
+
+            let sci = <span className={"incorrect"}>Scientific ✗</span>;
+            let common=<span className={"incorrect"}> Common ✗</span>;
+            if (this.state.sci_correct) {
+                sci = <span className={"correct"}>Scientific ✓</span>
+            }
+
+            if (this.state.common_correct) {
+                common=<span className={"correct"}> Common ✓</span>
+            }
+
+
+
+            message = <span>{sci} {common}</span>
         } else {
             right = <Zoom url={this.state.image_path}/>
         }

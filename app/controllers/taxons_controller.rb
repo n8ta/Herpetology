@@ -9,6 +9,13 @@ class TaxonsController < ApplicationController
     @taxons = Taxon.where(taxon: nil)
   end
 
+  def edit
+  end
+
+  def update
+    @taxon.update(taxon_params)
+    redirect_to taxon_path(@taxon)
+  end
 
   private
 
@@ -18,7 +25,7 @@ class TaxonsController < ApplicationController
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
-  def region_params
-    params.require(:taxon).permit(:name)
+  def taxon_params
+    params.require(:taxon).permit(:name, :photo)
   end
 end

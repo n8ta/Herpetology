@@ -24,7 +24,7 @@
 <body>
 
 <navbar>
-  <a href="/"><h1>HerpID </h1></a>
+  <a href="/"><h1>HerpID</h1></a>
   <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>
   <% if current_user %>
     <%#= react_component('Scoreboard', {'id': current_user.id}) %>
@@ -38,16 +38,19 @@
 
 <footer>
   <hr>
+  <p><strong>Warning </strong>: There are photos of dead animals and a significant number of snakes that were hit by vehciles. </p>
+
   <% if not current_user.nil? %>
     <p>Hi <%= current_user.username %>   <%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
   <% else %>
     <p><a href="/users/sign_up">Sign Up</a> <a href="/users/sign_in">Sign In</a></p>
   <% end %>
-
   <p>HerpID <%= ENV['herpid_version'] %> Alpha</br>
     This is an alpha and as such everything is up in the air.
     <br/>Report any bugs or cool feature ideas on github</p>
   <a href="https://github.com/n8ta/SnakeID"><img src="<%= asset_path('github.png') %>"></a>
+
+
 </footer>
 </body>
 </html>
