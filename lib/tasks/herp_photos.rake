@@ -4,15 +4,8 @@ namespace :imports do
   task herp_photos: :environment do
     done = 0
     puts "Staring import of herp mapper photos"
-
-    q = Queue.new
     base = '/herpmapper2/species/'
     # base = '/Users/n8ta/Desktop/herp2/species'
-
-    Dir.entries(base).each do |species_dir|
-      q << species_dir
-    end
-
 
     def handle_dir(species_dir)
       base = '/herpmapper2/species/'
@@ -51,26 +44,9 @@ namespace :imports do
     end
 
 
-    threads = []
-    for x in 0..0
-      threads << Thread.new {
-        while q.length != 0
-          species_dir = q.pop
-          puts "done: "+done.to_s
-          begin
-            handle_dir(species_dir)
-            done += 1
-          rescue
-            q << page
-          end
-        end
-      }
+    Dir.entries(base).each do |species_dir|
+      handle_dir(species_dir)
     end
-
-    threads.each do |thr|
-      thr.join()
-    end
-
 
 
   end
