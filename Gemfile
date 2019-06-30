@@ -7,6 +7,10 @@ gem 'fog-aws'
 gem 'dotenv-rails'
 gem 'webpacker'
 gem 'react-rails'
+
+gem "memory_profiler"
+gem "derailed_benchmarks"
+
 gem 'uglifier', '>= 1.3.0'
 gem 'redd'
 gem 'httparty'
