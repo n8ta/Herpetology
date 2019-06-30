@@ -86,7 +86,7 @@ module Quiz
 
 
     def specie_hash(species)
-      if species.length < 6
+      if species.length < 5
         raise "Not enough species"
       end
       len = species.length
@@ -94,7 +94,7 @@ module Quiz
       picked = [correct_specie]
       hash_data = {'sci' => [], 'common' => []}
       i = 0
-      while (picked.length < 7) and (i < 100)
+      while (picked.length < 4) and (i < 100)
         i += 1
         trial_specie = species[rand(len)]
         unless picked.include?(trial_specie)

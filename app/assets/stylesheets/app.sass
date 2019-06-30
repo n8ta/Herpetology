@@ -1,5 +1,13 @@
 @import 'vars'
 
+#breadcrumb
+  margin-bottom: 2rem
+  &,h2, a
+    color: white
+  .subhead
+    font-size: .8em
+    margin-left: .2em
+
 body
   display: grid
   grid-template-rows: auto auto
@@ -29,7 +37,7 @@ body
   a
     text-decoration: none
   h1
-    margin-bottom: -1.5rem
+    margin-bottom: -2rem
     margin-top: 1rem
 
 
@@ -45,64 +53,83 @@ body
 
 
 .species
-  display: grid
-  grid-template-columns: auto minmax(2rem,32rem) minmax(2rem,32rem) auto
-  grid-column-gap: .5rem
-  grid-row-gap: .5rem
-  grid-template-areas: '. left right .'
-  .spec-left
-    h2
-      margin-bottom: 0
-    grid-area: left
-    margin-right: 1rem
-    .spec-buttons
-      display: grid
-      grid-template-columns: 50% 50%
-      ul
-        grid-template-area: auto
-        flex-basis: 50%
-      ul:first-child
-        margin-right: .2em
-  .spec-right
-    grid-area: right
-  .correct
-    color: darkgreen
-  .incorrect
-    color: darkred
-  .guess
-    color: black
-  button
-    width: 100%
-    background-color: lightblue
-    padding: .2rem .2rem .2rem .4rem
-    margin: .2rem
-    text-align: left
-    font-size: 1.1rem
-    .correct
-      background-color: green
-    .incorrect
-      bakcground-color: red
-  &[type='disabled']
-    background-color: grey
-  #next
-    color: black
-    background-color: lightgreen
-  .sci_name
-    font-style: italic
-  ul
+  li
+    list-style: none
     list-style-type: none
-    padding-left: 0
+    padding: 0 !important
+    background: linear-gradient(to right, $dark-green, $blue)
+    &:hover, button:hover
+      background: linear-gradient(to left, $dark-green, $blue)
+    button
+      margin-top: .5rem
+      width: 100%
+      background-color: $light-green
+      border: solid 1rem transparent
+      height: 100%
+      .correct
+        background-color: green
+      .incorrect
+        bakcground-color: red
+      &[type='disabled']
+        background-color: grey
+      &:hover
 
-  @media (width < 700px)
-  .species
-    grid-template-columns: 100%
-    grid-template-rows: auto auto
-    grid-row-gap: 1rem
-    grid-template-areas: 'top' 'bottom'
-    .spec-left
-      grid-area: bottom
-    .spec-right
-      grid-area: top
+  .two-col
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-column-gap: 1rem
+    div
+      grid-area: auto
+
+
+
+//.species
+//  display: grid
+//  grid-template-columns: auto minmax(2rem,32rem) minmax(2rem,32rem) auto
+//  grid-column-gap: .5rem
+//  grid-row-gap: .5rem
+//  grid-template-areas: '. left right .'
+//  .spec-left
+//    h2
+//      margin-bottom: 0
+//    grid-area: left
+//    margin-right: 1rem
+//    .spec-buttons
+//      display: grid
+//      grid-template-columns: 50% 50%
+//      ul
+//        grid-template-area: auto
+//        flex-basis: 50%
+//      ul:first-child
+//        margin-right: .2em
+//  .spec-right
+//    grid-area: right
+//  .correct
+//    color: darkgreen
+//  .incorrect
+//    color: darkred
+//  .guess
+//    color: black
+
+//  #next
+//    color: black
+//    background-color: lightgreen
+//  .sci_name
+//    font-style: italic
+//  ul
+//    list-style-type: none
+//    padding-left: 0
+//
+//  @media (width < 700px)
+//  .species
+//    grid-template-columns: 100%
+//    grid-template-rows: auto auto
+//    grid-row-gap: 1rem
+//    grid-template-areas: 'top' 'bottom'
+//    .spec-left
+//      grid-area: bottom
+//    .spec-right
+//      grid-area: top
 
 footer
   margin-top: 5rem

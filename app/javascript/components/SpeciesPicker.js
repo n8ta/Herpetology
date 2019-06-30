@@ -125,7 +125,7 @@ class SpeciesPicker extends React.Component {
             'common_guess': this.state.common_chosen || index, // SetState is async so we may not have it in the state yet, so if it's undefined use the index
             'sci_guess': this.state.sci_chosen || index,
         };
-        console.log("data:",data);
+        console.log("data:", data);
         fetch(window.location, {
             method: 'POST',
             headers: {
@@ -162,51 +162,50 @@ class SpeciesPicker extends React.Component {
         let common_options = options['common'];
         let next_button = '';
         let message = '';
+        let left = '';
         let right = '';
         if (this.state.mode == 'loading') {
-            message = "Loading";
+            message = "Loading"
         } else if (this.state.mode == 'answered') {
             message = <span className={'correct'}>Correct!</span>;
             next_button = <button onClick={this.next} id={'next'}>Next</button>
         } else if (this.state.mode == 'waiting') {
-            message = "Make your best guess for scientific and common names"
+            left = sci_options;
+            right= common_options;
         }
         if (this.state.mode == "answered") {
-            right = <Datum className={'column'} image_path={this.state.prev_image_path}
-                           species_id={this.state.species_id}></Datum>;
-
-
             let sci = <span className={"incorrect"}>Scientific ✗</span>;
-            let common=<span className={"incorrect"}> Common ✗</span>;
+            let common = <span className={"incorrect"}> Common ✗</span>;
             if (this.state.sci_correct) {
                 sci = <span className={"correct"}>Scientific ✓</span>
             }
 
             if (this.state.common_correct) {
-                common=<span className={"correct"}> Common ✓</span>
+                common = <span className={"correct"}> Common ✓</span>
             }
 
 
-
             message = <span>{sci} {common}</span>
-        } else {
-            right = <Zoom url={this.state.image_path}/>
         }
         return (
             <div className="species">
-                <div className="spec-right">
-                    {right}
-                </div>
-                <div className="spec-left">
-                    <h2>{message}</h2>
-                    <div className='spec-buttons'>
-                        <ul>{sci_options}</ul>
-                        <ul>{common_options}</ul>
-                    </div>
-                    {next_button}
 
-                    <br/>
+                <Zoom url={this.state.image_path}/>
+                <div className={'two-col'}>
+                    <div>
+                        <h4>Scientific</h4>
+                        {left}
+                    </div>
+                    <div>
+                        <h4>Common</h4>
+                        {right}
+                    </div>
+
                 </div>
+
+                {next_button}
+
+                <br/>
 
             </div>
         )

@@ -1,24 +1,25 @@
 <% region_array = []
-  cur = @region
- while cur != nil
-   region_array << cur
-   cur=cur.region
- end
-  region_array = region_array.reverse
-  region_array = region_array.map { |ra| "<a href='#{quiz_game_path(@taxon,ra)}'>#{ra.name}</a>" }.join(" > ")
+   cur = @region
+   while cur != nil
+     region_array << cur
+     cur = cur.region
+   end
+   region_array = region_array.reverse
+   region_array = region_array.map {|ra| "<a href='#{quiz_game_path(@taxon, ra)}'>#{ra.name}</a>"}.join(" > ")
 %>
 
 <% content_for :title do %>
   <%= @taxon.common_names[0].name %> in <%= @region.name %>
 <% end %>
 
-<h2><%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %> >
-  <%= region_array.html_safe %>
-  <%= " "+@region.taxons.species.where(root_taxon_id: @taxon.id).size.to_s %> species
-</h2>
+<div id="breadcrumb">
+  <h2><%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %> >
+    <%= region_array.html_safe %>
+    <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id).size.to_s %> species</span>
+  </h2>
+</div>
 
-<%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
+<%#= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
 
-<hr>
 <%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
                                       options: @options}) %>
