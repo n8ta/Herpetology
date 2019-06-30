@@ -7,6 +7,7 @@ namespace :imports do
 
     q = Queue.new
     base = '/herpmapper2/species/'
+    # base = '/Users/n8ta/Desktop/herp2/species'
 
     Dir.entries(base).each do |species_dir|
       q << species_dir
@@ -28,7 +29,7 @@ namespace :imports do
 
             if photo_name[0] == 'a'
               photo.dead = false
-            elsif photo_name[1] == 'd'
+            elsif photo_name[0] == 'd'
               photo.dead = true
             end
 
