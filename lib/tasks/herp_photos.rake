@@ -15,7 +15,7 @@ namespace :imports do
 
 
     def handle_dir(species_dir)
-      base = '/Users/n8ta/Desktop/herp2/species/'
+      base = '/herpmapper2/species/'
       return if species_dir == "." or species_dir == ".." or species_dir == ".DS_Store"
       name = species_dir.titleize
       begin
