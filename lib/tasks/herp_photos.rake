@@ -45,8 +45,11 @@ namespace :imports do
       end
     end
 
-
+    done = 0
+    len = Dir.entries(base).count
     Dir.entries(base).each do |species_dir|
+      done += 1
+      puts len.to_s +"_"+done.to_s
       handle_dir(species_dir,base)
     end
 
