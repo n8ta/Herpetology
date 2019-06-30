@@ -13,6 +13,7 @@ namespace :imports do
       name = species_dir.titleize
       begin
         specie = Taxon.find_by(name: name)
+        puts "Specie: "+specie.inspect
         Dir.entries(base + species_dir).each do |photo_name|
           begin
             next if photo_name == "." or photo_name == ".." or species_dir == ".DS_Store"
