@@ -8,10 +8,6 @@ gem 'dotenv-rails'
 gem 'webpacker'
 gem 'react-rails'
 
-group :production do
-  gem 'jemalloc'
-end
-
 gem 'uglifier', '>= 1.3.0'
 gem 'redd'
 gem 'httparty'
