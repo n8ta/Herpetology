@@ -6,7 +6,7 @@ namespace :imports do
     puts "Staring import of herp mapper photos"
 
     q = Queue.new
-    base = '/Users/n8ta/Desktop/herp2/species/'
+    base = '/herpmapper2/species/'
 
     Dir.entries(base).each do |species_dir|
       q << species_dir
