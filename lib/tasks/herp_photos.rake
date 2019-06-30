@@ -52,7 +52,7 @@ namespace :imports do
 
 
     threads = []
-    for x in 0..6
+    for x in 0..0
       threads << Thread.new {
         while q.length != 0
           species_dir = q.pop
