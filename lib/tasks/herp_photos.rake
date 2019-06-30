@@ -4,11 +4,11 @@ namespace :imports do
   task herp_photos: :environment do
     done = 0
     puts "Staring import of herp mapper photos"
-    base = '/herpmapper2/species'
-    # base = '/Users/n8ta/Desktop/herp2/species'
+    base = '/herpmapper2/species/'
+    # base = '/Users/n8ta/Desktop/herp2/species/'
 
-    def handle_dir(species_dir)
-      base = '/herpmapper2/species'
+    def handle_dir(species_dir,base)
+      # base = '/herpmapper2/species'
       return if species_dir == "." or species_dir == ".." or species_dir == ".DS_Store"
       name = species_dir.titleize
       begin
@@ -31,14 +31,15 @@ namespace :imports do
             photo.image_path = Pathname.new(path).open
             photo.save!
           rescue => e
-            puts e
-            logger.error e.message
-            logger.error e.backtrace.join("\n")
+            puts e.message
+            puts e.backtrace.join("\n")
             puts "Failed on " + species_dir.to_s + " " + photo_name.to_s
             next
           end
         end
-      rescue error
+      rescue => error
+        puts error.message
+        puts error.backtrace.join("\n")
         puts "Failed on: " + species_dir.to_s
         return
       end
@@ -46,7 +47,7 @@ namespace :imports do
 
 
     Dir.entries(base).each do |species_dir|
-      handle_dir(species_dir)
+      handle_dir(species_dir,base)
     end
 
 
