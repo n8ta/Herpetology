@@ -8,3 +8,5 @@ Rake::Task['maintence:update_regions_root_taxons_table'].invoke
 
 ## Store whether or not a taxon has been photographed on the model, against denormalizes but necessary for speed
 Rake::Task['maintence:update_taxon_validity'].invoke
+
+Rake::Task['imports:root_taxon_photos']
