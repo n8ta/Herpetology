@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_29_011226) do
+ActiveRecord::Schema.define(version: 2019_06_30_193455) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2019_06_29_011226) do
     t.bigint "correct", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "dead", default: false
     t.index ["taxon_id"], name: "index_photos_on_taxon_id"
   end
 

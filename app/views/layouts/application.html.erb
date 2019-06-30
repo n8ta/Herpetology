@@ -36,6 +36,10 @@
   <% if current_user %>
     <%#= react_component('Scoreboard', {'id': current_user.id}) %>
   <% end %>
+
+</div>
+<div id="breadcrumb">
+  <%= yield :breadcrumb %>
 </div>
 
 <div id="content">

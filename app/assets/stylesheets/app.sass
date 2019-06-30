@@ -1,18 +1,10 @@
 @import 'vars'
 
-#breadcrumb
-  margin-bottom: 2rem
-  &,h2, a
-    color: white
-  .subhead
-    font-size: .8em
-    margin-left: .2em
-
 body
   display: grid
-  grid-template-rows: auto auto
-  grid-template-columns: auto minmax(30rem,75rem) auto
-  grid-template-areas: '. logo .' '. content .'
+  grid-template-rows: auto min-content auto
+  grid-template-columns: auto minmax(30rem,75rem)  auto
+  grid-template-areas: '. logo .' ' . breadcrumb .' '. content .'
   padding: 0
   margin: 0
   font-size: 1.2rem
@@ -28,7 +20,6 @@ body
 #logo
   background-color: $dark-green
   text-align: center
-  border-bottom: 1rem solid $darker-green
   #info
     font-size: .8em
     color: black
@@ -37,9 +28,20 @@ body
   a
     text-decoration: none
   h1
-    margin-bottom: -2rem
-    margin-top: 1rem
-
+    //margin-bottom: -2rem
+#breadcrumb
+  grid-area: breadcrumb
+  padding: 1rem 2rem 1rem 2rem
+  background-color: $darker-green
+  img
+    height: 2.5rem
+  &,h2, a
+    color: white
+  .subhead
+    font-size: .8em
+    margin-left: .2em
+  a:hover
+    color: $light-green
 
 .tier-list
   display: flex
@@ -53,83 +55,75 @@ body
 
 
 .species
+  h4
+    .correct
+      font-weight: 900
+      color: $darker-green
+      text-shadow: .1rem -.1rem .5rem white, .1rem .1rem .5rem white, -.1rem .1rem white
+    .incorrect
+      font-weight: 700
+      color: darkred
+  button[disabled=disabled], button:disabled
+      color: $mid-green
   li
     list-style: none
     list-style-type: none
-    padding: 0 !important
+    margin-top: 1rem
     background: linear-gradient(to right, $dark-green, $blue)
-    &:hover, button:hover
+    &:hover
       background: linear-gradient(to left, $dark-green, $blue)
+    &.correct
+      button
+        font-weight: 700
+        color: $darker-green
+    &.incorrect
+      button
+        color: darkred
+        font-weight: 700
+    &.guess
+      button
+        background-color: $dark-green
+        color: white
+        font-weight: 900
+    &:hover
+      button
+        background-color: $dark-green
+    &:active
+      button
+        background-color: $darker-green
     button
-      margin-top: .5rem
       width: 100%
       background-color: $light-green
-      border: solid 1rem transparent
-      height: 100%
-      .correct
-        background-color: green
-      .incorrect
-        bakcground-color: red
-      &[type='disabled']
-        background-color: grey
-      &:hover
+      border: solid 1.3rem transparent
+      margin-top: .3rem
 
   .two-col
+    min-height: 55rem
     display: grid
     grid-template-columns: 1fr 1fr
     grid-column-gap: 1rem
     div
       grid-area: auto
+  #next
+    position: fixed
+    left: 0
+    right: 0
+    bottom: 3rem
+    button
+      background-color: $dark-green
+      border: 0
+      color: white
+      padding: 1rem 2rem 1rem 2rem
+      border-radius: 3rem
+      &:hover
+        background-color: $darker-green
+        color: $brown
+      &:active
+        background-color: $brown
+        color: white
+      box-shadow: white .1rem .1rem 1rem, white -.1rem -.1rem 1rem, white -.1rem .1rem 1rem, white .1rem -.1rem 1rem
 
 
-
-//.species
-//  display: grid
-//  grid-template-columns: auto minmax(2rem,32rem) minmax(2rem,32rem) auto
-//  grid-column-gap: .5rem
-//  grid-row-gap: .5rem
-//  grid-template-areas: '. left right .'
-//  .spec-left
-//    h2
-//      margin-bottom: 0
-//    grid-area: left
-//    margin-right: 1rem
-//    .spec-buttons
-//      display: grid
-//      grid-template-columns: 50% 50%
-//      ul
-//        grid-template-area: auto
-//        flex-basis: 50%
-//      ul:first-child
-//        margin-right: .2em
-//  .spec-right
-//    grid-area: right
-//  .correct
-//    color: darkgreen
-//  .incorrect
-//    color: darkred
-//  .guess
-//    color: black
-
-//  #next
-//    color: black
-//    background-color: lightgreen
-//  .sci_name
-//    font-style: italic
-//  ul
-//    list-style-type: none
-//    padding-left: 0
-//
-//  @media (width < 700px)
-//  .species
-//    grid-template-columns: 100%
-//    grid-template-rows: auto auto
-//    grid-row-gap: 1rem
-//    grid-template-areas: 'top' 'bottom'
-//    .spec-left
-//      grid-area: bottom
-//    .spec-right
-//      grid-area: top
 
 footer
   margin-top: 5rem

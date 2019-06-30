@@ -8,8 +8,9 @@ gem 'dotenv-rails'
 gem 'webpacker'
 gem 'react-rails'
 
-gem "memory_profiler"
-gem "derailed_benchmarks"
+group :production do
+  gem 'jemalloc'
+end
 
 gem 'uglifier', '>= 1.3.0'
 gem 'redd'
@@ -25,7 +26,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'carrierwave', '~> 1.0'
 gem 'devise'
 gem 'nokogiri'
-gem 'bloomer'
 gem 'mysql2'
 
 group :development, :test do
@@ -37,6 +37,4 @@ group :development do
   gem 'ruby-debug-ide', '~> 0.6.1'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
 end

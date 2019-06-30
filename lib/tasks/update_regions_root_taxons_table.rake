@@ -1,7 +1,8 @@
 namespace :maintence do
   desc "Download regions from herpmapper"
   task update_regions_root_taxons_table: :environment do
-    puts "Taxons"+Taxon.all.count.to_s
+    puts "Maintence: update regions for root taxons"
+    puts "Taxons"+Taxon.roots.count.to_s
     x = 0
     Taxon.all.roots.each do |txn|
       puts x

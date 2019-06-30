@@ -18,16 +18,21 @@
   font-weight: normal
   font-style: normal
 
+@font-face
+  font-family: 'bd-old-book'
+  src: url('/fonts/bd72oldbook.otf') format('otf'), url('/fonts/bd72oldbook.woff') format('woff'), url('/fonts/bd72oldbook.woff2') format('woff2')
+  font-weight: normal
+  font-style: normal
+
+*
+  font-family: bd-old-book
+  font-size: 2rem
+
 html
   font-size: 62.5%
 
-body
-  font-size: 3rem
-  color: black
-
-
 #breadcrumb
-  h2
+  *
     font-size: 3rem
 
 h1,h2,h3,h4
@@ -40,31 +45,41 @@ h1
   color: white
   font-size: 8rem
 
-h2
+h2, a h2, h2 a
   font-family: bd-book-italic
   color: white
+
+h2
   font-size: 5rem
 
 h3
   color: $brown
-  font-size: 2.5rem
+  font-size: 3.5rem
   font-family: bd-smallcap-book
 
-h4
+h4, h4 *
   color: white
-  font-size: 2.5rem
+  font-size: 3rem
   font-family: bd-book-italic
 
+button
+  letter-spacing: .03rem
 
 body
   color: $brown
+  font-size: 2rem
   background-color: $mid-green
+
+button.main
+  font-family: bd-smallcap-book
 
 a
   font-family: bd-smallcap-book
-  color: $brown
+  color: white
   &:hover
-    color: $darker-green !important
+    color: $darker-green
+  &.main
+    font-size: 2.5rem
 
 .center
   display: flex
@@ -73,5 +88,5 @@ a
 
 
 @media (width > 35rem)
-  h3
-    font-size: 4rem !important
+  *
+    font-size: 3rem

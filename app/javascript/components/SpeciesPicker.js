@@ -24,9 +24,8 @@ class SpeciesPicker extends React.Component {
 
     gen_options() {
         let options = {'sci': [], 'common': []};
-        let sci_disabled = this.state.mode == 'answered' || this.state.mode == "loading" || this.state.sci_chosen != undefined;
-        let common_disabled = this.state.mode == 'answered' || this.state.mode == "loading" || this.state.common_chosen != undefined;
-
+        let sci_disabled =  this.state.mode == 'answered' || this.state.mode == "loading" || this.state.sci_chosen != undefined ? "disabled" : ""
+        let common_disabled = this.state.mode == 'answered' || this.state.mode == "loading" || this.state.common_chosen != undefined ? "disabled" : ""
         for (let i = 0; i < this.state.options['sci'].length; i++) {
             let tmp = i;
             let sci_btn_class = "";
@@ -58,17 +57,19 @@ class SpeciesPicker extends React.Component {
                 }
             }
 
+            console.log("disabled: ",sci_disabled,common_disabled);
+
             options['sci'].push(
-                <li key={i}>
-                    <button className={sci_btn_class} disabled={sci_disabled} data-type={'sci'} data-index={i}
+                <li key={i} className={sci_btn_class}>
+                    <button disabled={sci_disabled} data-type={'sci'} data-index={i}
                             onClick={this.handleClick}>
                         <span className="common_name">{this.state.options['sci'][i]}</span>
                     </button>
                 </li>);
 
             options['common'].push(
-                <li key={i}>
-                    <button className={common_btn_class} disabled={common_disabled} data-type={'common'} data-index={i}
+                <li key={i} className={common_btn_class}>
+                    <button disabled={common_disabled} data-type={'common'} data-index={i}
                             onClick={this.handleClick}>
                         <span className="sci_name">{this.state.options['common'][i]}</span>
                     </button>
@@ -164,40 +165,37 @@ class SpeciesPicker extends React.Component {
         let message = '';
         let left = '';
         let right = '';
+        let left_title = "Scientific";
+        let right_title = "Common";
         if (this.state.mode == 'loading') {
             message = "Loading"
         } else if (this.state.mode == 'answered') {
-            message = <span className={'correct'}>Correct!</span>;
-            next_button = <button onClick={this.next} id={'next'}>Next</button>
+            next_button = <div id={'next'} class="center"><button className={'main'} onClick={this.next}>Next</button></div>;
+            left = sci_options;
+            right= common_options;
+            left_title = <span className={"incorrect"}>Scientific ✗</span>;
+            right_title= <span className={"incorrect"}> Common ✗</span>;
+            if (this.state.sci_correct) {
+                left_title = <span className={"correct"}>Scientific ✓</span>;
+            }
+            if (this.state.common_correct) {
+                right_title = <span className={"correct"}> Common ✓</span>;
+            }
         } else if (this.state.mode == 'waiting') {
             left = sci_options;
             right= common_options;
-        }
-        if (this.state.mode == "answered") {
-            let sci = <span className={"incorrect"}>Scientific ✗</span>;
-            let common = <span className={"incorrect"}> Common ✗</span>;
-            if (this.state.sci_correct) {
-                sci = <span className={"correct"}>Scientific ✓</span>
-            }
-
-            if (this.state.common_correct) {
-                common = <span className={"correct"}> Common ✓</span>
-            }
-
-
-            message = <span>{sci} {common}</span>
         }
         return (
             <div className="species">
 
                 <Zoom url={this.state.image_path}/>
-                <div className={'two-col'}>
+                <div className={['two-col', this.state.mode].join(' ')}>
                     <div>
-                        <h4>Scientific</h4>
+                        <h4>{left_title}</h4>
                         {left}
                     </div>
                     <div>
-                        <h4>Common</h4>
+                        <h4>{right_title}</h4>
                         {right}
                     </div>
 
