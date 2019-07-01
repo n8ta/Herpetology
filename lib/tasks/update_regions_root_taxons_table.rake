@@ -1,4 +1,4 @@
-namespace :maintence do
+namespace :maintenance do
   desc "Download regions from herpmapper"
   task update_regions_root_taxons_table: :environment do
     puts "Maintence: update regions for root taxons"

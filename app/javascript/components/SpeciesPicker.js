@@ -98,6 +98,7 @@ class SpeciesPicker extends React.Component {
             incorrect_index: undefined,
             sci_chosen: undefined,
             common_chosen: undefined,
+            message: undefined,
             num_chosen: 0,
         });
     }
@@ -170,7 +171,7 @@ class SpeciesPicker extends React.Component {
         if (this.state.mode == 'loading') {
             message = "Loading"
         } else if (this.state.mode == 'answered') {
-            next_button = <div id={'next'} class="center"><button className={'main'} onClick={this.next}>Next</button></div>;
+            next_button = <div id={'next'} class="center"><button className={'main'} onClick={this.next}>Next <br/></button></div>;
             left = sci_options;
             right= common_options;
             left_title = <span className={"incorrect"}>Scientific ✗</span>;

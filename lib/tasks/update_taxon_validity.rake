@@ -1,4 +1,4 @@
-namespace :maintence do
+namespace :maintenance do
   desc "Update valid bool on taxon species models"
   task update_taxon_validity: :environment do
     puts "Starting maintence: update taxon validity"

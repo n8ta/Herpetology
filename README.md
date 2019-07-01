@@ -17,7 +17,6 @@ when ready for launch. Get in touch with me if you are interested in contributin
   - Content ID
   - No Snake
   - Other
-- Fix genus species capitalization
 - Show tips on species picker after guess
 - Tip approvals
 - Tip submissions
@@ -27,7 +26,6 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - All time most accurate
 - Variable zoom on zoom-in feature 
 - Ruby version in gemfile
-- Style this shit
 - Built report system
 - All the user shit like email passwords
 - Gamification
@@ -35,6 +33,9 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Write some tests xD
 
 # Done:
+- Tag photos by dead/alive (June 31, 2019)
+- Fix genus species capitalization (June 31, 2019)
+- Style this shit (June  31, 2019)
 - Sort out very slow query in region.rb to find subregions with > 6 photograped species (June 25, 2019)
   - This ended up being one of those normalization vs speed problems and the data is quite denormalized now, upside is the queries are lightning fast (:
 - Seperate scientific name and common name accuracy (June 25, 2019)
@@ -66,8 +67,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 1. Configure rb in .env
 2. bundle install
 3. yarn install
-4. mkdir tmp/reddit; mkdir tmp/pitt; mkdir tmp/herpmapper
-5. rails db:migrate RAILS_ENV=production
-6. rails db:seed RAILS_ENV=production
+4. Request access to photos from herpmapper, modify their script to preface photos with a_ and d_ for alive/dead
+5. rails db:set RAILS_ENV=production
 7. rails assets:precompile RAILS_ENV=production 
 8. rails s -e production

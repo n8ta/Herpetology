@@ -79,7 +79,7 @@ module Quiz
     end
 
     def pick_taxon
-      @taxons = [Taxon.find(5), Taxon.find(4), Taxon.find(7), Taxon.find(2)]
+      @taxons = [Taxon.find(7), Taxon.find(5), Taxon.find(9), Taxon.find(6)]
     end
 
     private

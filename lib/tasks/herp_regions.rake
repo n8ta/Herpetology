@@ -58,25 +58,28 @@ namespace :imports do
         # nil_regions.add(region[2]) if county.nil?
         begin
           taxon.regions << country
-        rescue
-          # rescued_country += 1
+        rescue => e
+          puts e.backtrace.join("\n")
+          rescued_country += 1
         end
         begin
           taxon.regions << state
-        rescue
-          # rescued_state += 1
+        rescue => e
+          puts e.backtrace.join("\n")
+          rescued_state += 1
         end
         begin
           taxon.regions << county
-        rescue
-          # rescued_county += 1
+        rescue => e
+          puts e.backtrace.join("\n")
+          rescued_county += 1
         end
       end
       # puts "Nil regions: " + nil_regions.count.to_s
       # puts "Nil taxons:" + nil_taxons.count.to_s
-      # puts 'rescued_country: '+rescued_country.to_s
-      # puts 'rescued_state: '+rescued_state.to_s
-      # puts 'rescued_county: '+rescued_county.to_s
+      puts 'rescued_country: '+rescued_country.to_s
+      puts 'rescued_state: '+rescued_state.to_s
+      puts 'rescued_county: '+rescued_county.to_s
 
 
 

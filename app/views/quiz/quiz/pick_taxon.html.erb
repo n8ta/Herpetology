@@ -2,6 +2,10 @@
   Pick your Herp
 <% end %>
 
+<% content_for :breadcrumb  do %>
+  Practice identifying a herp in your area
+<% end %>
+
 <h2>Pick your Herp</h2>
 <ul id="pick_taxons">
   <% @taxons.each do |txn| %>

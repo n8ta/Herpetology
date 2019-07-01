@@ -26,12 +26,15 @@
 
 *
   font-family: bd-old-book
-  font-size: 2rem
+  font-size: 2.5rem
+  @media (width > 35rem)
+    font-size: 3rem
 
 html
   font-size: 62.5%
 
 #breadcrumb
+  text-align: center
   *
     font-size: 3rem
 
@@ -40,10 +43,10 @@ h1,h2,h3,h4
   padding: 0
   text-align: center
 
-h1
+h1, h1 *
   font-family: bd-bold
   color: white
-  font-size: 8rem
+  font-size: 5rem
 
 h2, a h2, h2 a
   font-family: bd-book-italic
@@ -54,7 +57,7 @@ h2
 
 h3
   color: $brown
-  font-size: 3.5rem
+  font-size: 3rem
   font-family: bd-smallcap-book
 
 h4, h4 *
@@ -85,8 +88,3 @@ a
   display: flex
   justify-content: center
   flex-direction: row
-
-
-@media (width > 35rem)
-  *
-    font-size: 3rem

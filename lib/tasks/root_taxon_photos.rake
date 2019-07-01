@@ -8,7 +8,7 @@ namespace :imports do
     (1..9).each do |num|
       txn = Taxon.find num
       ext = '.jpg'
-      ext = '.png' if num == 6 || num == 8 || num == 9
+      ext = '.png' if num == 8
       path = Rails.root.join('storage',num.to_s+ext)
       txn.photo = Pathname.new(path).open
       txn.save!

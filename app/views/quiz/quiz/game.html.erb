@@ -14,7 +14,7 @@
 
 <% content_for :breadcrumb do %>
   <h2>
-    <%= link_to image_tag('world.png'), root_path %> >
+    <%= link_to render('quiz/world'), root_path %> >
     <%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %> >
     <%= region_array.html_safe %>
     <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id).size.to_s %> species</span>

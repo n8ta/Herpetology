@@ -4,10 +4,7 @@
 
 <% content_for :breadcrumb do %>
   <h2>
-    <%= link_to root_path do %>
-      <%= render '_world' %>
-      <% end %>
-      >
+    <%= link_to root_path do %><%= render 'quiz/world' %><% end %> >
     <%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %>
   </h2>
 <% end %>
