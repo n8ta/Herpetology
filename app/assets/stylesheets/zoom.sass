@@ -1,6 +1,8 @@
 .zoom_container
   overflow: hidden
   margin-bottom: 1rem
+  display: flex
+  justify-content: center
   .zoom
     max-width: 100%
     background-size: contain
@@ -10,6 +12,6 @@
       // This is just used to size #zoom, the background of zoom is the image shown to the user
       visibility: hidden
       width: 100%
-      height: auto
+      max-height: 40vh
     &:hover
       transform: scale(2)
