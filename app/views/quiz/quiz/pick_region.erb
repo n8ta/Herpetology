@@ -11,7 +11,6 @@
 
 
 <h2>Pick your Region</h2>
-<% console %>
 <ul id="pick_region">
   <% @regions.each do |reg| %>
     <li><%= link_to reg.name, quiz_game_path(@taxon, reg) %></li>
