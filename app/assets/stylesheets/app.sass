@@ -18,6 +18,7 @@ body
     grid-area: logo
 
 #logo
+  z-index: 5
   #herpID
     color: $light-green
   background-color: $dark-green
@@ -33,21 +34,23 @@ body
     margin-bottom: -1rem
 
 #breadcrumb
-  z-index: -1
+  z-index: 0
   grid-area: breadcrumb
   padding: 1rem 2rem 1rem 2rem
   background-color: $darker-green
-  svg
+  #world
     height: 2.5rem
     fill: white
+  #world:hover
+      fill: $light-green
   &,h2, a
     color: white
   .subhead
     font-size: .5em
     margin-left: .2em
-  a:hover, svg:hover
+  h2 a:hover, h2 svg:hover
     color: $light-green !important
-    fill: $light-green
+
 
 .tier-list
   display: flex
