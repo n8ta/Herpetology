@@ -1,6 +1,7 @@
 import React from "react"
 import Zoom from './Zoom.js';
 import Name from './Name.js';
+import Signup from './Signup.js';
 import Datum from './Datum.js';
 import PropTypes from "prop-types"
 
@@ -17,9 +18,22 @@ class SpeciesPicker extends React.Component {
             num_chosen: 0,
             sci_chosen: undefined,
             common_chosen: undefined,
+            asked_about_signup: undefined,
+            iterations: 0,
         };
         this.handleClick = this.handleClick.bind(this);
         this.next = this.next.bind(this);
+
+        console.log(Cookies.get("asked_about_signup"));
+        let asked_about_signup = Cookies.get("asked_about_signup");
+        if (asked_about_signup == undefined) {
+            this.state.asked_about_signup = false;
+        } else {
+            this.state.asked_about_signup = true;
+        }
+        Cookies.get("asked_about_signup");
+
+
     }
 
     gen_options() {
@@ -37,14 +51,12 @@ class SpeciesPicker extends React.Component {
                 } else if (tmp == this.state.sci_chosen) {
                     sci_btn_class = "incorrect"
                 } else {
-                    console.log('tmp sci', tmp)
                 }
                 if (tmp == this.state.common_correct_index) {
                     common_btn_class = "correct"
                 } else if (tmp == this.state.common_chosen) {
                     common_btn_class = "incorrect"
                 } else {
-                    console.log('tmp com', tmp)
                 }
 
             } else {
@@ -57,7 +69,6 @@ class SpeciesPicker extends React.Component {
                 }
             }
 
-            console.log("disabled: ",sci_disabled,common_disabled);
 
             options['sci'].push(
                 <li key={i} className={sci_btn_class}>
@@ -85,22 +96,31 @@ class SpeciesPicker extends React.Component {
         image.src = image_path;
     }
 
-    next(e) {
-        this.setState({
-            common_name: undefined,
-            sci_name: undefined,
-            mode: 'waiting',
-            options: this.state.next_options,
-            image_path: this.state.next_image_path,
-            next_options: undefined,
-            next_image_path: undefined,
-            correct_index: undefined,
-            incorrect_index: undefined,
-            sci_chosen: undefined,
-            common_chosen: undefined,
-            message: undefined,
-            num_chosen: 0,
-        });
+    next() {
+
+        if (this.state.asked_about_signup == false && this.state.iterations == 0) {
+            // alert('asdf');
+            this.setState({mode: "signup", asked_about_signup: true});
+            // Cookies.set("asked_about_signup",true)
+        } else {
+            this.setState({
+                common_name: undefined,
+                sci_name: undefined,
+                mode: 'waiting',
+                options: this.state.next_options,
+                image_path: this.state.next_image_path,
+                next_options: undefined,
+                next_image_path: undefined,
+                correct_index: undefined,
+                incorrect_index: undefined,
+                sci_chosen: undefined,
+                common_chosen: undefined,
+                message: undefined,
+                num_chosen: 0,
+                iterations: this.state.iterations+1,
+            });
+        }
+
     }
 
     handleClick(e) {
@@ -127,7 +147,6 @@ class SpeciesPicker extends React.Component {
             'common_guess': this.state.common_chosen || index, // SetState is async so we may not have it in the state yet, so if it's undefined use the index
             'sci_guess': this.state.sci_chosen || index,
         };
-        console.log("data:", data);
         fetch(window.location, {
             method: 'POST',
             headers: {
@@ -166,12 +185,14 @@ class SpeciesPicker extends React.Component {
         let message = '';
         let left = '';
         let right = '';
+        let form = '';
         let left_title = "Scientific";
         let right_title = "Common";
+        let zoom = <Zoom url={this.state.image_path}/>
         if (this.state.mode == 'loading') {
             message = "Loading"
         } else if (this.state.mode == 'answered') {
-            next_button = <div id={'next'} class="center"><button className={'main'} onClick={this.next}>Next <br/></button></div>;
+            next_button = <div id={'next'} className={"center"}><button className={'main happypath'} onClick={this.next}>Next <br/></button></div>;
             left = sci_options;
             right= common_options;
             left_title = <span className={"incorrect"}>Scientific ✗</span>;
@@ -185,11 +206,18 @@ class SpeciesPicker extends React.Component {
         } else if (this.state.mode == 'waiting') {
             left = sci_options;
             right= common_options;
+        } else if (this.state.mode == "signup") {
+            zoom = <h4>Sign up for stats and to see species you get wrong more often</h4>;
+            form = <Signup/>;
+            left_title = "";
+            right_title = "";
+            next_button = <div id={'next'} className={"center"}><button className={'main badpath'} onClick={this.next}>No Thanks <br/></button></div>;
+
         }
         return (
             <div className="species">
-
-                <Zoom url={this.state.image_path}/>
+                {zoom}
+                {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>
                         <h4>{left_title}</h4>

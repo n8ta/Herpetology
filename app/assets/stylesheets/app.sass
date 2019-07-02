@@ -115,15 +115,21 @@ body
     grid-column-gap: 1rem
     div
       grid-area: auto
+
   #next
     position: fixed
     left: 0
     right: 0
     bottom: 3rem
+    button.happypath
+      box-shadow: white .1rem .1rem 1rem, white -.1rem -.1rem 1rem, white -.1rem .1rem 1rem, white .1rem -.1rem 1rem
+    button.badpath
+      color: $brown
     button
+      color: white
       background-color: $dark-green
       border: 0
-      color: white
+
       padding: 1rem 2rem 1rem 2rem
       border-radius: 3rem
       &:hover
@@ -132,9 +138,6 @@ body
       &:active
         background-color: $brown
         color: white
-      box-shadow: white .1rem .1rem 1rem, white -.1rem -.1rem 1rem, white -.1rem .1rem 1rem, white .1rem -.1rem 1rem
-
-
 
 footer
   margin-top: 5rem

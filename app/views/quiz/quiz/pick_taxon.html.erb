@@ -2,8 +2,12 @@
   Pick your Herp
 <% end %>
 
-<% content_for :breadcrumb  do %>
-  Practice identifying a herp in your area
+<% content_for :breadcrumb do %>
+  <% if current_user %>
+    Hi <%= current_user.username %>, welcome back.
+  <% else %>
+    Practice identifying a herp in your area
+  <% end %>
 <% end %>
 
 <h2>Pick your Herp</h2>
@@ -22,13 +26,13 @@
   <% end %>
 </ul>
 <div class="center">
-<% if @taxons.size != Taxon.roots.size %>
+  <% if @taxons.size != Taxon.roots.size %>
 
     <%= link_to "More", quiz_pick_taxon_all_path, class: 'main' %>
 
-<% else %>
+  <% else %>
 
     <%= link_to "Less", quiz_pick_taxon_path, class: 'main' %>
 
 
-<% end %></div>
+  <% end %></div>

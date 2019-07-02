@@ -35,7 +35,14 @@ module Quiz
       old_sci_index = session[:sci_index]
       old_common_index = session[:common_index]
       hash_and_specie = specie_hash(species)
-      photo = hash_and_specie[1].photos[rand(hash_and_specie[1].photos.length)]
+
+      photos = hash_and_specie[1].photos
+
+      unless current_user && current_user.show_dead_photos
+        photos = photos.where(dead: false)
+      end
+      photo = photos[rand(hash_and_specie[1].photos.length)]
+
       specie_data = {
           'sci_name': specie_m.name.to_s,
           'common_name': specie_m.common_names.any? ? specie_m.common_names[0].name.to_s : nil,

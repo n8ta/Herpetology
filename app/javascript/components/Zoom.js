@@ -51,6 +51,7 @@ class Zoom extends React.Component {
 }
 
 Zoom.propTypes = {
-    url: PropTypes.string
+    url: PropTypes.string,
+    dead: PropTypes.bool
 };
 export default Zoom
