@@ -18,8 +18,13 @@ class Signup extends React.Component {
 
         };
         console.log(auth_token);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleUsername = this.handleUsername.bind(this);
+    }
+
+    handleSubmit() {
+        Cookies.set("asked_about_signup",true,{expires: 365})
     }
 
     handleUsername() {
@@ -152,7 +157,7 @@ class Signup extends React.Component {
                     </div>
 
                     <div className="actions center">
-                        <input className={this.state.class} type="submit" name="commit" value="Sign up"
+                        <input onClick={this.handleSubmit} className={this.state.class} type="submit" name="commit" value="Sign up"
                                data-disable-with="Sign up"/>
                     </div>
                 </form>
