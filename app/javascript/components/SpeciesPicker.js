@@ -1,8 +1,6 @@
 import React from "react"
 import Zoom from './Zoom.js';
-import Name from './Name.js';
 import Signup from './Signup.js';
-import Datum from './Datum.js';
 import PropTypes from "prop-types"
 
 class SpeciesPicker extends React.Component {
@@ -20,6 +18,7 @@ class SpeciesPicker extends React.Component {
             common_chosen: undefined,
             asked_about_signup: undefined,
             iterations: 0,
+            venmous: undefined,
         };
         this.handleClick = this.handleClick.bind(this);
         this.next = this.next.bind(this);
@@ -116,6 +115,7 @@ class SpeciesPicker extends React.Component {
                 common_chosen: undefined,
                 message: undefined,
                 num_chosen: 0,
+                venomous: undefined,
                 iterations: this.state.iterations+1,
             });
         }
@@ -171,6 +171,7 @@ class SpeciesPicker extends React.Component {
                 mode: 'answered',
                 sci_correct: result['sci_correct'],
                 common_correct: result['common_correct'],
+                venomous: result['venomous'],
             });
             this.preload(result['next_image_path']);
         })
@@ -187,7 +188,8 @@ class SpeciesPicker extends React.Component {
         let form = '';
         let left_title = "Scientific";
         let right_title = "Common";
-        let zoom = <Zoom url={this.state.image_path}/>
+        let report = '';
+        let zoom = <Zoom url={this.state.image_path} venomous={this.state.venomous}/>
         if (this.state.mode == 'loading') {
             message = "Loading"
         } else if (this.state.mode == 'answered') {
@@ -202,6 +204,7 @@ class SpeciesPicker extends React.Component {
             if (this.state.common_correct) {
                 right_title = <span className={"correct"}> Common ✓</span>;
             }
+            report = <div className={'center'}> <a href='/' className={'main'}>Report a problem</a></div>
         } else if (this.state.mode == 'waiting') {
             left = sci_options;
             right= common_options;
@@ -226,7 +229,10 @@ class SpeciesPicker extends React.Component {
                         {right}
                     </div>
 
+
+
                 </div>
+                {report}
 
                 {next_button}
 

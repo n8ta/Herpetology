@@ -12,7 +12,9 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Toggle showing photos of deceased animals 
+- React component for forgot password
+- Setup email
+- Toggle showing photos of deceased animals (setting for signed in users) 
 - Reporting feature, types:
   - Content ID
   - No Snake
@@ -30,12 +32,15 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - All the user shit like email passwords
 - Gamification
 - Fit Splines
-- Write some tests xD
+- Learn to spell venemous...
+- Write some tests xD 
 
 # Done:
+- React components for sign up / sign in (July 1, 2019)
 - Tag photos by dead/alive (June 31, 2019)
 - Fix genus species capitalization (June 31, 2019)
 - Style this shit (June  31, 2019)
+- Capitalize scientific names correctly (June 26, 2019)
 - Sort out very slow query in region.rb to find subregions with > 6 photograped species (June 25, 2019)
   - This ended up being one of those normalization vs speed problems and the data is quite denormalized now, upside is the queries are lightning fast (:
 - Seperate scientific name and common name accuracy (June 25, 2019)

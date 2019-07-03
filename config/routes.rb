@@ -10,6 +10,14 @@ Rails.application.routes.draw do
     post '/users/username_available/:username' => 'users/registrations#username_available'
   end
 
+  resources :taxons, only: [] do
+    resources :regions, only: [] do
+      resources :reports, except: [:new] do
+        get 'new/:photo_id' => 'reports#new'
+      end
+    end
+  end
+
   resources :user_taxon_data, only: [:show]
 
   root :to => 'redirect#redir'

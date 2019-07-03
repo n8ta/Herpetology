@@ -43,10 +43,17 @@ module Quiz
       end
       photo = photos[rand(hash_and_specie[1].photos.length)]
 
+      venomous = specie_m.venomous
+      x = rand(2)
+      venomous = true if x == 0
+      venomous = true if x == 1
+      venomous = true if x == 2
+
       specie_data = {
           'sci_name': specie_m.name.to_s,
           'common_name': specie_m.common_names.any? ? specie_m.common_names[0].name.to_s : nil,
           'species_id': specie_m.id,
+          'venomous': venomous,
           'next_options': hash_and_specie[0],
           'next_image_path': photo.image_path.url,
           'correct_sci_index': old_sci_index,
