@@ -32,22 +32,25 @@
 
 
 <div id="logo">
-  <a href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+
   <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
   <% if current_user %>
-    <%#= react_component('Scoreboard', {'id': current_user.id}) %>
+    <a href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+    <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to 'Sign In', '/users/sign_in', method: :get %>
+    <a id='logo_anchor' href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+    <%= link_to 'Sign Up', '/users/sign_up' %>
   <% end %>
 
 </div>
 <div id="breadcrumb">
   <%= yield :breadcrumb %>
 </div>
+<div id="flash"><%= flash[:notice] %><%= flash[:alert] %></div>
 
 <div id="content">
 
-
-  <%= flash[:notice] %>
-  <%= flash[:alert] %>
 
   <%= yield %>
 

@@ -33,10 +33,22 @@
 html
   font-size: 62.5%
 
+
+#logo
+  a:not(#logo_anchor)
+    color: $mid-green
+    opacity: .3
+  a:hover
+    color: rgb(210,210,210)
+  a:active
+    color: white
+
 #breadcrumb
   text-align: center
-  *
+  *, a
     font-size: 3rem
+#flash
+  text-align: center
 
 h1,h2,h3,h4
   margin: 0

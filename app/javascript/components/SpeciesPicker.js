@@ -98,10 +98,9 @@ class SpeciesPicker extends React.Component {
 
     next() {
 
-        if (this.state.asked_about_signup == false && this.state.iterations == 0) {
-            // alert('asdf');
+        if (this.state.asked_about_signup == false && this.state.iterations == 2) {
             this.setState({mode: "signup", asked_about_signup: true});
-            Cookies.set("asked_about_signup",true,{expires: 1})
+            // Cookies.set("asked_about_signup",true,{expires: 1})
         } else {
             this.setState({
                 common_name: undefined,
@@ -207,8 +206,7 @@ class SpeciesPicker extends React.Component {
             left = sci_options;
             right= common_options;
         } else if (this.state.mode == "signup") {
-            zoom = <h4>Sign up for stats and to see species you get wrong more often</h4>;
-            form = <Signup/>;
+            zoom = <Signup/>;
             left_title = "";
             right_title = "";
             next_button = <div id={'next'} className={"center"}><button className={'main badpath'} onClick={this.next}>No Thanks <br/></button></div>;

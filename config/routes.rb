@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
 
   # resources :tips
-  devise_for :users, :controllers => { :registrations => 'users/registrations' }
+  devise_for :users, :controllers => {:registrations => 'users/registrations'} do
+  end
+
+
+  devise_scope :user do
+    post '/users/email_available/:email' => 'users/registrations#email_available'
+    post '/users/username_available/:username' => 'users/registrations#username_available'
+  end
 
   resources :user_taxon_data, only: [:show]
 
@@ -16,8 +23,6 @@ Rails.application.routes.draw do
     get 'taxon/:taxon_id/region/:region_id' => 'quiz#game', as: 'game'
     post 'taxon/:taxon_id/region/:region_id' => 'quiz#guess', as: 'guess'
   end
-
-
 
 
   resources :taxons do

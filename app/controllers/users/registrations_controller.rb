@@ -4,6 +4,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
 
+  def username_available
+    username = JSON.parse(Base64.decode64(params[:username]))
+    sleep 0.5
+    if User.find_by(username: username).nil?
+      render :json => {valid: true}
+    else
+      render :json => {valid: false}
+    end
+  end
+
+  def email_available
+    email = JSON.parse(Base64.decode64(params[:email]))
+    if User.find_by(email: email).nil?
+      render :json => {valid: true}
+    else
+      render :json => {valid: false}
+    end
+
+  end
+
+
   # GET /resource/sign_up
   def new
     super
@@ -11,6 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    session[:return_url] = params[:return_url]
     super
   end
 
@@ -52,7 +74,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    super(resource)
+    if session[:return_url] != nil
+      flash[:notice] = "You have signed up! There is no confirmation email"
+      return session[:return_url]
+    else
+      super(resource)
+    end
   end
 
   # The path used after sign up for inactive accounts.

@@ -1,10 +1,44 @@
 @import 'vars'
 
+
+.loading_anim
+  margin-top: -2rem
+  position: relative
+  background: #BCE27F
+  margin-bottom: 2rem
+
+
+.loading_anim:after
+  content: ''
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 15px
+  height: 15px
+  z-index: 999
+  border-radius: 50%
+  background: $brown
+  animation-name: loading_anim
+  animation-duration: .6s
+  animation-direction: alternate
+  animation-timing-function: ease-in-out
+  animation-iteration-count: infinite
+
+
+@keyframes loading_anim
+  0%
+    transform: translate(-72.5px, -7.5px)
+  100%
+    transform: translate(58.5px, -7.5px)
+
+
+
+
 body
   display: grid
-  grid-template-rows: auto min-content auto
+  grid-template-rows: auto min-content min-content auto
   grid-template-columns: auto minmax(30rem,75rem)  auto
-  grid-template-areas: '. logo .' ' . breadcrumb .' '. content .'
+  grid-template-areas: '. logo .' ' . breadcrumb .'  '. flash . '' . content .'
   padding: 0
   margin: 0
   font-size: 1.2rem
@@ -18,6 +52,11 @@ body
     grid-area: logo
 
 #logo
+  h1
+    margin-left: 2rem
+    margin-right: 2rem
+  display: flex
+  justify-content: center
   z-index: 5
   #herpID
     color: $light-green
@@ -29,9 +68,13 @@ body
     text-decoration-color: black
     text-decoration-style: unset
   a
+    display: flex
+    justify-content: flex-end
+    flex-direction: column
     text-decoration: none
   h1
     margin-bottom: -1rem
+
 
 #breadcrumb
   z-index: 0
@@ -51,6 +94,13 @@ body
   h2 a:hover, h2 svg:hover
     color: $light-green !important
 
+#flash
+  margin-top: 2rem
+  grid-area: flash
+  background-color: $light-green
+  padding: 1rem
+#flash:empty
+  padding: 0 !important
 
 .tier-list
   display: flex
@@ -144,3 +194,10 @@ footer
   img
     width: 5rem
     height: 5rem
+
+#new_user
+
+.lower_links
+  margin-top: 2rem
+  text-align: center
+
