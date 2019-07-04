@@ -54,20 +54,18 @@ ActiveRecord::Schema.define(version: 2019_07_04_074910) do
   end
 
   create_table "reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "taxon_id", null: false
+    t.bigint "taxon_id"
     t.bigint "photo_id", null: false
     t.boolean "handled", default: false, null: false
     t.bigint "created_by"
     t.bigint "handled_by"
-    t.bigint "suggested_taxon"
-    t.boolean "suggested_venomous"
+    t.string "venomous"
     t.boolean "no_herp", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_by"], name: "fk_rails_1bfbfccda5"
     t.index ["handled_by"], name: "fk_rails_8485fb06e7"
     t.index ["photo_id"], name: "index_reports_on_photo_id"
-    t.index ["suggested_taxon"], name: "fk_rails_9baa54541f"
     t.index ["taxon_id"], name: "index_reports_on_taxon_id"
   end
 
@@ -132,7 +130,6 @@ ActiveRecord::Schema.define(version: 2019_07_04_074910) do
   add_foreign_key "regions_taxons", "taxons"
   add_foreign_key "reports", "photos"
   add_foreign_key "reports", "taxons"
-  add_foreign_key "reports", "taxons", column: "suggested_taxon"
   add_foreign_key "reports", "users", column: "created_by"
   add_foreign_key "reports", "users", column: "handled_by"
   add_foreign_key "taxons", "taxons"

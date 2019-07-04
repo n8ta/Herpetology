@@ -36,7 +36,7 @@
   <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
   <% if current_user %>
     <a>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</a>
-    <a href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+    <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
     <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
   <% else %>
     <%= link_to 'Sign In', '/users/sign_in', method: :get %>

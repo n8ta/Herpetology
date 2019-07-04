@@ -1,5 +1,6 @@
 import React from "react"
 import Zoom from './Zoom.js';
+import Report from './Report.js';
 import Signup from './Signup.js';
 import PropTypes from "prop-types"
 
@@ -18,10 +19,10 @@ class SpeciesPicker extends React.Component {
             common_chosen: undefined,
             asked_about_signup: undefined,
             iterations: 0,
-            report_path: undefined,
             venmous: undefined,
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleReport = this.handleReport.bind(this);
         this.next = this.next.bind(this);
 
         console.log(Cookies.get("asked_about_signup"));
@@ -38,7 +39,7 @@ class SpeciesPicker extends React.Component {
 
     gen_options() {
         let options = {'sci': [], 'common': []};
-        let sci_disabled =  this.state.mode == 'answered' || this.state.mode == "loading" || this.state.sci_chosen != undefined ? "disabled" : ""
+        let sci_disabled = this.state.mode == 'answered' || this.state.mode == "loading" || this.state.sci_chosen != undefined ? "disabled" : ""
         let common_disabled = this.state.mode == 'answered' || this.state.mode == "loading" || this.state.common_chosen != undefined ? "disabled" : ""
         for (let i = 0; i < this.state.options['sci'].length; i++) {
             let tmp = i;
@@ -117,10 +118,14 @@ class SpeciesPicker extends React.Component {
                 message: undefined,
                 num_chosen: 0,
                 venomous: undefined,
-                iterations: this.state.iterations+1,
+                iterations: this.state.iterations + 1,
             });
         }
 
+    }
+
+    handleReport() {
+        this.setState({mode: 'report'})
     }
 
     handleClick(e) {
@@ -173,7 +178,7 @@ class SpeciesPicker extends React.Component {
                 sci_correct: result['sci_correct'],
                 common_correct: result['common_correct'],
                 venomous: result['venomous'],
-                report_path: result['report_path'],
+                photo_id: result['photo_id'],
             });
             this.preload(result['next_image_path']);
         })
@@ -184,7 +189,6 @@ class SpeciesPicker extends React.Component {
         let sci_options = options['sci'];
         let common_options = options['common'];
         let next_button = '';
-        let message = '';
         let left = '';
         let right = '';
         let form = '';
@@ -193,27 +197,44 @@ class SpeciesPicker extends React.Component {
         let report = '';
         let zoom = <Zoom url={this.state.image_path} venomous={this.state.venomous}/>
         if (this.state.mode == 'answered') {
-            next_button = <div id={'next'} className={"center"}><button className={'main happypath'} onClick={this.next}>Next <br/></button></div>;
+            next_button = <div id={'next'} className={"center"}>
+                <button className={'main happypath'} onClick={this.next}>Next <br/></button>
+            </div>;
             left = sci_options;
-            right= common_options;
+            right = common_options;
             left_title = <span className={"incorrect"}>Scientific ✗</span>;
-            right_title= <span className={"incorrect"}> Common ✗</span>;
+            right_title = <span className={"incorrect"}> Common ✗</span>;
             if (this.state.sci_correct) {
                 left_title = <span className={"correct"}>Scientific ✓</span>;
             }
             if (this.state.common_correct) {
                 right_title = <span className={"correct"}> Common ✓</span>;
             }
-            report = <div className={'center'}> <a href={this.state.report_path} className={'main'}>Contribute Information / Corrections</a></div>
+            report = <div onClick={this.handleReport} className={'center'}><a href={'#'}
+                                                                              className={'main'}>Somethings wrong with this ID</a></div>
         } else if (this.state.mode == 'waiting') {
             left = sci_options;
-            right= common_options;
+            right = common_options;
         } else if (this.state.mode == "signup") {
-            zoom = <Signup/>;
-            left_title = "";
-            right_title = "";
-            next_button = <div id={'next'} className={"center"}><button className={'main badpath'} onClick={this.next}>No Thanks <br/></button></div>;
-
+            return (
+                <div>
+                    <Signup/>
+                    <div id={'next'} className={"center"}>
+                        <button className={'main badpath'} onClick={this.next}>No Thanks <br/></button>
+                    </div>
+                </div>
+            )
+        } else if (this.state.mode == "report") {
+            return (
+                <div className="center">
+                    <div>
+                        <h2>New Report</h2>
+                        <Report photo_id={this.state.photo_id}
+                                url={this.state.image_path}
+                                venomous={this.state.venomous}></Report>
+                    </div>
+                </div>
+            )
         }
         return (
             <div className="species">
@@ -228,7 +249,6 @@ class SpeciesPicker extends React.Component {
                         <h4>{right_title}</h4>
                         {right}
                     </div>
-
 
 
                 </div>

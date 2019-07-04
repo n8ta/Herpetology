@@ -32,10 +32,11 @@ class ReportsController < ApplicationController
   # POST /reports.json
   def create
     parsed = report_params
-    parsed[:suggested_taxon] = Taxon.find_by(name: parsed[:suggested_taxon])
+    parsed[:taxon] = Taxon.find_by(name: parsed[:taxon])
+    parsed[:no_herp] = true if parsed[:no_herp]
+    session[:return_url] = params[:return_url]
     @report = Report.new(parsed)
     @report.created_by = current_user if current_user
-
     respond_to do |format|
       if @report.save
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
@@ -79,6 +80,6 @@ class ReportsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:type, :taxon_id, :photo_id, :suggested_taxon, :suggested_venomous)
+      params.require(:report).permit(:type, :taxon_id, :taxon, :photo_id, :venomous, :no_herp)
     end
 end

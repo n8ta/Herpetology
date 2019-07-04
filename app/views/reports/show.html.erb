@@ -1,34 +1,35 @@
-<p id="notice"><%= notice %></p>
+<% content_for :breadcrumb do %>
+  Report of <%= @report.photo.taxon.name %> <%= "by #{@report.created_by.username if @report.created_by}" %>
+<% end %>
 
-<p>
-  <strong>Created by:</strong>
-  <%= @report.created_by %>
-</p>
+<% content_for :title do "Report" end %>
 
-<p>
-  <strong>Type:</strong>
-  <%= @report.type %>
-</p>
+<%= react_component('Zoom', url: @report.photo.image_path.url, no_text: true) %>
 
-<p>
-  <strong>Taxon:</strong>
-  <%= @report.taxon %>
-</p>
+<div class="center">
+  <div>
+<h3>Issues</h3>
 
-<p>
-  <strong>Photo:</strong>
-  <%= @report.photo %>
-</p>
+<% if @report.venomous %>
+  <p>
+    <strong>This species should be marked as:</strong>
+    <%= @report.venomous %>
+  </p>
+<% end %>
 
-<p>
-  <strong>Handled:</strong>
-  <%= @report.handled %>
-</p>
+<% if @report.taxon %>
+  <p>
+    <strong>This photo is actually of:</strong>
+    <%= @report.taxon.common_name %> -- <%= @report.taxon.name %>
+  </p>
+<% end %>
 
-<p>
-  <strong>Handled by:</strong>
-  <%= @report.handled_by %>
-</p>
+<% if @report.no_herp %>
+  <p>
+    <strong>This photo doesn't have a herp in it...</strong>
+  </p>
+<% end %>
 
-<%= link_to 'Edit', edit_report_path(@report) %> |
-<%= link_to 'Back', reports_path %>
+
+  </div>
+</div>

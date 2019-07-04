@@ -3,13 +3,13 @@ class TaxonsController < ApplicationController
 
   def search
     name = params[:name]
-    @taxons = Taxon.all.where("lower(name) LIKE ?",'%'+name.downcase+'%').limit 100
+    @taxons = Taxon.all.species.where("lower(name) LIKE ?",'%'+name.downcase+'%').limit 100
     common_names = CommonName.all.where("lower(name) LIKE ?",'%'+name.downcase+'%').limit 100
-    common_names = common_names.map {|cn| cn.taxon }
-    @taxons = @taxons + common_names
+    taxons = common_names.map {|cn| cn.taxon }
+    taxons = taxons.select {|tx| tx.rank == "species" }
+    @taxons = @taxons + taxons
     @taxons.uniq
-
-
+    @taxons = @taxons[0..4]
     render 'index', formats: [:json]
   end
 

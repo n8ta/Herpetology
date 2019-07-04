@@ -55,7 +55,7 @@ module Quiz
           'correct_common_index': old_common_index,
           'sci_correct': sci_correct,
           'common_correct': common_correct,
-          'report_path': new_taxon_report_path(specie_m,session[:photo_id])
+          'photo_id': session[:photo_id]
       }
       datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
       if current_user
