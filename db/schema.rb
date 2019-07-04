@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_034632) do
+ActiveRecord::Schema.define(version: 2019_07_04_074910) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -53,6 +53,24 @@ ActiveRecord::Schema.define(version: 2019_07_03_034632) do
     t.index ["taxon_id", "region_id"], name: "index_regions_taxons_on_taxon_id_and_region_id", unique: true
   end
 
+  create_table "reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "taxon_id", null: false
+    t.bigint "photo_id", null: false
+    t.boolean "handled", default: false, null: false
+    t.bigint "created_by"
+    t.bigint "handled_by"
+    t.bigint "suggested_taxon"
+    t.boolean "suggested_venomous"
+    t.boolean "no_herp", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by"], name: "fk_rails_1bfbfccda5"
+    t.index ["handled_by"], name: "fk_rails_8485fb06e7"
+    t.index ["photo_id"], name: "index_reports_on_photo_id"
+    t.index ["suggested_taxon"], name: "fk_rails_9baa54541f"
+    t.index ["taxon_id"], name: "index_reports_on_taxon_id"
+  end
+
   create_table "taxons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "taxon_id"
@@ -61,6 +79,7 @@ ActiveRecord::Schema.define(version: 2019_07_03_034632) do
     t.boolean "photographed", default: false, null: false
     t.string "photo"
     t.boolean "venomous"
+    t.string "common_name"
     t.index ["root_taxon_id"], name: "fk_rails_795ac0b1ff"
     t.index ["taxon_id"], name: "index_taxons_on_taxon_id"
   end
@@ -111,6 +130,11 @@ ActiveRecord::Schema.define(version: 2019_07_03_034632) do
   add_foreign_key "regions_root_taxons", "taxons"
   add_foreign_key "regions_taxons", "regions"
   add_foreign_key "regions_taxons", "taxons"
+  add_foreign_key "reports", "photos"
+  add_foreign_key "reports", "taxons"
+  add_foreign_key "reports", "taxons", column: "suggested_taxon"
+  add_foreign_key "reports", "users", column: "created_by"
+  add_foreign_key "reports", "users", column: "handled_by"
   add_foreign_key "taxons", "taxons"
   add_foreign_key "taxons", "taxons", column: "root_taxon_id"
   add_foreign_key "tips", "taxons"

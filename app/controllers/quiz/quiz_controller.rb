@@ -34,32 +34,28 @@ module Quiz
       common_correct = session[:common_index].to_s == body['common_guess']
       old_sci_index = session[:sci_index]
       old_common_index = session[:common_index]
-      hash_and_specie = specie_hash(species)
+      hash_specie_photo = specie_hash(species)
 
-      photos = hash_and_specie[1].photos
-
-      unless current_user && current_user.show_dead_photos
-        photos = photos.where(dead: false)
-      end
-      photo = photos[rand(hash_and_specie[1].photos.length)]
+      photo = hash_specie_photo[2]
 
       venomous = specie_m.venomous
-      x = rand(2)
-      venomous = true if x == 0
-      venomous = true if x == 1
-      venomous = true if x == 2
+      x = rand(3)
+      venomous = "unknown" if x == 0
+      venomous = "unknown" if x == 1
+      venomous = "unknown" if x == 2
 
       specie_data = {
           'sci_name': specie_m.name.to_s,
           'common_name': specie_m.common_names.any? ? specie_m.common_names[0].name.to_s : nil,
           'species_id': specie_m.id,
           'venomous': venomous,
-          'next_options': hash_and_specie[0],
+          'next_options': hash_specie_photo[0],
           'next_image_path': photo.image_path.url,
           'correct_sci_index': old_sci_index,
           'correct_common_index': old_common_index,
           'sci_correct': sci_correct,
           'common_correct': common_correct,
+          'report_path': new_taxon_report_path(specie_m,session[:photo_id])
       }
       datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
       if current_user
@@ -132,6 +128,13 @@ module Quiz
         end
       end
 
+      photos = correct_specie.photos
+      unless current_user && current_user.show_dead_photos
+        photos = photos.where(dead: false)
+      end
+      photo = photos[rand(photos.size-1)]
+
+
       sci_index = rand(4)
       common_index = rand(4)
       hash_data['sci'].insert(sci_index, correct_specie.name)
@@ -139,7 +142,8 @@ module Quiz
       session[:sci_index] = sci_index
       session[:common_index] = common_index
       session[:specie_id] = correct_specie.id
-      return [hash_data, correct_specie] # hash, Species model
+      session[:photo_id] = photo.id
+      return [hash_data, correct_specie,photo] # hash, Species model
     end
 
     def set_taxon

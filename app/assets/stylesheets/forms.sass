@@ -1,0 +1,77 @@
+@import 'vars'
+
+.hidden
+  display: none
+
+.loading_anim
+  margin-top: -2rem
+  position: relative
+  background: #BCE27F
+  margin-bottom: 2rem
+
+
+.loading_anim:after
+  content: ''
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 15px
+  height: 15px
+  z-index: 999
+  border-radius: 50%
+  background: $brown
+  animation-name: loading_anim
+  animation-duration: .6s
+  animation-direction: alternate
+  animation-timing-function: ease-in-out
+  animation-iteration-count: infinite
+
+
+@keyframes loading_anim
+  0%
+    transform: translate(-72.5px, -7.5px)
+  100%
+    transform: translate(58.5px, -7.5px)
+
+form
+  input[type=checkbox].venomous
+    height: 2rem
+    width: 2rem
+  .field
+    margin-top: 2rem
+  .warning
+    color: indianred
+    font-size: 1.5rem
+    height: 0
+    text-align: right
+    padding-right: 2rem
+    margin-top: 0rem
+    margin-bottom: 1.5rem
+    font-weight: 100
+  label
+    margin-top: 2.5rem
+  input
+    border: 0
+    border-radius: 1rem
+    padding: 1rem
+    color: white
+    background-color: $dark-green
+
+  input.valid
+    background-color: $blue
+    color: white
+  input[type=submit]
+    margin-top: 2rem
+    width: unset
+    color: $light-green
+  input[type=submit].ready
+    margin-top: 2rem
+    color: white
+    box-shadow: rgba(255,255,255,.3) .1rem .1rem 1rem, rgba(255,255,255,.3) -.1rem -.1rem 1rem, rgba(255,255,255,.3) -.1rem .1rem 1rem, rgba(255,255,255,.3) .1rem -.1rem 1rem
+    &:hover
+      background-color: $darker-green
+      box-shadow: rgba(255,255,255,.4) .1rem .1rem 1rem, rgba(255,255,255,.4) -.1rem -.1rem 1rem, rgba(255,255,255,.4) -.1rem .1rem 1rem, rgba(255,255,255,.4) .1rem -.1rem 1rem
+    &:active
+      background-color: $brown
+      color: white
+      box-shadow: rgba(255,255,255,.8) .1rem .1rem 1rem, rgba(255,255,255,.8) -.1rem -.1rem 1rem, rgba(255,255,255,.8) -.1rem .1rem 1rem, rgba(255,255,255,.8) .1rem -.1rem 1rem

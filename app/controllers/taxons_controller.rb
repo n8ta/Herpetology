@@ -1,6 +1,18 @@
 class TaxonsController < ApplicationController
   before_action :set_taxon, only: [:show, :edit, :update, :destroy]
 
+  def search
+    name = params[:name]
+    @taxons = Taxon.all.where("lower(name) LIKE ?",'%'+name.downcase+'%').limit 100
+    common_names = CommonName.all.where("lower(name) LIKE ?",'%'+name.downcase+'%').limit 100
+    common_names = common_names.map {|cn| cn.taxon }
+    @taxons = @taxons + common_names
+    @taxons.uniq
+
+
+    render 'index', formats: [:json]
+  end
+
   def show
     @taxons = @taxon.taxons
   end
@@ -9,13 +21,13 @@ class TaxonsController < ApplicationController
     @taxons = Taxon.where(taxon: nil)
   end
 
-  def edit
-  end
-
-  def update
-    @taxon.update(taxon_params)
-    redirect_to taxon_path(@taxon)
-  end
+  # def edit
+  # end
+  #
+  # def update
+  #   @taxon.update(taxon_params)
+  #   redirect_to taxon_path(@taxon)
+  # end
 
   private
 

@@ -1,0 +1,13 @@
+<h2>Edit Photo</h2>
+<%= form_tag(photo_path(@photo), method: :post) do %>
+
+
+  <div class="field">
+    <%= form.label :taxon %>
+
+    <%= form.collection_select :id, :sci_name, Taxon.all.species %>
+  </div>
+
+
+  <%= submit_tag("Update Photo") %>
+<% end %>

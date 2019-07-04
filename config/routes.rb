@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  # resources :tips
-  devise_for :users, :controllers => {:registrations => 'users/registrations'} do
-  end
+
+
+  devise_for :users, :controllers => {:registrations => 'users/registrations'}
 
 
   devise_scope :user do
@@ -10,13 +10,7 @@ Rails.application.routes.draw do
     post '/users/username_available/:username' => 'users/registrations#username_available'
   end
 
-  resources :taxons, only: [] do
-    resources :regions, only: [] do
-      resources :reports, except: [:new] do
-        get 'new/:photo_id' => 'reports#new'
-      end
-    end
-  end
+  get '/photos/:photo_id/report' => 'reports#new', as: 'new_photo_report'
 
   resources :user_taxon_data, only: [:show]
 
@@ -32,8 +26,13 @@ Rails.application.routes.draw do
     post 'taxon/:taxon_id/region/:region_id' => 'quiz#guess', as: 'guess'
   end
 
+  resources :reports
+  resources :photos, only: [:edit, :show, :update, :destroy]
 
   resources :taxons do
+    collection do
+      get 'search/:name' => 'taxons#search', as: 'search'
+    end
     resources :regions, only: [:show] do
     end
   end

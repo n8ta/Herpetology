@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Created by:</strong>
+  <%= @report.created_by %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @report.type %>
+</p>
+
+<p>
+  <strong>Taxon:</strong>
+  <%= @report.taxon %>
+</p>
+
+<p>
+  <strong>Photo:</strong>
+  <%= @report.photo %>
+</p>
+
+<p>
+  <strong>Handled:</strong>
+  <%= @report.handled %>
+</p>
+
+<p>
+  <strong>Handled by:</strong>
+  <%= @report.handled_by %>
+</p>
+
+<%= link_to 'Edit', edit_report_path(@report) %> |
+<%= link_to 'Back', reports_path %>

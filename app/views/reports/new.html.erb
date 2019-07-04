@@ -1,0 +1,20 @@
+<% content_for :title do %>
+  Make a Report
+<% end %>
+
+<% content_for :breadcrumb do %>
+  Report: <%= @taxon.sci_name %> -- <%= @taxon.common_names[0].name %>
+<% end %>
+
+
+<div class="center">
+
+  <div>
+    <h2>New Report</h2>
+
+    <% report = @report %>
+
+    <%= react_component('Report', {url: @photo.image_path.url, venomous: @venomous, photo_id: @photo.id, options: Taxon.all.species.pluck(:name) } ) %>
+
+  </div>
+</div>
