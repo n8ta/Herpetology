@@ -171,7 +171,7 @@ class Signup extends React.Component {
 
     render() {
         return (
-                <div>
+                <div id={'signup'}>
                     <div className={'center'}>
                         <h2>Sign Up </h2>
                     </div>
