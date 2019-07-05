@@ -74,7 +74,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 1. Configure rb in .env
 2. bundle install
 3. yarn install
-4. Request access to photos from herpmapper, modify their script to preface photos with a_ and d_ for alive/dead
-5. rails db:set RAILS_ENV=production
+4. Request access to photos from herpmapper, modify their script to preface photos with a_ and d_ for alive/dead, move those folders to the /herpmapper/species directory
+5. rails db:migrate RAILS_ENV=production
 7. rails assets:precompile RAILS_ENV=production 
 8. rails s -e production
