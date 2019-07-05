@@ -133,6 +133,8 @@ module Quiz
       unless current_user && current_user.show_dead_photos
         photos = photos.where(dead: false)
       end
+      Logger.debug "Photos"
+      Logger.debug photos.inspect
       photo = photos[rand(photos.size-1)]
 
 
