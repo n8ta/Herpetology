@@ -9,8 +9,11 @@ namespace :maintenance do
       x+=1
       if txn.photos.where(dead: false).any?
         txn.photographed = true
-        txn.save
+
+      else
+        txn.photographed = false
       end
+      txn.save
     end
   end
 end

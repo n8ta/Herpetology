@@ -125,8 +125,11 @@ module Quiz
         end
       end
 
+
       photos = correct_specie.photos
-      unless current_user && current_user.show_dead_photos
+      puts "Photo I"
+      puts photos.inspect
+      unless current_user && current_user.show_dead_photos == true
         photos = photos.where(dead: false)
       end
       puts "Photos:"
