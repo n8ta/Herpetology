@@ -29,6 +29,8 @@ module Quiz
     def guess
       body = JSON.parse request.body.read
       species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
+      puts "species:"
+      puts species.inspect
       specie_m = Taxon.all.species.find(session[:specie_id])
       sci_correct = session[:sci_index].to_s == body['sci_guess']
       common_correct = session[:common_index].to_s == body['common_guess']
@@ -39,17 +41,11 @@ module Quiz
 
       photo = hash_specie_photo[2]
 
-      venomous = specie_m.venomous
-      x = rand(3)
-      venomous = "unknown" if x == 0
-      venomous = "unknown" if x == 1
-      venomous = "unknown" if x == 2
-
       specie_data = {
           'sci_name': specie_m.name.to_s,
           'common_name': specie_m.common_names.any? ? specie_m.common_names[0].name.to_s : nil,
           'species_id': specie_m.id,
-          'venomous': venomous,
+          'venomous': specie_m.venomous,
           'next_options': hash_specie_photo[0],
           'next_image_path': photo.image_path.url,
           'correct_sci_index': old_sci_index,
