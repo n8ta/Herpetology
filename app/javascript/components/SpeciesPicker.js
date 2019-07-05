@@ -73,7 +73,7 @@ class SpeciesPicker extends React.Component {
 
             options['sci'].push(
                 <li key={i} className={sci_btn_class}>
-                    <button disabled={sci_disabled} data-type={'sci'} data-index={i}
+                    <button className={'special'} disabled={sci_disabled} data-type={'sci'} data-index={i}
                             onClick={this.handleClick}>
                         <span className="common_name">{this.state.options['sci'][i]}</span>
                     </button>
@@ -81,7 +81,7 @@ class SpeciesPicker extends React.Component {
 
             options['common'].push(
                 <li key={i} className={common_btn_class}>
-                    <button disabled={common_disabled} data-type={'common'} data-index={i}
+                    <button className={'special'} disabled={common_disabled} data-type={'common'} data-index={i}
                             onClick={this.handleClick}>
                         <span className="sci_name">{this.state.options['common'][i]}</span>
                     </button>
@@ -220,7 +220,7 @@ class SpeciesPicker extends React.Component {
                 <div>
 
                     <Signup/>
-                    <div id={'next'} className={"center"}>
+                    <div className={"center"}>
                         <button className={'main badpath'} onClick={this.next}>No Thanks <br/></button>
                     </div>
                 </div>

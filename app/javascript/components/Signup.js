@@ -236,7 +236,11 @@ class Signup extends React.Component {
                             </div>
                         </form>
                     </div>
+                    <div className={"center"}>
+                        <button className={'main badpath'}>No Thanks <br/></button>
+                    </div>
                 </div>
+
         )
     }
 };

@@ -53,7 +53,7 @@ class Menubutton extends React.Component {
     render() {
         return (
             <div id='menubutton'>
-            <button onClick={this.toggle} className={["hamburger","hamburger--vortex",this.state.mode].join(" ")}  type="button">
+            <button onClick={this.toggle} className={["special","hamburger","hamburger--vortex",this.state.mode].join(" ")}  type="button">
                 <span className="hamburger-box">
                     <span className="hamburger-inner"></span>
                 </span>
