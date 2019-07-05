@@ -30,7 +30,7 @@ class Signup extends React.Component {
     handleUsername() {
 
         let username = document.getElementById('user_username');
-        let encoded = btoa(JSON.stringify(username.value));
+        let encoded = btoa(username.value);
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         fetch('/users/username_available/' + encoded, {
             method: 'POST',
@@ -70,7 +70,7 @@ class Signup extends React.Component {
 
 
         let email = document.getElementById('user_email');
-        let encoded = btoa(JSON.stringify(email.value));
+        let encoded = btoa(email.value);
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
 
 

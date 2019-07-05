@@ -5,16 +5,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
 
   def username_available
-    a = params[:username]
-    puts "a"
-    puts a.inspect
-    b = Base64.decode64 a
-    puts "b"
-    puts b.inspect
-    c = JSON.parse c
-    puts "c"
-    puts c.inspect
-    username = JSON.parse(Base64.decode64(params[:username]))
+    puts "pr"
+    puts params[:username]
+    puts "decode"
+    puts Base64.decode64(params[:username])
+    username = Base64.decode64(params[:username])
     if User.find_by(username: username).nil?
       render :json => {valid: true}
     else
@@ -23,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def email_available
-    email = JSON.parse(Base64.decode64(params[:email]))
+    email = Base64.decode64(params[:email])
     if User.find_by(email: email).nil?
       render :json => {valid: true}
     else

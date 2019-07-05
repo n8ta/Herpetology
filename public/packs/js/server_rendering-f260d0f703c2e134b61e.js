@@ -418,7 +418,7 @@ function (_React$Component) {
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.toggle,
-        className: ["hamburger", "hamburger--vortex", this.state.mode].join(" "),
+        className: ["special", "hamburger", "hamburger--vortex", this.state.mode].join(" "),
         type: "button",
         __source: {
           fileName: _jsxFileName,
@@ -1678,7 +1678,7 @@ function (_React$Component) {
       var _this2 = this;
 
       var username = document.getElementById('user_username');
-      var encoded = btoa(JSON.stringify(username.value));
+      var encoded = btoa(username.value);
       var auth_token = document.querySelector("meta[name='csrf-token']").content;
       fetch('/users/username_available/' + encoded, {
         method: 'POST',
@@ -1731,7 +1731,7 @@ function (_React$Component) {
       }
 
       var email = document.getElementById('user_email');
-      var encoded = btoa(JSON.stringify(email.value));
+      var encoded = btoa(email.value);
       var auth_token = document.querySelector("meta[name='csrf-token']").content;
 
       if (email && validateEmail(email.value)) {
@@ -2107,27 +2107,7 @@ function (_React$Component) {
           lineNumber: 233
         },
         __self: this
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "center",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 239
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: 'main badpath',
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 240
-        },
-        __self: this
-      }, "No Thanks ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 240
-        },
-        __self: this
-      }))));
+      })))));
     }
   }]);
 
@@ -2266,6 +2246,7 @@ function (_React$Component) {
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: 'special',
           disabled: sci_disabled,
           "data-type": 'sci',
           "data-index": i,
@@ -2292,6 +2273,7 @@ function (_React$Component) {
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: 'special',
           disabled: common_disabled,
           "data-type": 'common',
           "data-index": i,
@@ -43545,4 +43527,4 @@ module.exports = function (module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=server_rendering-4d50f5339e61a1876d67.js.map
+//# sourceMappingURL=server_rendering-f260d0f703c2e134b61e.js.map

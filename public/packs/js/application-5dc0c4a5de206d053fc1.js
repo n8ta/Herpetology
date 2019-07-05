@@ -418,7 +418,7 @@ function (_React$Component) {
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.toggle,
-        className: ["hamburger", "hamburger--vortex", this.state.mode].join(" "),
+        className: ["special", "hamburger", "hamburger--vortex", this.state.mode].join(" "),
         type: "button",
         __source: {
           fileName: _jsxFileName,
@@ -1678,7 +1678,7 @@ function (_React$Component) {
       var _this2 = this;
 
       var username = document.getElementById('user_username');
-      var encoded = btoa(JSON.stringify(username.value));
+      var encoded = btoa(username.value);
       var auth_token = document.querySelector("meta[name='csrf-token']").content;
       fetch('/users/username_available/' + encoded, {
         method: 'POST',
@@ -1731,7 +1731,7 @@ function (_React$Component) {
       }
 
       var email = document.getElementById('user_email');
-      var encoded = btoa(JSON.stringify(email.value));
+      var encoded = btoa(email.value);
       var auth_token = document.querySelector("meta[name='csrf-token']").content;
 
       if (email && validateEmail(email.value)) {
@@ -1839,6 +1839,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: 'signup',
         __source: {
           fileName: _jsxFileName,
           lineNumber: 174
@@ -2245,6 +2246,7 @@ function (_React$Component) {
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: 'special',
           disabled: sci_disabled,
           "data-type": 'sci',
           "data-index": i,
@@ -2271,6 +2273,7 @@ function (_React$Component) {
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: 'special',
           disabled: common_disabled,
           "data-type": 'common',
           "data-index": i,
@@ -2525,7 +2528,6 @@ function (_React$Component) {
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          id: 'next',
           className: "center",
           __source: {
             fileName: _jsxFileName,
@@ -45400,4 +45402,4 @@ module.exports = function (module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=application-7cdc7915e6a1579f7b87.js.map
+//# sourceMappingURL=application-5dc0c4a5de206d053fc1.js.map
