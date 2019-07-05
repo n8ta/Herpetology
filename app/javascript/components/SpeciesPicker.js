@@ -99,7 +99,7 @@ class SpeciesPicker extends React.Component {
 
     next() {
 
-        if (this.state.asked_about_signup == false && this.state.iterations == 2) {
+        if (this.state.asked_about_signup == false && this.state.iterations == 10) {
             this.setState({mode: "signup", asked_about_signup: true});
             // Cookies.set("asked_about_signup",true,{expires: 1})
         } else {
@@ -218,6 +218,7 @@ class SpeciesPicker extends React.Component {
         } else if (this.state.mode == "signup") {
             return (
                 <div>
+
                     <Signup/>
                     <div id={'next'} className={"center"}>
                         <button className={'main badpath'} onClick={this.next}>No Thanks <br/></button>
