@@ -1,5 +1,5 @@
 @import 'vars'
-
+@import "hamburgers"
 body
   display: grid
   grid-template-rows: auto min-content min-content auto
@@ -14,10 +14,19 @@ body
   #content
     grid-area: content
     padding: 2rem
-  #logo
+  #logo-holder
     grid-area: logo
+    z-index: 10
 
 #logo
+  position: relative
+  #menubutton
+    height: 100%
+    display: flex
+    justify-content: center
+    flex-direction: column
+    .hamburger
+      padding-top: 1rem
   h1
     margin-left: 2rem
     margin-right: 2rem
@@ -34,16 +43,43 @@ body
     text-decoration-color: black
     text-decoration-style: unset
   a
-    display: flex
-    justify-content: flex-end
-    flex-direction: column
     text-decoration: none
+  a.right_of_logo
+    margin-top: 2rem
   h1
     margin-bottom: -1rem
-
+#menu
+  a:hover h4
+    color: $mid-green
+    text-decoration: underline
+  a:active h4
+    color: $darkest-green
+    text-decoration: underline
+  ul
+    padding-left: 0
+    list-style-type: none
+    text-align: center
+    margin-top: 2rem
+    li
+      margin-bottom: 2rem
+  min-width: 30rem
+  max-width: 75rem
+  margin-left: auto
+  margin-right: auto
+  background-color: $darker-green
+  position: absolute
+  left: 0
+  right: 0
+  height: 0px
+  overflow-y: hidden
+  -webkit-transition: height .7s
+  -moz-transition: height .7s
+  -ms-transition: height .7s
+  -o-transition: height .7s
+  transition: height .7s
 
 #breadcrumb
-  z-index: 0
+  z-index: 4
   grid-area: breadcrumb
   padding: 1rem 2rem 1rem 2rem
   background-color: $darker-green

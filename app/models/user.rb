@@ -9,14 +9,14 @@ class User < ApplicationRecord
 
   has_many :user_taxon_data, dependent: :delete_all
 
-  enum type: ["user","contributor","admin"]
+  enum user_class: ["user","contributor","admin"]
 
   def admin?
-    type == "admin"
+    user_class == "admin"
   end
 
   def contributor?
-    type == "contributor"
+    user_class == "contributor"
   end
 
   def admin_or_contributor?

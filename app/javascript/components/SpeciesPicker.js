@@ -211,7 +211,7 @@ class SpeciesPicker extends React.Component {
                 right_title = <span className={"correct"}> Common ✓</span>;
             }
             report = <div onClick={this.handleReport} className={'center'}><a href={'#'}
-                                                                              className={'main'}>Somethings wrong with this ID</a></div>
+                                                                              className={'main'}>Contribute a Correction</a></div>
         } else if (this.state.mode == 'waiting') {
             left = sci_options;
             right = common_options;

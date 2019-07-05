@@ -14,26 +14,26 @@ class Report extends React.Component {
         };
         this.updateDataList = this.updateDataList.bind(this);
         this.radio = this.radio.bind(this);
+        this.clear_radio = this.clear_radio.bind(this);
         this.select = this.select.bind(this);
         this.render = this.render.bind(this);
         this.empty = this.empty.bind(this);
     }
 
     radio() {
-        this.setState({'radio_valid': true})
+        this.setState({radio_valid: true, specie_error: ''})
     }
 
     empty() {
         if (this.state.empty_valid == undefined) {
-            this.setState({'empty_valid': true})
+            this.setState({empty_valid: true, specie_error: ''})
         } else {
-            this.setState({'empty_valid': undefined})
+            this.setState({empty_valid: undefined})
         }
     }
 
-
-
     updateDataList() {
+        this.clear_radio();
         let search = document.getElementById('report_taxon_input');
         fetch('/taxons/search/' + encodeURI(search.value), {
             method: 'get',
@@ -47,6 +47,7 @@ class Report extends React.Component {
         }).then(res => res.json()).then((result) => {
             if (result.length == 1 && (result[0].common_name == search.value || result[0].name == search.value)) {
                 this.setState({specie_class: 'valid', specie_error: ''})
+                this.clear_radio()
             } else {
                 this.setState({specie_class: 'invalid', specie_error: 'Invalid name, will not be submitted', search_results: result})
             }
@@ -57,9 +58,19 @@ class Report extends React.Component {
     select(name) {
         document.getElementById('report_taxon_input').value = name;
         this.setState({specie_error: '', specie_class: 'valid', search_results: [], });
+        this.clear_radio();
         this.render();
+
     }
 
+    clear_radio() {
+        let radios = document.querySelectorAll('input[type=radio]')
+        for (let i =0; i<radios.length; i++) {
+            radios[i].checked = false
+        }
+        this.setState({radio_valid: undefined})
+
+    }
 
     render() {
 
@@ -75,15 +86,39 @@ class Report extends React.Component {
             options.push(<a href='#' onClick={function () {this.select(name)}.bind(this) }  key={name}> {name} -- {comm}</a>)
         }
 
+        let taxon_disabled = "";
+        let venom_disabled = "";
+        let clear = ""
+        let no_herp_disabled = "";
+        if (this.state.specie_class == "valid") {
+            venom_disabled = "disabled";
+            no_herp_disabled = "disabled";
+        } else if (this.state.empty_valid) {
+            venom_disabled = "disabled";
+            taxon_disabled = "disabled";
+            options = "";
+            document.getElementById('report_taxon_input').value = "";
+        } else if (this.state.radio_valid) {
+            no_herp_disabled = "disabled";
+            taxon_disabled = "disabled";
+            options = "";
+            document.getElementById('report_taxon_input').value = "";
+            clear = <a href='#' onClick={this.clear_radio}>Clear</a>
+
+        }
+
+
         return (
 
-            <form action="/reports" acceptCharset="UTF-8" method="post"><input name="utf8" type="hidden"
+            <form action="/reports" acceptCharset="UTF-8" method="post" id='report_form'><input name="utf8" type="hidden"
                                                                                defaultValue="✓"/><input
                 type="hidden" name="authenticity_token"
                 defaultValue={this.state.csrf}/>
                 <input type="hidden" name="return_url" value={window.location}/>
+
                 <Zoom url={this.props.url} venomous={this.props.venomous} no_text={true}/>
-                <p>You only need to fill out the fields that were incorrect</p>
+                <p>Fill out one of these options</p>
+
                 <div className="field hidden">
                     <label htmlFor="report_photo_id">Photo</label>
                     <input defaultValue={this.props.photo_id} type="text"
@@ -91,9 +126,9 @@ class Report extends React.Component {
                 </div>
 
                 <div className="field">
-                    <label htmlFor="report_taxon_input">Correct Species</label><br/>
+                    <label htmlFor="report_taxon_input">Species Incorrect, Shold be:</label><br/>
                     <div className={'warning top'}>{this.state.specie_error}</div>
-                    <input className={this.state.specie_class} type='text' onKeyDown={this.updateDataList} id="report_taxon_input"
+                    <input disabled={taxon_disabled} className={this.state.specie_class} type='text' onKeyDown={this.updateDataList} id="report_taxon_input"
                            name="report[taxon]"/>
 
 
@@ -102,25 +137,27 @@ class Report extends React.Component {
                     </div>
                 </div>
                 <div className="field">
-                    <input onClick={this.radio} defaultValue="venomous" name="report[venomous]" type="radio" id="report_venomous"/>
+                    <label>Species venomous tag is wrong</label><br/>
+                    <input disabled={venom_disabled} onClick={this.radio} defaultValue="venomous" name="report[venomous]" type="radio" id="report_venomous"/>
                     <label htmlFor="report_venomous">Venomous</label>
                     <br/>
-                    <input onClick={this.radio} defaultValue="nonvenomous" name="report[venomous]" type="radio"
+                    <input disabled={venom_disabled} onClick={this.radio} defaultValue="nonvenomous" name="report[venomous]" type="radio"
                            id="report_nonvenomous"/>
                     <label htmlFor="report_nonvenomous">Nonvenomous</label>
                     <br/>
-                    <input onClick={this.radio} defaultValue="unknown" name="report[venomous]" type="radio" id="report_unknown"/>
+                    <input disabled={venom_disabled} onClick={this.radio} defaultValue="unknown" name="report[venomous]" type="radio" id="report_unknown"/>
                     <label htmlFor="report_unknown">Unknown</label>
                     <br/>
+                    {clear}
                     {/*        <a>Clear</a>*/}
                 </div>
                 <div className="field">
-                    <input onClick={this.empty} type="checkbox" id="report_no_herp" name="report[no_herp]"/>
+                    <input disabled={no_herp_disabled} onClick={this.empty} type="checkbox" id="report_no_herp" name="report[no_herp]"/>
                     <label htmlFor="report_no_herp">Empty photo?</label>
                 </div>
 
                 <div className="actions">
-                    <input className={ready} type="submit" id="submit" name="commit" defaultValue="Create Report"
+                    <input className={ready} type="submit" value="Create Report" id="submit" name="commit" defaultValue="Create Report"
                            data-disable-with="Create Report"/>
                 </div>
             </form>

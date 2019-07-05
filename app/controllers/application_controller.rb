@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     if !current_user
-      flash[:notice] = "You must be logged in to submit a tip"
+      flash[:notice] = "You must be logged in for that"
       redirect_to '/users/sign_up'
       @rendered = true
     end
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   def contributor_only
     require_login
     return if @rendered
-    if current_user.admin_or_contributor?
+    if current_user.user_class != "admin" and current_user.user_class != "contributor"
       flash[:alert] = "You must be a contributor to do that. To become a contributor contact Nate Tracy-Amoroso. See the github page."
       redirect_back fallback_location: '/'
     end

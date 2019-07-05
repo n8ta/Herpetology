@@ -34,6 +34,7 @@ module Quiz
       common_correct = session[:common_index].to_s == body['common_guess']
       old_sci_index = session[:sci_index]
       old_common_index = session[:common_index]
+      old_photo_id = session[:photo_id]
       hash_specie_photo = specie_hash(species)
 
       photo = hash_specie_photo[2]
@@ -55,7 +56,7 @@ module Quiz
           'correct_common_index': old_common_index,
           'sci_correct': sci_correct,
           'common_correct': common_correct,
-          'photo_id': session[:photo_id]
+          'photo_id': old_photo_id
       }
       datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
       if current_user

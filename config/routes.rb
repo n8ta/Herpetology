@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   devise_scope :user do
     post '/users/email_available/:email' => 'users/registrations#email_available'
     post '/users/username_available/:username' => 'users/registrations#username_available'
+    post '/users/show_dead' => 'users/sessions#show_dead', as: 'show_dead'
+    post '/users/hide_dead' => 'users/sessions#hide_dead', as: 'hide_dead'
+    get '/users/show_dead' => 'users/sessions#show_dead'
+    get '/users/hide_dead' => 'users/sessions#hide_dead'
   end
 
   get '/photos/:photo_id/report' => 'reports#new', as: 'new_photo_report'

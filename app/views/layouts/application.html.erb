@@ -10,39 +10,66 @@
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
 </head>
 <% unless Rails.env == "development" %>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5"></script>
-  <script>
-      window.dataLayer = window.dataLayer || [];
+  <script>window.dataLayer = window.dataLayer || [];
 
-      function gtag() {
-          dataLayer.push(arguments);
-      }
+  function gtag() {
+      dataLayer.push(arguments);
+  }
 
-      gtag('js', new Date());
-
-      gtag('config', 'UA-111016820-5');
-  </script>
+  gtag('js', new Date());
+  gtag('config', 'UA-111016820-5');</script>
 <% end %>
 
+<% console %>
 
 <body>
+<!-- Place this tag where you want the button to render. -->
 
 
-<div id="logo">
+<div id="logo-holder">
+  <div id="logo">
+    <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
+    <% if current_user %>
+      <%= render 'statics/hamburger' %>
+      <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'right_of_logo' %>
+    <% else %>
+      <%= render 'statics/hamburger' %>
+      <a id='logo_anchor' href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+      <%= link_to 'Sign In/Up', '/users/sign_up', class: 'right_of_logo' %>
+    <% end %>
+  </div>
+  <div id="menu">
+    <ul>
+      <li><%= link_to reports_path do %><h4>Reports</h4>
+        <% end %></li>
+      <li><%= link_to reports_path do %><h4>Messages</h4>
+        <% end %></li>
+      <li>
+        <%= link_to "https://github.com/n8ta/HerpID", target: '_blank' do %><h4>HerpID on Github</h4>
+        <% end %><br/>
+        <a class="github-button" href="https://github.com/n8ta/herpid/issues" data-icon="octicon-issue-opened" data-size="large" data-show-count="true" aria-label="Issue n8ta/herpid on GitHub">Issues</a><br/>
+        <a class="github-button" href="https://github.com/n8ta/herpID" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star n8ta/herpID on GitHub">Star</a>
+      </li>
+      <li>
+        <%= link_to "https://n8ta.com/", target: '_blank' do %><h4>Developer: <br/>Nate Tracy-Amoroso</h4>
+        <% end %>
+      </li>
+      <li>
+        <% if current_user %>
+          <h4>Settings</h4>
+          <%= react_component('Settings', {show_dead: current_user.show_dead_photos}) %>
+        <% end %>
+      </li>
+    </ul>
 
-  <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
-  <% if current_user %>
-    <a>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</a>
-    <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
-    <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
-  <% else %>
-    <%= link_to 'Sign In', '/users/sign_in', method: :get %>
-    <a id='logo_anchor' href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
-    <%= link_to 'Sign Up', '/users/sign_up' %>
-  <% end %>
+
+  </div>
 
 </div>
 <div id="breadcrumb">
@@ -51,25 +78,8 @@
 <div id="flash"><%= flash[:notice] %><%= flash[:alert] %></div>
 
 <div id="content">
-
-
   <%= yield %>
-
-
-<!--  <footer>-->
-    <%# if not current_user.nil? %>
-<!--      <p>Hi <%#= current_user.username %>   <%#= link_to "Sign out", destroy_user_session_path, method: :delete %></p>-->
-    <%# else %>
-<!--      <p><a href="/users/sign_up">Sign Up</a> <a href="/users/sign_in">Sign In</a></p>-->
-    <%# end %>
-<!--    <a href="https://github.com/n8ta/SnakeID"><img src="<%#= asset_path('github.png') %>"></a>-->
-
-
-<!--  </footer>-->
-
-
 </div>
-
 </body>
 
 </html>

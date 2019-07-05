@@ -12,13 +12,9 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
+- Interface to handle reports
 - React component for forgot password
 - Setup email
-- Toggle showing photos of deceased animals (setting for signed in users) 
-- Reporting feature, types:
-  - Content ID
-  - No Snake
-  - Other
 - Show tips on species picker after guess
 - Tip approvals
 - Tip submissions
@@ -36,6 +32,11 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Write some tests xD 
 
 # Done:
+- Toggle showing photos of deceased animals (setting for signed in users) (July 3, 2019) 
+- Reporting feature, types:  (July 3, 2019)
+  - Bad ID
+  - No Herp
+  - Venomous or not
 - React components for sign up / sign in (July 1, 2019)
 - Tag photos by dead/alive (June 31, 2019)
 - Fix genus species capitalization (June 31, 2019)

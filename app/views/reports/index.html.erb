@@ -1,42 +1,53 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Reports</h1>
+<h2>Reports</h2>
 
-<div class="center"><div>
+<div class="center">
+  <div>
+    <% if @reports.size == 0 %>
+      <br/>
+      <h4>No Reports</h4>
+    <% end %>
+    <% @reports.each do |report| %>
+      <div class="report">
+        <%= react_component("Zoom", {url: report.photo.image_path.url, no_text: true}) %>
+        <div>
 
+          <% if report.venomous %>
+            <p>
+              <strong>This species should be marked as:</strong>
+              <%= report.venomous %>
+            </p>
+          <% end %>
 
-  <% Report.all.pending.each do |report|  %>
-  <div class="report">
-    <%= image_tag report.photo.image_path.url %>
-    <% if report.venomous %>
-      <p>
-        <strong>This species should be marked as:</strong>
-        <%= report.venomous %>
-      </p>
+          <% if report.taxon %>
+            <p>
+              <strong>Currently:</strong> <%= report.photo.taxon.name %> --
+              <%- report.photo.taxon.common_name %>
+              <br/>
+              <strong>Reported as:</strong> <%= report.taxon.name %> -- <%= report.taxon.common_name %>
+
+            </p>
+          <% end %>
+
+          <% if report.no_herp %>
+            <p>
+              <strong>Photo has no herp</strong>
+            </p>
+          <% end %>
+
+          <% if report.created_by %>
+            <p>
+              Created by: <%= report.created_by.username %>
+            </p>
+          <% end %>
+        </div>
+      </div>
     <% end %>
 
-    <% if report.taxon %>
-      <p>
-        <strong>Currently:</strong> <%= report.photo.taxon.name %> -- <%- report.photo.taxon.common_name %>
-        <br/>
-        <strong>Reported as:</strong> <%= report.taxon.name  %> -- <%= report.taxon.common_name%>
-
-      </p>
-    <% end %>
-
-    <% if report.no_herp %>
-      <p>
-        <strong>Photo has no herp</strong>
-      </p>
-    <% end %>
 
   </div>
-    <% end %>
-
-
-
-
-</div></div>
+</div>
 
 
 
