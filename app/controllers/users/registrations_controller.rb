@@ -6,7 +6,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def username_available
     username = JSON.parse(Base64.decode64(params[:username]))
-    sleep 0.5
     if User.find_by(username: username).nil?
       render :json => {valid: true}
     else
