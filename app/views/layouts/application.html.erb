@@ -25,7 +25,6 @@
   gtag('config', 'UA-111016820-5');</script>
 <% end %>
 
-<% console %>
 
 <body>
 <!-- Place this tag where you want the button to render. -->
@@ -37,19 +36,19 @@
     <% if current_user %>
       <%= render 'statics/hamburger' %>
       <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'right_of_logo' %>
+      <span>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</span>
+      <%#= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'right_of_logo' %>
     <% else %>
       <%= render 'statics/hamburger' %>
       <a id='logo_anchor' href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
       <%= link_to 'Sign In/Up', '/users/sign_up', class: 'right_of_logo' %>
     <% end %>
   </div>
-  <div id="menu">
-    <ul>
-      <li><%= link_to reports_path do %><h4>Reports</h4>
-        <% end %></li>
-      <li><%= link_to reports_path do %><h4>Messages</h4>
-        <% end %></li>
+  <div id="menu" class="drop_down_menu">
+    <ul id="menu-inner">
+<!--      <li><%#= link_to reports_path do %><h4>Reports</h4><%# end %></li>-->
+<!--      <li><%#= link_to reports_path do %><h4>Messages</h4><%# end %>-->
+<!--      </li>-->
       <li>
         <%= link_to "https://github.com/n8ta/HerpID", target: '_blank' do %><h4>HerpID on Github</h4>
         <% end %><br/>
@@ -57,24 +56,33 @@
         <a class="github-button" href="https://github.com/n8ta/herpID" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star n8ta/herpID on GitHub">Star</a>
       </li>
       <li>
-        <%= link_to "https://n8ta.com/", target: '_blank' do %><h4>Developer: <br/>Nate Tracy-Amoroso</h4>
-        <% end %>
+        <h4>Developer: </h4><%= link_to "https://n8ta.com/", target: '_blank' do %><h4>Nate Tracy-Amoroso</h4> <% end %>
+      </h4>
       </li>
       <li>
         <% if current_user %>
           <h4>Settings</h4>
           <%= react_component('Settings', {show_dead: current_user.show_dead_photos}) %>
+        <% else %>
+        <H4>Settings</H4>
+          <p>If you make an account you can toggle seeing photos of dead animals on and off, default is off.</p>
+          <%= link_to "Signup", '/users/sign_up' %>
         <% end %>
       </li>
     </ul>
-
-
   </div>
+
 
 </div>
 <div id="breadcrumb">
   <%= yield :breadcrumb %>
+  <div id="subregions" class="drop_down_menu">
+    <div id="subregions-inner">
+      <%= yield :subregions %>
+    </div>
+  </div>
 </div>
+
 <div id="flash"><%= flash[:notice] %><%= flash[:alert] %></div>
 
 <div id="content">

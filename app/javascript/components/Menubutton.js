@@ -36,7 +36,6 @@ class Menubutton extends React.Component {
         let menu = document.getElementById('menu');
         let body = document.querySelector('body');
 
-        console.log(menu);
         if (this.state.mode == "") {
             this.setState({mode: "is-active"});
             menu.style.height = '100vh';

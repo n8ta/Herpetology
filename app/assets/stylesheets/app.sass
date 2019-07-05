@@ -48,7 +48,27 @@ body
     margin-top: 2rem
   h1
     margin-bottom: -1rem
+
+#subregions
+  z-index: 10
+  #subregions-inner
+    a:hover
+      color: $mid-green
+    a:active
+      color: $darkest-green
+    *
+      font-size: .9em
+      font-weight: 100
+    padding-left: 2rem
+    padding-right: 2rem
 #menu
+  #menu-inner
+    padding-left: 2rem
+
+  *
+    color: white
+  p
+    margin-top: 0
   a:hover h4
     color: $mid-green
     text-decoration: underline
@@ -61,7 +81,9 @@ body
     text-align: center
     margin-top: 2rem
     li
-      margin-bottom: 2rem
+      margin-bottom: 4rem
+
+.drop_down_menu
   min-width: 30rem
   max-width: 75rem
   margin-left: auto
@@ -78,6 +100,7 @@ body
   -o-transition: height .7s
   transition: height .7s
 
+
 #breadcrumb
   z-index: 4
   grid-area: breadcrumb
@@ -90,9 +113,7 @@ body
       fill: $light-green
   &,h2, a
     color: white
-  .subhead
-    font-size: .5em
-    margin-left: .2em
+    font-weight: 100
   h2 a:hover, h2 svg:hover
     color: $light-green !important
 

@@ -32,6 +32,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Write some tests xD 
 
 # Done:
+- Menu / subregion areas with toggles (July 4, 2019)
 - Toggle showing photos of deceased animals (setting for signed in users) (July 3, 2019) 
 - Reporting feature, types:  (July 3, 2019)
   - Bad ID
