@@ -11,41 +11,49 @@ class Subregionbutton extends React.Component {
   toggle() {
 
     function disableScroll() {
-      if (window.addEventListener) // older FF
-        window.addEventListener('DOMMouseScroll', preventDefault, false);
-      document.addEventListener('wheel', preventDefault, {passive: false}); // Disable scrolling in Chrome
-      window.onwheel = preventDefault; // modern standard
-      window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-      window.ontouchmove  = preventDefault; // mobile
-      document.onkeydown  = preventDefaultForScrollKeys;
+      try {if (window.addEventListener) { FFwindow.addEventListener('DOMMouseScroll', preventDefault, false);} }catch(err) {}
+      try {document.addEventListener('wheel', preventDefault, {passive: false})}catch(err){}; // Disable scrolling in Chrome} catch(err) {};
+      try {window.onwheel = preventDefault }catch(err){};
+      try {window.onmousewheel = document.onmousewheel = preventDefault } catch(err) {};
+      try {window.ontouchmove  = preventDefault } catch(err) {};
+      try {document.onkeydown  = preventDefaultForScrollKeys } catch(err) {};
     }
 
     function enableScroll() {
-      if (window.removeEventListener)
-        window.removeEventListener('DOMMouseScroll', preventDefault, false);
-      document.removeEventListener('wheel', preventDefault, {passive: false}); // Enable scrolling in Chrome
-      window.onmousewheel = document.onmousewheel = null;
-      window.onwheel = null;
-      window.ontouchmove = null;
-      document.onkeydown = null;
+      try {window.removeEventListener('DOMMouseScroll', preventDefault, false)} catch(err){};
+      try {document.removeEventListener('wheel', preventDefault, {passive: false});}catch(err){};
+      try {window.onmousewheel = document.onmousewheel = null;} catch(err){}
+      try {window.onwheel = null;} catch(err){};
+      try {window.ontouchmove = null;} catch(err){};
+      try {document.onkeydown = null;} catch(err){};
     }
+
+
 
 
 
     let sugregions = document.getElementById('subregions');
     let body = document.querySelector('body');
+    let content = document.getElementById('content');
 
     console.log(menu);
     if (this.state.mode == "") {
       this.setState({mode: "is-active"});
+      sugregions.style.minHeight = 'unset';
       sugregions.style.height = '100vh';
       body.style.overflowY = 'hidden';
       disableScroll();
+      setTimeout(function(){
+        content.style.display = 'none';
+        console.log("ran timsseout!!!")
+      }, 700);
     } else {
       this.setState({mode: ""});
+      sugregions.style.minHeight = 'unset';
       sugregions.style.height = '0px';
       body.style.overflowY = 'unset';
       enableScroll();
+      content.style.display = 'unset';
     }
   }
 

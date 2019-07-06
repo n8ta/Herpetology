@@ -5,10 +5,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
 
   def username_available
-    puts "pr"
-    puts params[:username]
-    puts "decode"
-    puts Base64.decode64(params[:username])
     username = Base64.decode64(params[:username])
     if User.find_by(username: username).nil?
       render :json => {valid: true}

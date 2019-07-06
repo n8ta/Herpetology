@@ -34,17 +34,17 @@
   <div id="logo">
     <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
     <% if current_user %>
-      <%= render 'statics/hamburger' %>
+      <%= react_component("Menubutton") %>
       <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
       <span>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</span>
       <%#= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'right_of_logo' %>
     <% else %>
-      <%= render 'statics/hamburger' %>
+      <%= react_component("Menubutton") %>
       <a id='logo_anchor' href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
       <%= link_to 'Sign In/Up', '/users/sign_up', class: 'right_of_logo' %>
     <% end %>
   </div>
-  <div id="menu" class="drop_down_menu">
+  <div id="menu" class="center drop_down_menu">
     <ul id="menu-inner">
 <!--      <li><%#= link_to reports_path do %><h4>Reports</h4><%# end %></li>-->
 <!--      <li><%#= link_to reports_path do %><h4>Messages</h4><%# end %>-->
