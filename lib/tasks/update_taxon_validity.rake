@@ -10,7 +10,6 @@ namespace :maintenance do
 
       if txn.photos.where(dead: false).any?
         txn.photographed = true
-
       else
         txn.photographed = false
       end
