@@ -3,18 +3,17 @@
 <head>
   <title>HerpID | <%= yield :title %></title>
   <meta name="description" value="HerpID teaches people to identify reptiles and amphibians">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script async defer src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" integrity="sha384-8kKqrPvADL3/ZYJGtcqeG+fveXaJxTaI7LF1/a9QGZpkRVZSurP858KKE6rtnLLs" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous" integriy="sha384-szBDCttiBKEqclgvjfm0xu/GOyoGJH3pVG2Ptr69bXpDc9ZU0Ed0BYkeZZ98F7Ym"></script>
 
 </head>
 <% unless Rails.env == "development" %>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5" integrity="sha384-7sbs6GRWWqggJcbgIzwS+Y4quYBLc4Cdbic5BxrDcISwNuOCnf901ZmBpJTEwR9g"></script>
   <script>window.dataLayer = window.dataLayer || [];
 
   function gtag() {
