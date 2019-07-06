@@ -36,7 +36,6 @@ class Subregionbutton extends React.Component {
     let body = document.querySelector('body');
     let content = document.getElementById('content');
 
-    console.log(menu);
     if (this.state.mode == "") {
       this.setState({mode: "is-active"});
       sugregions.style.minHeight = 'unset';
@@ -45,7 +44,6 @@ class Subregionbutton extends React.Component {
       disableScroll();
       setTimeout(function(){
         content.style.display = 'none';
-        console.log("ran timsseout!!!")
       }, 700);
     } else {
       this.setState({mode: ""});

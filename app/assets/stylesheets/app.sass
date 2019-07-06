@@ -19,6 +19,10 @@ body
     z-index: 10
 
 #logo
+  #logo_anchor
+    display: flex
+    justify-content: center
+    flex-direction: column
   position: relative
   #menubutton
     height: 100%
@@ -28,6 +32,11 @@ body
     .hamburger
       padding-top: 1rem
   h1
+    margin: 0
+    padding: 0
+    a
+      margin: 0
+      padding: 0
     margin-left: 2rem
     margin-right: 2rem
   display: flex
@@ -59,12 +68,16 @@ body
     *
       font-size: 1em
       font-weight: 100
+    padding-bottom: 2rem
+    max-width: 30rem
     padding-left: 2rem
     padding-right: 2rem
 #menu
   #menu-inner
+    padding-bottom: 2rem
     max-width: 30rem
     padding-left: 2rem
+    padding-right: 2rem
 
   *
     color: white

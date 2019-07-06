@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 
 class Menubutton extends React.Component {
     constructor(props) {
-        console.log("MENU CONS");
         super(props);
         this.state = {mode: ""};
         this.toggle = this.toggle.bind(this)
@@ -36,28 +35,22 @@ class Menubutton extends React.Component {
         let body = document.querySelector('body');
         let content = document.getElementById('content');
 
-        console.log("content:",content);
         if (this.state.mode == "") {
             this.setState({mode: "is-active"});
             menu.style.minHeight = 'unset';
             menu.style.height = '100vh';
             body.style.overflowY = 'hidden';
             disableScroll();
-            console.log('branch');
             setTimeout(function(){
                 content.style.display = 'none';
-                console.log("ran timsseout!!!")
             }, 700);
-            console.log('post');
         } else {
-            console.log('branch2 ');
             this.setState({mode: ""});
             menu.style.minHeight = 'unset';
             menu.style.height = '0px';
             content.style.display = 'unset';
             body.style.overflowY = 'unset';
             enableScroll();
-            console.log('bran h2')
         }
 
     }
