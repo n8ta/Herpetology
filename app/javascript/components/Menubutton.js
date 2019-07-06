@@ -6,7 +6,6 @@ class Menubutton extends React.Component {
     constructor(props) {
         console.log("MENU CONS");
         super(props);
-        alert('yieks');
         this.state = {mode: ""};
         this.toggle = this.toggle.bind(this)
     }
