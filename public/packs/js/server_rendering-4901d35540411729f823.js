@@ -359,48 +359,29 @@ function (_React$Component) {
   _createClass(Menubutton, [{
     key: "toggle",
     value: function toggle() {
-      // function disableScroll() {
-      //     try {if (window.addEventListener) { FFwindow.addEventListener('DOMMouseScroll', preventDefault, false);} }catch(err) {}
-      //     try {document.addEventListener('wheel', preventDefault, {passive: false})}catch(err){}; // Disable scrolling in Chrome} catch(err) {};
-      //     try {window.onwheel = preventDefault }catch(err){};
-      //     try {window.onmousewheel = document.onmousewheel = preventDefault } catch(err) {};
-      //     try {window.ontouchmove  = preventDefault } catch(err) {};
-      //     try {document.onkeydown  = preventDefaultForScrollKeys } catch(err) {};
-      // }
-      //
-      // function enableScroll() {
-      //     try {window.removeEventListener('DOMMouseScroll', preventDefault, false)} catch(err){};
-      //     try {document.removeEventListener('wheel', preventDefault, {passive: false});}catch(err){};
-      //     try {window.onmousewheel = document.onmousewheel = null;} catch(err){}
-      //     try {window.onwheel = null;} catch(err){};
-      //     try {window.ontouchmove = null;} catch(err){};
-      //     try {document.onkeydown = null;} catch(err){};
-      // }
       var menu = document.getElementById('menu');
-      var body = document.querySelector('body');
       var content = document.getElementById('content');
 
       if (this.state.mode == "") {
         this.setState({
           mode: "is-active"
         });
-        menu.style.minHeight = '100vh';
-        menu.style.height = 'auto';
-        body.style.overflowY = 'hidden'; // disableScroll();
-
+        menu.style.height = '100vh';
         setTimeout(function () {
           if (this.state.mode == "") {} else {
-            content.style.display = 'none';
+            menu.style.height = 'auto ';
+            menu.style.minHeight = "100vh";
           }
         }.bind(this), 700);
       } else {
+        menu.style.height = menu.clientHeight.toString() + "px";
+        menu.style.minHeight = "unset";
+        setTimeout(function () {
+          menu.style.height = '0px';
+        }, 45);
         this.setState({
           mode: ""
         });
-        menu.style.minHeight = 'unset';
-        menu.style.height = '0px';
-        content.style.display = 'unset';
-        body.style.overflowY = 'unset'; // enableScroll();
       }
     }
   }, {
@@ -410,7 +391,7 @@ function (_React$Component) {
         id: "menubutton",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 64
+          lineNumber: 41
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -419,21 +400,21 @@ function (_React$Component) {
         type: "button",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 65
+          lineNumber: 42
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "hamburger-box",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 66
+          lineNumber: 45
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "hamburger-inner",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 67
+          lineNumber: 46
         },
         __self: this
       }))));
@@ -2724,31 +2705,28 @@ function (_React$Component) {
       //   try {document.onkeydown = null;} catch(err){};
       // }
       var sugregions = document.getElementById('subregions');
-      var body = document.querySelector('body');
       var content = document.getElementById('content');
 
       if (this.state.mode == "") {
         this.setState({
           mode: "is-active"
         });
-        sugregions.style.minHeight = '100vh';
-        sugregions.style.height = 'auto';
-        body.style.overflowY = 'hidden'; // disableScroll();
-
+        sugregions.style.height = '100vh';
         setTimeout(function () {
           if (this.state.mode == "") {} else {
-            content.style.display = 'none';
+            sugregions.style.height = 'auto';
+            sugregions.style.minHeight = "100vh";
           }
         }.bind(this), 700);
       } else {
+        sugregions.style.height = sugregions.clientHeight.toString() + "px";
+        sugregions.style.minHeight = "unset";
+        setTimeout(function () {
+          sugregions.style.height = '0px';
+        }, 45);
         this.setState({
           mode: ""
         });
-        sugregions.style.minHeight = 'unset';
-        sugregions.style.height = '0px';
-        body.style.overflowY = 'unset'; // enableScroll();
-
-        content.style.display = 'unset';
       }
     }
   }, {
@@ -2761,7 +2739,7 @@ function (_React$Component) {
           className: "subhead",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 64
+            lineNumber: 62
           },
           __self: this
         }, "Hide Subregions");
@@ -2772,7 +2750,7 @@ function (_React$Component) {
           className: "subhead",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 68
+            lineNumber: 66
           },
           __self: this
         }, "Show Subregions");
@@ -43532,4 +43510,4 @@ module.exports = function(module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=server_rendering-ff09acb4266c4730dc3a.js.map
+//# sourceMappingURL=server_rendering-4901d35540411729f823.js.map
