@@ -7,6 +7,7 @@ namespace :maintenance do
     Taxon.all.roots.each do |txn|
       puts x
       begin
+        txn.valid_regions = []
         txn.valid_regions << Region.all.select {|ct| ct.taxons.species.where(root_taxon_id: txn.id, dead: false, photograped: true).size >5}
       rescue
       end
