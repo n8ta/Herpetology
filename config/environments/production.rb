@@ -5,6 +5,8 @@ Rails.application.configure do
   config.serve_static_assets = true
   config.assets.compile = true
 
+  config.force_ssl = true
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
