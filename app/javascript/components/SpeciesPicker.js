@@ -101,7 +101,7 @@ class SpeciesPicker extends React.Component {
 
         if (this.state.asked_about_signup == false && this.state.iterations == 6) {
             this.setState({mode: "signup", asked_about_signup: true});
-            // Cookies.set("asked_about_signup",true,{expires: 1})
+            Cookies.set("asked_about_signup",true,{expires: 1})
         } else {
             this.setState({
                 common_name: undefined,
