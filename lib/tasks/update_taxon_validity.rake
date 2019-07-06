@@ -7,6 +7,7 @@ namespace :maintenance do
     Taxon.all.each do |txn|
       puts x if x%1000 == 0
       x+=1
+
       if txn.photos.where(dead: false).any?
         txn.photographed = true
 
