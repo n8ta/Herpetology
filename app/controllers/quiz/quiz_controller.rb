@@ -28,8 +28,6 @@ module Quiz
 
     def guess
       body = JSON.parse request.body.read
-
-      place_on_scoreboard = current_user.place_on_scoreboard
       species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
       puts "species:"
       puts species.inspect
