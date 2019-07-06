@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_04_200043) do
+ActiveRecord::Schema.define(version: 2019_07_06_184146) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 2019_07_04_200043) do
     t.datetime "updated_at", null: false
     t.index ["name", "taxon_id"], name: "index_common_names_on_name_and_taxon_id", unique: true
     t.index ["taxon_id"], name: "index_common_names_on_taxon_id"
+  end
+
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "content"
+    t.bigint "report_id"
+    t.bigint "src"
+    t.bigint "dst"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dst"], name: "fk_rails_dafa164fa2"
+    t.index ["report_id"], name: "index_messages_on_report_id"
+    t.index ["src"], name: "fk_rails_8b62b3bab8"
   end
 
   create_table "photos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -123,6 +135,9 @@ ActiveRecord::Schema.define(version: 2019_07_04_200043) do
   end
 
   add_foreign_key "common_names", "taxons"
+  add_foreign_key "messages", "reports"
+  add_foreign_key "messages", "users", column: "dst"
+  add_foreign_key "messages", "users", column: "src"
   add_foreign_key "photos", "taxons"
   add_foreign_key "regions_root_taxons", "regions"
   add_foreign_key "regions_root_taxons", "taxons"

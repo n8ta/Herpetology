@@ -100,7 +100,6 @@ GEM
     formatador (0.2.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    hamburgers (1.1.3)
     http (2.2.2)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -263,7 +262,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   fog-aws
-  hamburgers
   httparty
   jbuilder (~> 2.5)
   jquery-rails
@@ -280,7 +278,7 @@ DEPENDENCIES
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
-  webpacker
+  webpacker (= 4.0.7)
 
 BUNDLED WITH
    1.17.2

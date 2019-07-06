@@ -1,0 +1,10 @@
+<div class="center">
+<ol>
+  <% users.each do |rank| %>
+    <div>
+      <span class="rank"><%= rank[:rank].ordinalize %></span>
+      <%= rank[:username] %>: <span class="score"><%= rank[:score].round(3) %></span>
+    </div>
+  <% end %>
+</ol>
+</div>

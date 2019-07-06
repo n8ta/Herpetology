@@ -12,22 +12,24 @@ module Quiz
     end
 
     def scoreboard
-      if current_user
-        user_ranks = User.all.sort {|a, b| b.score <=> a.score}
+      @users_total_correct = User.all.sort {|a, b| b.total_correct <=> a.total_correct}
+      @users_sci_acc = User.all.sort {|a, b| b.accuracy_scientific <=> a.accuracy_scientific}
+      @users_com_acc = User.all.sort {|a, b| b.accuracy_common <=> a.accuracy_common}
 
+      @correct_ids = @users_total_correct.each_with_index.map {|user, i| {'rank': i+1, 'username': user.username, 'score': user.total_correct}}
+      @sci_acc = @users_total_correct.each_with_index.map {|user, i| {'rank': i+1, 'username': user.username, 'score': user.accuracy_scientific}}
+      @com_acc = @users_total_correct.each_with_index.map {|user, i| {'rank': i+1, 'username': user.username, 'score': user.accuracy_common}}
 
-        ranks = [{'rank': 1, 'name': user_ranks[0].username, 'score': user_ranks[0].score},
-                 {'rank': 2, 'name': user_ranks[1].username, 'score': user_ranks[1].score},
-                 {'rank': 3, 'name': user_ranks[2].username, 'score': user_ranks[2].score}
-        ]
-        render :json => ranks
-      else
-        render :json, 'You must sign in'
+      respond_to do |format|
+        format.html { }
+        format.json { render :json => ranks }
       end
     end
 
     def guess
       body = JSON.parse request.body.read
+
+      place_on_scoreboard = current_user.place_on_scoreboard
       species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
       puts "species:"
       puts species.inspect
@@ -73,7 +75,7 @@ module Quiz
 
     def game
       @regions = @region.regions
-      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true )
+      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
       options = specie_hash(@species)
       correct_specie = options[1]
       @photo = correct_specie.photos[rand(correct_specie.photos.size)]
@@ -134,7 +136,7 @@ module Quiz
       end
       puts "Photos:"
       puts photos.inspect
-      photo = photos[rand(photos.size-1)]
+      photo = photos[rand(photos.size - 1)]
       puts "Photo:"
       puts photo.inspect
 
@@ -146,7 +148,7 @@ module Quiz
       session[:common_index] = common_index
       session[:specie_id] = correct_specie.id
       session[:photo_id] = photo.id
-      return [hash_data, correct_specie,photo] # hash, Species model
+      return [hash_data, correct_specie, photo] # hash, Species model
     end
 
     def set_taxon

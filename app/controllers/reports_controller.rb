@@ -1,7 +1,12 @@
 class ReportsController < ApplicationController
-  before_action :contributor_only, only: [:edit, :update, :index, :destroy]
-  before_action :set_report, only: [:show, :edit, :update, :destroy]
+  before_action :contributor_only, only: [:edit, :update, :index, :destroy, :approve]
+  before_action :set_report, only: [:show, :edit, :update, :destroy, :approve]
 
+
+  # POST /reports/1/approve
+  def approve
+
+  end
 
   # GET /reports
   # GET /reports.json

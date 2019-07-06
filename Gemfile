@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'jquery-rails'
 gem 'fog-aws'
 gem 'dotenv-rails'
-gem 'webpacker'
+gem 'webpacker', '4.0.7'
 gem 'react-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'redd'

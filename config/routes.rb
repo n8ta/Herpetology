@@ -24,13 +24,17 @@ Rails.application.routes.draw do
     root :to => 'quiz#pick_taxon'
     get '/' => 'quiz#pick_taxon', as: 'pick_taxon'
     get '/pick_taxon' => 'quiz#pick_taxon_all', as: 'pick_taxon_all'
-    get 'scoreboard.json' => 'quiz#scoreboard', as: 'scoreboard'
     get 'taxon/:taxon_id' => 'quiz#pick_region', as: 'pick_region'
     get 'taxon/:taxon_id/region/:region_id' => 'quiz#game', as: 'game'
     post 'taxon/:taxon_id/region/:region_id' => 'quiz#guess', as: 'guess'
+    get 'scoreboard' => 'quiz#scoreboard', as: 'scoreboard'
   end
 
-  resources :reports
+  resources :reports do
+    collection do
+      post 'approve' => 'reports#approve', as: 'approve'
+    end
+  end
   resources :photos, only: [:edit, :show, :update, :destroy]
 
   resources :taxons do

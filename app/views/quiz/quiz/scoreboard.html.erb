@@ -1,0 +1,24 @@
+<% content_for :title do %>
+  Scoreboard
+<% end %>
+
+<% content_for :breadcrumb do %>
+  Scoreboard
+<% end %>
+
+<h2>Most correct IDs</h2>
+
+<%= render :partial =>'quiz/list', locals: {users: @correct_ids} %>
+
+
+<h2>Scientific Accuracy</h2>
+
+<%= render :partial =>'quiz/list', locals: {users: @sci_acc} %>
+
+
+<h2>Common Accuracy</h2>
+
+<%= render :partial =>'quiz/list', locals: {users: @com_acc} %>
+
+<br/>
+<%= link_to "Back to Herps", quiz_pick_taxon_path , class: 'center'   %>

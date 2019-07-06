@@ -177,7 +177,7 @@ class Signup extends React.Component {
                         <h2>Sign Up </h2>
                     </div>
                     <div className={'center'}>
-                        <p>Creating an account lets us tailor the species you see to show you the speices you need to practice more often.</p>
+                        <p>Creating an account puts you on teh scoreboard and lets us tailor the species you see to show you those you need to practice more.</p>
                     </div>
                     <div className={'center'}>
                         <form onKeyUp={this.handleChange} className="new_user" id="sign_up_new_user" action="/users"

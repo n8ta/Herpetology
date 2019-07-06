@@ -11,6 +11,10 @@ class User < ApplicationRecord
 
   enum user_class: ["user","contributor","admin"]
 
+  def place_on_scoreboard
+    User.all.sort {|a, b| b.total_correct <=> a.total_correct}.find_index(self) + 1
+  end
+
   def admin?
     user_class == "admin"
   end
@@ -24,19 +28,26 @@ class User < ApplicationRecord
   end
 
   def total_correct
-    self.user_taxon_data.sum(:correct)
+      total_sci + total_com
+  end
+
+  def accuracy_scientific
+    total_sci / (total_seen == 0 ? 1.0 : total_seen)
+  end
+  def accuracy_common
+    total_com / (total_seen == 0 ? 1.0 : total_seen)
+  end
+
+  def total_sci
+    self.user_taxon_data.sum(:sci_correct).to_f
+  end
+
+  def total_com
+    self.user_taxon_data.sum(:common_correct).to_f
   end
 
   def total_seen
-    self.user_taxon_data.sum(:seen)
+    self.user_taxon_data.sum(:sci_seen).to_f
   end
 
-  def ratio
-    return 0 if total_seen == 0
-    total_correct/total_seen
-  end
-
-  def score
-    total_correct
-  end
 end

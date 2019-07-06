@@ -8,7 +8,7 @@
   <%= csp_meta_tag %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <script async defer src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" integrity="sha384-8kKqrPvADL3/ZYJGtcqeG+fveXaJxTaI7LF1/a9QGZpkRVZSurP858KKE6rtnLLs" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" integrity="sha384-8kKqrPvADL3/ZYJGtcqeG+fveXaJxTaI7LF1/a9QGZpkRVZSurP858KKE6rtnLLs" crossorigin="anonymous"></script>
   <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous" integriy="sha384-szBDCttiBKEqclgvjfm0xu/GOyoGJH3pVG2Ptr69bXpDc9ZU0Ed0BYkeZZ98F7Ym"></script>
 
 </head>
@@ -26,16 +26,13 @@
 
 
 <body>
-<!-- Place this tag where you want the button to render. -->
-
-
 <div id="logo-holder">
   <div id="logo">
     <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
     <% if current_user %>
       <%= react_component("Menubutton") %>
       <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
-      <span>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</span>
+      <span>&nbsp &nbsp &nbsp &nbsp &nbsp</span>
       <%#= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'right_of_logo' %>
     <% else %>
       <%= react_component("Menubutton") %>
@@ -45,27 +42,43 @@
   </div>
   <div id="menu" class="center drop_down_menu">
     <ul id="menu-inner">
-<!--      <li><%#= link_to reports_path do %><h4>Reports</h4><%# end %></li>-->
-<!--      <li><%#= link_to reports_path do %><h4>Messages</h4><%# end %>-->
-<!--      </li>-->
+      <li><h4><%= link_to quiz_scoreboard_path do %>
+          Scoreboard
+          <% if current_user %>
+            (<%= current_user.place_on_scoreboard.ordinalize %>)
+          <% end %>
+
+        <% end %>
+      </h4></li>
+      <% if current_user && current_user.admin_or_contributor? %>
+        <li><h4><%= link_to reports_path do %>Reports(<%= Report.pending.size %>)
+          <% end %></h4></li>
+      <% end %>
       <li>
-        <%= link_to "https://github.com/n8ta/HerpID", target: '_blank' do %><h4>HerpID on Github</h4>
-        <% end %><br/>
+        <h4><%= link_to "https://github.com/n8ta/HerpID", target: '_blank' do %>HerpID on Github
+          <% end %></h4><br/>
         <a class="github-button" href="https://github.com/n8ta/herpid/issues" data-icon="octicon-issue-opened" data-size="large" data-show-count="true" aria-label="Issue n8ta/herpid on GitHub">Issues</a><br/>
         <a class="github-button" href="https://github.com/n8ta/herpID" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star n8ta/herpID on GitHub">Star</a>
       </li>
       <li>
-        <h4>Developer: </h4><%= link_to "https://n8ta.com/", target: '_blank' do %><h4>Nate Tracy-Amoroso</h4> <% end %>
-      </h4>
+        <h4>Developer: <%= link_to "https://n8ta.com/", target: '_blank' do %>Nate Tracy-Amoroso
+          <% end %></h4>
       </li>
       <li>
         <% if current_user %>
           <h4>Settings</h4>
           <%= react_component('Settings', {show_dead: current_user.show_dead_photos}) %>
         <% else %>
-        <H4>Settings</H4>
-          <p>If you make an account you can toggle seeing photos of dead animals on and off, default is off.</p>
+          <H4>Settings</H4>
+          <p>If you make an account you can toggle seeing photos of dead animals on and off as well as see statistics on
+            accuracy.</p>
           <%= link_to "Signup", '/users/sign_up' %>
+        <% end %>
+      </li>
+      <li>
+        <% unless current_user.nil? %>
+          <h4>  <%= link_to destroy_user_session_path, method: :delete do %> Sign Out
+            <% end %></h4>
         <% end %>
       </li>
     </ul>
