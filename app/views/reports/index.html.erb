@@ -9,7 +9,6 @@
       <h4>No Reports</h4>
 
     <% end %>
-    <% console %>
     <% @reports.each do |report| %>
         <% # Ternaries all handle optional parts of the report, eg. they may have reported for venomous so report.taxon is nil %>
         <%= react_component("Handlereport", {photoUrl: report.photo.image_path.url,
