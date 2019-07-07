@@ -5,6 +5,7 @@
 <% content_for :breadcrumb do %>
   Scoreboard
 <% end %>
+<div id="scoreboard">
 
 <h2>Most correct IDs</h2>
 
@@ -12,6 +13,7 @@
 
 
 <h2>Scientific Accuracy</h2>
+<p class="center">If you have a perfect accuracy but less than 100 IDs it will be counted as 0 to prevent users IDing one herp and leaving</p>
 
 <%= render :partial =>'quiz/list', locals: {users: @users_sci_acc} %>
 
@@ -20,9 +22,10 @@
 
 <%= render :partial =>'quiz/list', locals: {users: @users_com_acc} %>
 
-<h2>Most Approved Reports of Photos/Species</h2>
+<h2>Most Contributions to the Site</h2>
 <%= render :partial =>'quiz/list', locals: {users: @users_reports} %>
 
 
 <br/>
 <%= link_to "Back to Herps", quiz_pick_taxon_path , class: 'center'   %>
+</div>
