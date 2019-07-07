@@ -46,10 +46,14 @@ class User < ApplicationRecord
   end
 
   def accuracy_scientific
-    total_sci / (total_seen == 0 ? 1.0 : total_seen)
+    acc = total_sci / (total_seen == 0 ? 1.0 : total_seen)
+    return 0 if acc = 0
+    return acc
   end
   def accuracy_common
-    total_com / (total_seen == 0 ? 1.0 : total_seen)
+    acc = total_com / (total_seen == 0 ? 1.0 : total_seen)
+    return 0 if acc = 0
+    return acc
   end
 
   def total_sci
