@@ -19,7 +19,7 @@ module Quiz
       @users_total_correct = User.all.sort {|a, b| b.total_correct <=> a.total_correct}[0..limit-1].each_with_index.map { |user,i| {'rank': i+1, 'username': user.username, 'score': user.total_correct} }
       @users_sci_acc = User.all.sort {|a, b| b.accuracy_scientific <=> a.accuracy_scientific}[0..limit-1].each_with_index.map { |user,i| {'rank': i+1, 'username': user.username, 'score': user.accuracy_scientific} }
       @users_com_acc = User.all.sort {|a, b| b.accuracy_common <=> a.accuracy_common}[0..limit-1].each_with_index.map { |user,i| {'rank': i+1, 'username': user.username, 'score': user.accuracy_common} }
-      @users_reports = User.all.sort {|a, b| b.approved_reports.size <=> a.approved_reports.size }[0..limit-1].each_with_index.map { |user,i| {'rank': i+1, 'username': user.username, 'score': user.git approved_reports.size } }
+      @users_reports = User.all.sort {|a, b| b.created_reports.where(approved: true).size <=> a.created_reports.where(approved: true).size }[0..limit-1].each_with_index.map { |user,i| {'rank': i+1, 'username': user.username, 'score': user.created_reports.where(approved: true).size } }
       if current_user
         # Add current user to end of scoreboard b/c that's what everyone really cares about
         cu_total_hash = {'rank': current_user.place_on_scoreboard, 'username': current_user.username, 'score': current_user.total_correct}
@@ -37,7 +37,7 @@ module Quiz
         unless @users_com_acc.include?(cu_com_hash)
           @users_com_acc << cu_com_hash
         end
-        cu_report_hash = {'rank': current_user.place_report_scoreboard, 'username': user.username, 'score': approved_reports.size }
+        cu_report_hash = {'rank': current_user.place_report_scoreboard, 'username': current_user.username, 'score': current_user.created_reports.where(approved: true).size }
         # current_user hash of report score
         unless @users_reports.include?(cu_report_hash)
           @users_reports << cu_report_hash
@@ -47,7 +47,7 @@ module Quiz
 
     def guess
       body = JSON.parse request.body.read
-      species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true, hidden: false)
+      species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
       puts "species:"
       puts species.inspect
       specie_m = Taxon.all.species.find(session[:specie_id])
@@ -92,7 +92,7 @@ module Quiz
 
     def game
       @regions = @region.regions
-      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true, hidden: false)
+      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
       options = specie_hash(@species)
       correct_specie = options[1]
       @photo = correct_specie.photos[rand(correct_specie.photos.size)]

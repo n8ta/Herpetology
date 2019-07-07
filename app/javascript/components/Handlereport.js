@@ -71,7 +71,7 @@ class Handlereport extends React.Component {
                 approve_class = "active";
             }
             reject_class = "disabled";
-            disabled = 'true';
+            disabled = 'true' ;
         } else if (this.state.mode == "rejected") {
             if (this.state.confirmed == true) {
                 reject_class = "confirmed"

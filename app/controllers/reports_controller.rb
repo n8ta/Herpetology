@@ -25,7 +25,8 @@ class ReportsController < ApplicationController
         end
         taxon.save!
       end
-      @report.handled = true
+      @report.handled = true # Action was taken by mod
+      @report.approved = true # User was correct in their suggestion
       @report.handled_by = current_user
       @report.save!
       return render :json => {msg: 'Approved'}
@@ -39,7 +40,8 @@ class ReportsController < ApplicationController
 
   # POST /reports/1/reject
   def reject
-    @report.handled = true
+    @report.handled = true # Action was taken by mod
+    @report.approved = false # User was incorrect
     @report.save!
     render :json => {msg: 'Rejected'}
   end

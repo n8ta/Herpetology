@@ -70,15 +70,15 @@ ActiveRecord::Schema.define(version: 2019_07_07_062417) do
     t.bigint "taxon_id"
     t.bigint "photo_id", null: false
     t.boolean "handled", default: false, null: false
-    t.bigint "created_by"
-    t.bigint "handled_by"
+    t.bigint "created_by_id"
+    t.bigint "handled_by_id"
     t.string "venomous"
     t.boolean "no_herp", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "approved"
-    t.index ["created_by"], name: "fk_rails_1bfbfccda5"
-    t.index ["handled_by"], name: "fk_rails_8485fb06e7"
+    t.index ["created_by_id"], name: "fk_rails_1bfbfccda5"
+    t.index ["handled_by_id"], name: "fk_rails_8485fb06e7"
     t.index ["photo_id"], name: "index_reports_on_photo_id"
     t.index ["taxon_id"], name: "index_reports_on_taxon_id"
   end
@@ -147,8 +147,8 @@ ActiveRecord::Schema.define(version: 2019_07_07_062417) do
   add_foreign_key "regions_taxons", "taxons"
   add_foreign_key "reports", "photos"
   add_foreign_key "reports", "taxons"
-  add_foreign_key "reports", "users", column: "created_by"
-  add_foreign_key "reports", "users", column: "handled_by"
+  add_foreign_key "reports", "users", column: "created_by_id"
+  add_foreign_key "reports", "users", column: "handled_by_id"
   add_foreign_key "taxons", "taxons"
   add_foreign_key "taxons", "taxons", column: "root_taxon_id"
   add_foreign_key "tips", "taxons"
