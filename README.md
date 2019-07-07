@@ -12,16 +12,15 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
+- Make sure we have accurate data on venomous species, this may be possible to do by hand (reports will help too)
+- Quiz on venomous as well as name
 - Interface to handle reports
 - React component for forgot password
 - Setup email
 - Show tips on species picker after guess
 - Tip approvals
 - Tip submissions
-- All photo contributions
 - Implement points based on number of species in tier
-- Daily scoreboard
-- All time most accurate
 - Variable zoom on zoom-in feature 
 - Ruby version in gemfile
 - Built report system
@@ -32,6 +31,8 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Write some tests xD 
 
 # Done:
+- Daily scoreboard (July 6, 2019)
+- All time most accurate (July 6, 2019)
 - Menu / subregion areas with toggles (July 4, 2019)
 - Toggle showing photos of deceased animals (setting for signed in users) (July 3, 2019) 
 - Reporting feature, types:  (July 3, 2019)
