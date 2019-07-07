@@ -1,12 +1,19 @@
 <div class="center">
-  <table>
-    <th>
-      <ol>
-        <% users.each do |rank| %>
-          <div>
-            <span class="rank"><%= rank[:rank].ordinalize %></span>
-            <%= rank[:username] %>: <span class="score"><%= rank[:score].round(3) %></span>
-          </div>
-        <% end %>
-      </ol>
+  <table class='scoreboard'>
+  <thead>
+    <th>Rank</th>
+    <th>User</th>
+    <th>Score</th>
+    </thead>
+    <tbody>
+
+    <% users.each do |rank| %>
+              <tr>
+                <td class="rank"><%= rank[:rank].ordinalize %></td>
+                <td><%= rank[:username] %></td>
+                <td class="score"><%= rank[:score].round(3) %></td>
+              </tr>
+            <% end %>
+    </tbody>
+    </table>
 </div>

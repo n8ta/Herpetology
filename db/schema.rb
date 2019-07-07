@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_06_184146) do
+ActiveRecord::Schema.define(version: 2019_07_07_062417) do
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "taxon_id", null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2019_07_06_184146) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "dead", default: false
+    t.boolean "hidden", default: false, null: false
     t.index ["taxon_id"], name: "index_photos_on_taxon_id"
   end
 
@@ -75,6 +76,7 @@ ActiveRecord::Schema.define(version: 2019_07_06_184146) do
     t.boolean "no_herp", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "approved"
     t.index ["created_by"], name: "fk_rails_1bfbfccda5"
     t.index ["handled_by"], name: "fk_rails_8485fb06e7"
     t.index ["photo_id"], name: "index_reports_on_photo_id"

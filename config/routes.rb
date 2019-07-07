@@ -31,8 +31,9 @@ Rails.application.routes.draw do
   end
 
   resources :reports do
-    collection do
+    member do
       post 'approve' => 'reports#approve', as: 'approve'
+      post 'reject' => 'reports#reject', as: 'reject'
     end
   end
   resources :photos, only: [:edit, :show, :update, :destroy]

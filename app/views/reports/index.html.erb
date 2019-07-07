@@ -1,5 +1,5 @@
-<p id="notice"><%= notice %></p>
-
+<% content_for :title do "Reports (#{Report.all.pending.size})" end %>
+<% content_for :breadcrumb do "#{Report.all.pending.size} Pending Reports" end %>
 <h2>Reports</h2>
 
 <div class="center">
@@ -7,42 +7,26 @@
     <% if @reports.size == 0 %>
       <br/>
       <h4>No Reports</h4>
+
     <% end %>
+    <% console %>
     <% @reports.each do |report| %>
-      <div class="report">
-        <%= react_component("Zoom", {url: report.photo.image_path.url, no_text: true}) %>
-        <div>
-
-          <% if report.venomous %>
-            <p>
-              <strong>This species should be marked as:</strong>
-              <%= report.venomous %>
-            </p>
-          <% end %>
-
-          <% if report.taxon %>
-            <p>
-              <strong>Currently:</strong> <%= report.photo.taxon.name %> --
-              <%- report.photo.taxon.common_name %>
-              <br/>
-              <strong>Reported as:</strong> <%= report.taxon.name %> -- <%= report.taxon.common_name %>
-
-            </p>
-          <% end %>
-
-          <% if report.no_herp %>
-            <p>
-              <strong>Photo has no herp</strong>
-            </p>
-          <% end %>
-
-          <% if report.created_by %>
-            <p>
-              Created by: <%= report.created_by.username %>
-            </p>
-          <% end %>
-        </div>
-      </div>
+        <% # Ternaries all handle optional parts of the report, eg. they may have reported for venomous so report.taxon is nil %>
+        <%= react_component("Handlereport", {photoUrl: report.photo.image_path.url,
+                                             venomous: report.venomous ? report.venomous : nil,
+                                             currentTaxonCommon: report.photo.taxon.common_name,
+                                             currentTaxonSci: report.photo.taxon.name,
+                                             newTaxonCommon: report.taxon ? report.taxon.common_name : nil,
+                                             newTaxonSci: report.taxon ? report.taxon.name : nil,
+                                             noHerp: report.no_herp,
+                                             reportId: report.id,
+                                             approveUrl: approve_report_url(report),
+                                             rejectUrl: reject_report_url(report),
+                                             userId: report.created_by ? report.created_by.id : nil,
+                                             userTotal: report.created_by ? report.created_by.total_seen : nil,
+                                             userSciAcc: report.created_by ? report.created_by.accuracy_scientific.round(3) : nil,
+                                             userComAcc: report.created_by ? report.created_by.accuracy_common.round(3) : nil,
+                                             userUsername: report.created_by ? report.created_by.username : nil, }) %>
     <% end %>
 
 

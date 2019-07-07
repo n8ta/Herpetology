@@ -1,11 +1,47 @@
 class ReportsController < ApplicationController
-  before_action :contributor_only, only: [:edit, :update, :index, :destroy, :approve]
-  before_action :set_report, only: [:show, :edit, :update, :destroy, :approve]
+  before_action :contributor_only, only: [:edit, :update, :index, :destroy, :approve, :reject]
+  before_action :set_report, only: [:show, :edit, :update, :destroy, :approve, :reject]
 
 
   # POST /reports/1/approve
   def approve
+    begin
+      photo = @report.photo
+      taxon = photo.taxon
+      if @report.taxon
+        photo.taxon = @report.taxon
+        photo.save!
+      elsif @report.no_herp
+        photo.hidden = true
+        photo.save!
+      elsif @report.venomous
+        case @report.venomous
+        when "venomous"
+          taxon.venomous = true
+        when "nonvenomous"
+          taxon.venomous = false
+        when "unknown"
+          taxon.venomous = nil
+        end
+        taxon.save!
+      end
+      @report.handled = true
+      @report.handled_by = current_user
+      @report.save!
+      return render :json => {msg: 'Approved'}
+    rescue => e
+      @report.handled = false
+      @report.handled_by = nil
+      puts e.inspect
+      return render :json => {msg: "Failed"}, :status => :bad_request
+    end
+  end
 
+  # POST /reports/1/reject
+  def reject
+    @report.handled = true
+    @report.save!
+    render :json => {msg: 'Rejected'}
   end
 
   # GET /reports
@@ -44,11 +80,11 @@ class ReportsController < ApplicationController
     @report.created_by = current_user if current_user
     respond_to do |format|
       if @report.save
-        format.html { redirect_to params[:return_url], notice: 'Report was created. Thanks!' }
-        format.json { render :show, status: :created, location: @report }
+        format.html {redirect_to params[:return_url], notice: 'Report was created. Thanks!'}
+        format.json {render :show, status: :created, location: @report}
       else
-        format.html { render :new }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @report.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -58,11 +94,11 @@ class ReportsController < ApplicationController
   def update
     respond_to do |format|
       if @report.update(report_params)
-        format.html { redirect_to @report, notice: 'Report was successfully updated.' }
-        format.json { render :show, status: :ok, location: @report }
+        format.html {redirect_to @report, notice: 'Report was successfully updated.'}
+        format.json {render :show, status: :ok, location: @report}
       else
-        format.html { render :edit }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @report.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -72,19 +108,20 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html {redirect_to reports_url, notice: 'Report was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_report
-      @report = Report.find(params[:id])
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_report
+    @report = Report.find(params[:id])
+  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
-    def report_params
-      params.require(:report).permit(:type, :taxon_id, :taxon, :photo_id, :venomous, :no_herp)
-    end
+  def report_params
+    params.require(:report).permit(:type, :taxon_id, :taxon, :photo_id, :venomous, :no_herp)
+  end
 end

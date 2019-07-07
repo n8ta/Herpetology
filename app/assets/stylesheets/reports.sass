@@ -1,6 +1,36 @@
+@import 'vars'
+// HandleReport.js component
+// not to create reports
 .report
   margin-top: 1rem
   display: grid
-  grid-template-columns: 1fr 1fr
+  width: 100%
+  grid-template-columns: 45% 45%
   grid-column-gap: 1rem
   grid-template-rows: auto
+  div
+    grid-area: auto
+  .buttons
+    svg
+      cursor: pointer
+      display: inline
+      width: 3em
+      height: 3em
+      fill: $dark-green
+      &:hover
+        fill: $darker-green
+      &:active
+        fill: $brown
+      &.active
+        cursor: unset
+        fill: $brown
+        &:hover
+          fill: $brown
+        &:active
+          fill: $brown
+      &.disabled
+        cursor: unset
+        fill: rgba(0,0,0,.1)
+      &.confirmed
+        fill: $blue
+        cursor: unset

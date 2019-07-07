@@ -8,7 +8,7 @@ namespace :maintenance do
       puts x
       begin
         txn.valid_regions = []
-        txn.valid_regions << Region.all.select { |ct| ct.taxons.species.where(root_taxon_id: txn.id, photographed: true).size > 5 }
+        txn.valid_regions << Region.all.select { |ct| ct.taxons.species.where(root_taxon_id: txn.id, photographed: true, hidden: false).size > 5 }
       rescue
       end
       x+=1

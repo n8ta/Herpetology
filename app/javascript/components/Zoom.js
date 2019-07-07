@@ -64,7 +64,7 @@ class Zoom extends React.Component {
                     <div className={'zoom_inner'} id={'zoom_container_' + this.state.id} onMouseLeave={this.mouseLeave}
                          onMouseMove={this.mouseMove}>
                         <div className={'zoom'} id={'zoom_' + this.state.id} style={style}>
-                            <img className={'zoom_image'} id={'zoom_image_' + this.state.id}
+                            <img alt='Photo of an unknown reptile or amphibean' className={'zoom_image'} id={'zoom_image_' + this.state.id}
                                  src={this.props.url}/>
 
                         </div>

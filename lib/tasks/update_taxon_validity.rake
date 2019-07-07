@@ -8,7 +8,7 @@ namespace :maintenance do
       puts x if x%1000 == 0
       x+=1
 
-      if txn.photos.where(dead: false).any?
+      if txn.photos.where(dead: false, hidden: false).any?
         txn.photographed = true
       else
         txn.photographed = false
