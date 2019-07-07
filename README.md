@@ -14,6 +14,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 # Todo:
 - Make sure we have accurate data on venomous species, this may be possible to do by hand (reports will help too)
 - Quiz on venomous as well as name
+- Add "Dead herp" to report options
 - Interface to handle reports
 - React component for forgot password
 - Setup email
