@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
 
   def approved_reports
-    Report.all_reports.select{ |rep| rep.handled_by_id == self.id && rep.approved == true }
+    Report.all_reports.select{ |rep| rep.created_by_id == self.id && rep.approved == true }
   end
 
 
