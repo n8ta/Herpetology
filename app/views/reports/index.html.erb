@@ -19,12 +19,12 @@ end %>
       component_params[:approveUrl] = approve_report_url(report,report.class.name)
       component_params[:rejectUrl] = reject_report_url(report,report.class.name)
 
-      if current_user
-        component_params[:userId] = current_user.id
-        component_params[:userUsername] = current_user.username
-        component_params[:userTotal] = current_user.total_seen
-        component_params[:userSciAcc] = current_user.accuracy_scientific.round(3)
-        component_params[:userComAcc] = current_user.accuracy_common.round(3)
+      unless report.created_by_id.nil?
+        component_params[:userId] = User.find(report.created_by_id).id
+        component_params[:userUsername] = User.find(report.created_by_id).username
+        component_params[:userTotal] = User.find(report.created_by_id).total_seen
+        component_params[:userSciAcc] = User.find(report.created_by_id).accuracy_scientific.round(3)
+        component_params[:userComAcc] = User.find(report.created_by_id).accuracy_common.round(3)
       end
 
      case report.class.name
