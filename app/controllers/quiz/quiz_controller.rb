@@ -12,9 +12,6 @@ module Quiz
     end
 
     def scoreboard
-      require Rails.root.join('app','mailers','user_mailer.rb')
-      UserMailer.with(user: current_user).welcome.deliver_now
-
       limit = 10
       # TBH this code should be swapped out with a hash user: rank then we can check the hash for the current_user and add it if needed
       # but right now we just check for the whole hash which is sketch af.
