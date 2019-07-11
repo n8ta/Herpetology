@@ -12,9 +12,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Make sure we have accurate data on venomous species, this may be possible to do by hand (reports will help too)
 - Quiz on venomous as well as name
-- Add "Dead herp" to report options
 - React component for forgot password
 - Setup email
 - Show tips on species picker after guess
@@ -25,6 +23,9 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Learn to spell venemous...
 
 # Done:
+- 
+- Make sure we have accurate data on venomous species, this may be possible to do by hand (reports will help too) (July 10, 2019)
+- Add "Dead herp" to report options (July 10, 2019)
 - Admin Interface to handle reports (July 7, 2019)
 - Gamification (July 6 ,2019)
 - Scoreboard with most contributions + max 10 users + current_user + accuracy (July 6, 2019)

@@ -80,7 +80,7 @@ class ReportsController < ApplicationController
     puts "type: "
     puts type.inspect
 
-    @report.created_by = current_user if current_user
+    @report.created_by_id = current_user.id if current_user
     respond_to do |format|
       if @report.save
         puts "Saved report"
