@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
     @report.approve(current_user) # Method on teh sub classes
     @report.handled = true # Action was taken by mod
     @report.approved = true # User was correct in their suggestion
-    @report.handled_by = current_user
+    @report.handled_by_id = current_user.id
     @report.save!
     return render :json => {msg: 'Approved'}
     # rescue => e
