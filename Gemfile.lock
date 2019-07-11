@@ -154,6 +154,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     public_suffix (3.1.0)
+    puma (3.12.1)
     rack (2.0.7)
     rack-proxy (0.6.5)
       rack
@@ -269,6 +270,7 @@ DEPENDENCIES
   lograge
   mysql2
   nokogiri
+  puma
   rails (~> 5.2.3)
   react-rails
   redd

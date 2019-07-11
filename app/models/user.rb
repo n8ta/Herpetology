@@ -7,8 +7,10 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :encrypted_password, presence: true
 
-  has_many :handled_reports, foreign_key: :handled_by, class_name: 'Report', table_name: 'reports'
-  has_many :created_reports, foreign_key: :created_by, class_name: 'Report', table_name: 'reports'
+
+  def approved_reports
+    Report.all_reports.select{ |rep| rep.handled_by_id == self.id && rep.approved == true }
+  end
 
 
   # has_many :reports, class_name: 'Report', table_name: 'Reports', foreign_key: "created_by" # Column name on report, there a handled_by user and a created_By user
@@ -26,7 +28,7 @@ class User < ApplicationRecord
     User.all.sort {|a, b| b.accuracy_common <=> a.accuracy_common}.find_index(self) + 1
   end
   def place_report_scoreboard
-    User.all.sort {|a, b| b.created_reports.where(approved: true).size <=> a.created_reports.where(approved: true).size }.find_index(self) + 1
+    User.all.sort {|a, b| b.approved_reports.size <=> a.approved_reports.size }.find_index(self) + 1
   end
 
   def admin?

@@ -1,5 +1,9 @@
-<% content_for :title do "Reports (#{Report.all.pending.size})" end %>
-<% content_for :breadcrumb do "#{Report.all.pending.size} Pending Reports" end %>
+<% content_for :title do
+  "Reports (#{Report.all.pending.size})"
+end %>
+<% content_for :breadcrumb do
+  "#{Report.all.pending.size} Pending Reports"
+end %>
 <h2>Reports</h2>
 
 <div class="center">
@@ -9,23 +13,42 @@
       <h4>No Reports</h4>
 
     <% end %>
-    <% @reports.each do |report| %>
-        <% # Ternaries all handle optional parts of the report, eg. they may have reported for venomous so report.taxon is nil %>
-        <%= react_component("Handlereport", {photoUrl: report.photo.image_path.url,
-                                             venomous: report.venomous ? report.venomous : nil,
-                                             currentTaxonCommon: report.photo.taxon.common_name,
-                                             currentTaxonSci: report.photo.taxon.name,
-                                             newTaxonCommon: report.taxon ? report.taxon.common_name : nil,
-                                             newTaxonSci: report.taxon ? report.taxon.name : nil,
-                                             noHerp: report.no_herp,
-                                             reportId: report.id,
-                                             approveUrl: approve_report_url(report),
-                                             rejectUrl: reject_report_url(report),
-                                             userId: report.created_by ? report.created_by.id : nil,
-                                             userTotal: report.created_by ? report.created_by.total_seen : nil,
-                                             userSciAcc: report.created_by ? report.created_by.accuracy_scientific.round(3) : nil,
-                                             userComAcc: report.created_by ? report.created_by.accuracy_common.round(3) : nil,
-                                             userUsername: report.created_by ? report.created_by.username : nil, }) %>
+    <% @reports.each do |report|
+      component_params = Hash.new
+      component_params[:reportId] = report.id
+      component_params[:approveUrl] = approve_report_url(report,report.class.name)
+      component_params[:rejectUrl] = reject_report_url(report,report.class.name)
+
+      if current_user
+        component_params[:userId] = current_user.id
+        component_params[:userUsername] = current_user.username
+        component_params[:userTotal] = current_user.total_seen
+        component_params[:userSciAcc] = current_user.accuracy_scientific.round(3)
+        component_params[:userComAcc] = current_user.accuracy_common.round(3)
+      end
+
+     case report.class.name
+      when "DeadHerpReport"
+        component_params[:deadHerp] = true
+        component_params[:photoUrl] = report.photo.image_path.url
+      when "BadIdReport"
+
+        component_params[:currentTaxonCommon] = report.photo.taxon.common_name
+        component_params[:currentTaxonSci] = report.photo.taxon.sci_name
+        component_params[:newTaxonCommon] = report.taxon.common_name
+        component_params[:newTaxonSci] = report.taxon.sci_name
+        component_params[:photoUrl] = report.photo.image_path.url
+      when "VenomReport"
+        component_params[:photoUrl] = report.taxon.photos[0].image_path.url
+        component_params[:venomous] = report.venomous
+        component_params[:currentTaxonCommon] = report.taxon.common_name
+        component_params[:currentTaxonSci] = report.taxon.sci_name
+      when "NoHerpReport"
+        component_params[:photoUrl] = report.photo.image_path.url
+        component_params[:noHerp] = true
+      end
+      %>
+      <%= react_component("Handlereport", component_params) %>
     <% end %>
 
 

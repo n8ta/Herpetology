@@ -91,12 +91,14 @@ class Handlereport extends React.Component {
         }
 
         if (this.props.venomous) {
-            msg = <React.Fragment><strong>This species should be marked as:</strong> {this.props.venomous}</React.Fragment>;
+            msg = <React.Fragment><strong>{this.props.currentTaxonCommon} -- {this.props.currentTaxonSci}</strong><br/> should be marked as: {this.props.venomous}</React.Fragment>
         } else if (this.props.newTaxonCommon && this.props.newTaxonSci) {
-            msg = <React.Fragment> <strong>Currently:</strong><br/> {this.props.currentTaxonSci} -- {this.props.currentTaxonCommon}<br/>
-                <strong>Reported as:</strong><br/>{this.props.newTaxonSci} -- {this.props.newTaxonCommon}</React.Fragment>
+            msg = <React.Fragment> <strong>Currently:</strong><br/> {this.props.currentTaxonCommon} -- {this.props.currentTaxonSci}<br/>
+                <strong>Reported as:</strong><br/>{this.props.newTaxonCommon} -- {this.props.newTaxonSci}</React.Fragment>
         } else if (this.props.noHerp) {
             msg = <strong>Photo has no herp</strong>
+        } else if (this.props.deadHerp) {
+            msg = <strong>Photo contains a dead herp</strong>
         } else {
             alert("Messed up report, please contact the dev, https://github.com/n8ta/HerpID")
         }
@@ -135,5 +137,6 @@ Handlereport.propTypes = {
     userComAcc: PropTypes.number,
     approveUrl: PropTypes.string,
     rejectUrl: PropTypes.string,
+    deadHerp: PropTypes.bool,
 };
 export default Handlereport

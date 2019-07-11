@@ -32,10 +32,11 @@ Rails.application.routes.draw do
 
   resources :reports do
     member do
-      post 'approve' => 'reports#approve', as: 'approve'
-      post 'reject' => 'reports#reject', as: 'reject'
+      post 'approve/:report_type' => 'reports#approve', as: 'approve'
+      post 'reject/:report_type' => 'reports#reject', as: 'reject'
     end
   end
+
   resources :photos, only: [:edit, :show, :update, :destroy]
 
   resources :taxons do

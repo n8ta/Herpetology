@@ -1,4 +1,5 @@
 import React from "react"
+import Venomreport from './Venomreport.js';
 import PropTypes from "prop-types"
 
 class Zoom extends React.Component {
@@ -48,12 +49,11 @@ class Zoom extends React.Component {
 
         } else {
             if (this.props.venomous == "venomous") {
-                venomous = <p id='poison_icon'>Venomous</p>
+                venomous = <div id='poison_icon'>Venomous</div>
             } else if (this.props.venomous == "nonvenomous") {
-                venomous = <p id='poison_icon'>Nonvenomous</p>
+                venomous = <div id='poison_icon'>Nonvenomous</div>
             } else if (this.props.venomous == "unknown") {
-                venomous = <p id='poison_icon'>We don't know if it's venomous<span>If you do please contribute info below</span>
-                </p>
+                venomous = <div id='poison_icon'>We don't know if it's venomous<Venomreport photo_id={this.props.photo_id}></Venomreport></div>
             }
         }
 
@@ -77,6 +77,7 @@ class Zoom extends React.Component {
 
 Zoom.propTypes = {
     url: PropTypes.string,
+    photo_id: PropTypes.number,
     venomous: PropTypes.string,
     no_text: PropTypes.bool,
 };

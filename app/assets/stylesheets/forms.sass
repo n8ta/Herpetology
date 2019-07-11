@@ -47,9 +47,37 @@ button:not(.special)
   color: white
   background-color: $dark-green
 
+button:not(.special):not(.disabled)
+  &:hover
+    background-color: $darker-green
+  &:active
+    background-color: $brown
+    color: white
+
+button:not(.species).small
+  margin-top: 0
+  padding: .35rem
+  font-size: .8em
+  padding-left: .6rem
+  padding-right: .6rem
+  margin-left: .2rem
+  margin-right: .2rem
+  &.submitted
+    color: white
+    background-color: $brown
+
+
 button.badpath:not(.special)
   color: $mid-green
 
+
+#bad_id_report
+  min-height: 50rem
+
+.centered_md_col
+  max-width: 45rem
+  margin-left: auto
+  margin-right: auto
 
 form
   input[type=checkbox].venomous

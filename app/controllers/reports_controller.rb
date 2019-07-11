@@ -2,40 +2,23 @@ class ReportsController < ApplicationController
   before_action :contributor_only, only: [:edit, :update, :index, :destroy, :approve, :reject]
   before_action :set_report, only: [:show, :edit, :update, :destroy, :approve, :reject]
 
-
   # POST /reports/1/approve
   def approve
-    begin
-      photo = @report.photo
-      taxon = photo.taxon
-      if @report.taxon
-        photo.taxon = @report.taxon
-        photo.save!
-      elsif @report.no_herp
-        photo.hidden = true
-        photo.save!
-      elsif @report.venomous
-        case @report.venomous
-        when "venomous"
-          taxon.venomous = true
-        when "nonvenomous"
-          taxon.venomous = false
-        when "unknown"
-          taxon.venomous = nil
-        end
-        taxon.save!
-      end
-      @report.handled = true # Action was taken by mod
-      @report.approved = true # User was correct in their suggestion
-      @report.handled_by = current_user
-      @report.save!
-      return render :json => {msg: 'Approved'}
-    rescue => e
-      @report.handled = false
-      @report.handled_by = nil
-      puts e.inspect
-      return render :json => {msg: "Failed"}, :status => :bad_request
-    end
+    puts "report:"
+    puts @report.inspect
+    # begin
+    @report.approve(current_user) # Method on teh sub classes
+    @report.handled = true # Action was taken by mod
+    @report.approved = true # User was correct in their suggestion
+    @report.handled_by = current_user
+    @report.save!
+    return render :json => {msg: 'Approved'}
+    # rescue => e
+    #   @report.handled = false
+    #   @report.handled_by = nil
+    #   puts e.inspect
+    #   return render :json => {msg: "Failed"}, :status => :bad_request
+    # end
   end
 
   # POST /reports/1/reject
@@ -74,44 +57,38 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
-    parsed = report_params
-    parsed[:taxon] = Taxon.find_by(name: parsed[:taxon])
-    parsed[:no_herp] = true if parsed[:no_herp]
-    session[:return_url] = params[:return_url]
-    @report = Report.new(parsed)
+    type = params[:type] # dead_herp_report, bad_id_report, venom_report, no_herp_report
+    case type
+    when "DeadHerpReport"
+      @report = DeadHerpReport.new(dead_herp_params)
+    when "BadIdReport"
+      begin
+      bdp = bad_id_params
+      rescue => e
+        x= 10
+      end
+      @report = BadIdReport.new(bdp)
+    when "VenomReport"
+      @report = VenomReport.new(venom_params)
+      puts "Created venom report"
+      puts venom_params.inspect
+      puts @report.inspect
+    when "NoHerpReport"
+      @report = NoHerpReport.new(no_herp_params)
+    end
+
+    puts "type: "
+    puts type.inspect
+
     @report.created_by = current_user if current_user
     respond_to do |format|
       if @report.save
-        format.html {redirect_to params[:return_url], notice: 'Report was created. Thanks!'}
-        format.json {render :show, status: :created, location: @report}
+        puts "Saved report"
+        puts @report.inspect
+        format.json {render json: {msg: 'Created report'}, status: :created}
       else
-        format.html {render :new}
         format.json {render json: @report.errors, status: :unprocessable_entity}
       end
-    end
-  end
-
-  # PATCH/PUT /reports/1
-  # PATCH/PUT /reports/1.json
-  def update
-    respond_to do |format|
-      if @report.update(report_params)
-        format.html {redirect_to @report, notice: 'Report was successfully updated.'}
-        format.json {render :show, status: :ok, location: @report}
-      else
-        format.html {render :edit}
-        format.json {render json: @report.errors, status: :unprocessable_entity}
-      end
-    end
-  end
-
-  # DELETE /reports/1
-  # DELETE /reports/1.json
-  def destroy
-    @report.destroy
-    respond_to do |format|
-      format.html {redirect_to reports_url, notice: 'Report was successfully destroyed.'}
-      format.json {head :no_content}
     end
   end
 
@@ -119,11 +96,44 @@ class ReportsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_report
-    @report = Report.find(params[:id])
+    case params[:report_type]
+    when "DeadHerpReport"
+      @report = DeadHerpReport.find(params[:id])
+    when "BadIdReport"
+      @report = BadIdReport.find(params[:id])
+    when "VenomReport"
+      @report = VenomReport.find(params[:id])
+    when "NoHerpReport"
+      @report = NoHerpReport.find(params[:id])
+    end
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def report_params
-    params.require(:report).permit(:type, :taxon_id, :taxon, :photo_id, :venomous, :no_herp)
+
+  def dead_herp_params
+    params.require(:photo_id)
+    a = Hash.new
+    a[:photo_id] = params[:photo_id]
+    return a
   end
+
+  def bad_id_params
+    bad_id_params = {:taxon_id => params[:taxon_id], :photo_id => params[:photo_id]}
+    return bad_id_params
+  end
+
+  def venom_params
+    venom_p = {:taxon_id => Photo.find(params[:photo_id]).taxon.id, :venomous => params[:venomous]}
+    puts "venom_p:"
+    puts venom_p
+    return venom_p
+  end
+
+  def no_herp_params
+    params.require(:photo_id)
+    a = Hash.new
+    a[:photo_id] = params[:photo_id]
+    return a
+
+  end
+
 end

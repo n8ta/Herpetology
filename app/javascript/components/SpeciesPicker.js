@@ -1,8 +1,10 @@
 import React from "react"
 import Zoom from './Zoom.js';
-import Report from './Report.js';
+import Noherpreport from './Noherpreport.js';
+import Deadherpreport from './Deadherpreport.js';
 import Signup from './Signup.js';
 import PropTypes from "prop-types"
+import Badidreport from "./Badidreport";
 
 class SpeciesPicker extends React.Component {
     constructor(props) {
@@ -19,10 +21,10 @@ class SpeciesPicker extends React.Component {
             common_chosen: undefined,
             asked_about_signup: undefined,
             iterations: 0,
-            venmous: undefined,
+            venomous: undefined,
+            photo_id: props.photo_id,
         };
         this.handleClick = this.handleClick.bind(this);
-        this.handleReport = this.handleReport.bind(this);
         this.next = this.next.bind(this);
 
         console.log(Cookies.get("asked_about_signup"));
@@ -119,13 +121,10 @@ class SpeciesPicker extends React.Component {
                 num_chosen: 0,
                 venomous: undefined,
                 iterations: this.state.iterations + 1,
+                photo_id: this.state.next_photo_id,
             });
         }
 
-    }
-
-    handleReport() {
-        this.setState({mode: 'report'})
     }
 
     handleClick(e) {
@@ -178,7 +177,7 @@ class SpeciesPicker extends React.Component {
                 sci_correct: result['sci_correct'],
                 common_correct: result['common_correct'],
                 venomous: result['venomous'],
-                photo_id: result['photo_id'],
+                next_photo_id: result['next_photo_id'],
             });
             this.preload(result['next_image_path']);
         })
@@ -192,11 +191,11 @@ class SpeciesPicker extends React.Component {
         let left = '';
         let right = '';
         let form = '';
+        let bad_id_report = '';
         let left_title = "Scientific";
         let right_title = "Common";
-        let report = '';
-        let zoom = <Zoom url={this.state.image_path} venomous={this.state.venomous}/>
         if (this.state.mode == 'answered') {
+            bad_id_report = <Badidreport photo_id={this.state.photo_id} taxon_com={this.state.common_name} taxon_sci={this.state.sci_name}/>
             next_button = <div id={'next'} className={"center"}>
                 <button className={'main happypath'} onClick={this.next}>Next <br/></button>
             </div>;
@@ -210,8 +209,6 @@ class SpeciesPicker extends React.Component {
             if (this.state.common_correct) {
                 right_title = <span className={"correct"}> Common ✓</span>;
             }
-            report = <div onClick={this.handleReport} className={'center'}><a href={'#'}
-                                                                              className={'main'}>Contribute a Correction</a></div>
         } else if (this.state.mode == 'waiting') {
             left = sci_options;
             right = common_options;
@@ -225,21 +222,14 @@ class SpeciesPicker extends React.Component {
                     </div>
                 </div>
             )
-        } else if (this.state.mode == "report") {
-            return (
-                <div className="center">
-                    <div>
-                        <h2>New Report</h2>
-                        <Report photo_id={this.state.photo_id}
-                                url={this.state.image_path}
-                                venomous={this.state.venomous}></Report>
-                    </div>
-                </div>
-            )
         }
         return (
             <div className="species">
-                {zoom}
+                <Zoom photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
+                <div className="center">
+                    <Noherpreport photo_id={this.state.photo_id}></Noherpreport>
+                    <Deadherpreport photo_id={this.state.photo_id}></Deadherpreport>
+                </div>
                 {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>
@@ -250,11 +240,8 @@ class SpeciesPicker extends React.Component {
                         <h4>{right_title}</h4>
                         {right}
                     </div>
-
-
                 </div>
-                {report}
-
+                {bad_id_report}
                 {next_button}
 
                 <br/>
@@ -267,6 +254,7 @@ class SpeciesPicker extends React.Component {
 SpeciesPicker.propTypes = {
     options: PropTypes.object,
     image_path: PropTypes.string,
+    photo_id: PropTypes.string,
 };
 
 export default SpeciesPicker

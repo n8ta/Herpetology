@@ -9,6 +9,5 @@ class ReportApprovedRejectedStatus < ActiveRecord::Migration[5.2]
     remove_column :reports, :approved
     rename_column :reports, :created_by_id, :created_by
     rename_column :reports, :handled_by_id, :handled_by
-
   end
 end

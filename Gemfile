@@ -22,6 +22,8 @@ gem 'carrierwave', '~> 1.0'
 gem 'devise'
 gem 'nokogiri'
 gem 'mysql2'
+gem 'puma'
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

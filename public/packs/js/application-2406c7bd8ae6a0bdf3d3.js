@@ -94,14 +94,20 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./Badidreport": "./app/javascript/components/Badidreport.js",
+	"./Badidreport.js": "./app/javascript/components/Badidreport.js",
 	"./Datum": "./app/javascript/components/Datum.js",
 	"./Datum.js": "./app/javascript/components/Datum.js",
+	"./Deadherpreport": "./app/javascript/components/Deadherpreport.js",
+	"./Deadherpreport.js": "./app/javascript/components/Deadherpreport.js",
 	"./Handlereport": "./app/javascript/components/Handlereport.js",
 	"./Handlereport.js": "./app/javascript/components/Handlereport.js",
 	"./Menubutton": "./app/javascript/components/Menubutton.js",
 	"./Menubutton.js": "./app/javascript/components/Menubutton.js",
 	"./Name": "./app/javascript/components/Name.js",
 	"./Name.js": "./app/javascript/components/Name.js",
+	"./Noherpreport": "./app/javascript/components/Noherpreport.js",
+	"./Noherpreport.js": "./app/javascript/components/Noherpreport.js",
 	"./Report": "./app/javascript/components/Report.js",
 	"./Report.js": "./app/javascript/components/Report.js",
 	"./Scoreboard": "./app/javascript/components/Scoreboard.js",
@@ -118,6 +124,8 @@ var map = {
 	"./Subregionbutton.js": "./app/javascript/components/Subregionbutton.js",
 	"./Subregions": "./app/javascript/components/Subregions.js",
 	"./Subregions.js": "./app/javascript/components/Subregions.js",
+	"./Venomreport": "./app/javascript/components/Venomreport.js",
+	"./Venomreport.js": "./app/javascript/components/Venomreport.js",
 	"./Zoom": "./app/javascript/components/Zoom.js",
 	"./Zoom.js": "./app/javascript/components/Zoom.js"
 };
@@ -141,6 +149,262 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = "./app/javascript/components sync recursive ^\\.\\/.*$";
+
+/***/ }),
+
+/***/ "./app/javascript/components/Badidreport.js":
+/*!**************************************************!*\
+  !*** ./app/javascript/components/Badidreport.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _SpeciesPicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpeciesPicker */ "./app/javascript/components/SpeciesPicker.js");
+var _jsxFileName = "/Users/n8ta/code/SnakeID/app/javascript/components/Badidreport.js";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Badidreport =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Badidreport, _React$Component);
+
+  function Badidreport(props) {
+    var _this;
+
+    _classCallCheck(this, Badidreport);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Badidreport).call(this, props));
+    _this.state = {
+      active: false,
+      submitted: false,
+      search_results: [],
+      specie_error: '',
+      search_class: ''
+    };
+    _this.updateDataList = _this.updateDataList.bind(_assertThisInitialized(_this));
+    _this.activate = _this.activate.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Badidreport, [{
+    key: "updateDataList",
+    value: function updateDataList() {
+      var _this2 = this;
+
+      var search = document.getElementById('report_taxon_input');
+      fetch('/taxons/search/' + encodeURI(search.value), {
+        method: 'get',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': this.state.csrf,
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      }).then(function (res) {
+        return res.json();
+      }).then(function (result) {
+        if (result.length == 1 && (result[0].common_name == search.value || result[0].name == search.value)) {
+          _this2.setState({
+            specie_class: 'valid',
+            specie_error: ''
+          });
+        } else {
+          _this2.setState({
+            specie_class: 'invalid',
+            specie_error: 'Invalid name, will not be submitted',
+            search_results: result
+          });
+        }
+      });
+    }
+  }, {
+    key: "select",
+    value: function select(taxon_id) {
+      this.setState({
+        specie_error: '',
+        specie_class: 'valid',
+        search_results: [],
+        submitted: true
+      });
+      this.render();
+      var auth_token = document.querySelector("meta[name='csrf-token']").content;
+      this.setState({
+        mode: 'loading'
+      });
+      fetch('/reports?type=BadIdReport&photo_id=' + this.props.photo_id + '&taxon_id=' + taxon_id, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': auth_token,
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      }).then(function (res) {
+        return res.json();
+      }).then(function (result) {
+        console.log('submitted report');
+      });
+      setTimeout(function () {
+        window.location.reload();
+      }, 1000);
+    }
+  }, {
+    key: "activate",
+    value: function activate() {
+      this.setState({
+        active: true
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var options = [];
+
+      var _loop = function _loop(i) {
+        var name = _this3.state.search_results[i]['name'];
+        var comm = _this3.state.search_results[i]['common_name'];
+        var id = _this3.state.search_results[i]['id'];
+        options.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#",
+          onClick: function () {
+            this.select(id);
+          }.bind(_this3),
+          key: name,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 75
+          },
+          __self: this
+        }, " ", name, " - ", comm));
+      };
+
+      for (var i = 0; i < this.state.search_results.length; i++) {
+        _loop(i);
+      }
+
+      if (this.state.active == false && this.state.submitted == false) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 81
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.activate,
+          className: 'small',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 82
+          },
+          __self: this
+        }, "This ID is wrong!"));
+      } else if (this.state.active == true && this.state.submitted == false) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          id: "bad_id_report",
+          className: 'centered_md_col',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 87
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: 'warning top',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 88
+          },
+          __self: this
+        }, this.state.specie_error), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: 'report_taxon_input',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 89
+          },
+          __self: this
+        }, "Enter then click the correct species"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          onKeyDown: this.updateDataList,
+          id: "report_taxon_input",
+          name: "report[taxon]",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 90
+          },
+          __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: 'report_suggestions',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 91
+          },
+          __self: this
+        }, options));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: 'bad_id_report',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 97
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 98
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: 'small submitted',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 99
+          },
+          __self: this
+        }, "Submitted, this will not count against your stats.")));
+      }
+    }
+  }]);
+
+  return Badidreport;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+Badidreport.propTypes = {
+  photo_id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+  taxon_com: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  taxon_sci: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+};
+/* harmony default export */ __webpack_exports__["default"] = (Badidreport);
 
 /***/ }),
 
@@ -303,6 +567,151 @@ Datum.propTypes = {
   tip: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string
 };
 /* harmony default export */ __webpack_exports__["default"] = (Datum);
+
+/***/ }),
+
+/***/ "./app/javascript/components/Deadherpreport.js":
+/*!*****************************************************!*\
+  !*** ./app/javascript/components/Deadherpreport.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Report__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Report */ "./app/javascript/components/Report.js");
+var _jsxFileName = "/Users/n8ta/code/SnakeID/app/javascript/components/Deadherpreport.js";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Deadherpreport =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Deadherpreport, _React$Component);
+
+  function Deadherpreport(props) {
+    var _this;
+
+    _classCallCheck(this, Deadherpreport);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Deadherpreport).call(this, props));
+    var auth_token = document.querySelector("meta[name='csrf-token']").content;
+    _this.state = {
+      csrf: auth_token,
+      submitted: false
+    };
+    _this.post = _this.post.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Deadherpreport, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(next_props, next_state) {
+      // Update when submitted changes state or props change
+      if (next_props.photo_id != this.props.photo_id || next_state.submitted == true && this.state.submitted == false) {
+        this.state.submitted = false;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, {
+    key: "post",
+    value: function post() {
+      this.setState({
+        submitted: true
+      });
+      var auth_token = document.querySelector("meta[name='csrf-token']").content;
+      this.setState({
+        mode: 'loading'
+      });
+      fetch('/reports?type=DeadHerpReport&photo_id=' + this.props.photo_id, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': auth_token,
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      }).then(function (res) {
+        return res.json();
+      }).then(function (result) {
+        console.log('submitted report');
+      });
+      setTimeout(function () {
+        window.location.reload();
+      }, 1000);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.submitted == false) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 51
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.post,
+          className: 'small',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 52
+          },
+          __self: this
+        }, "Dead Herp"));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 57
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: 'small submitted',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 58
+          },
+          __self: this
+        }, "Submitted Report, thanks!"));
+      }
+    }
+  }]);
+
+  return Deadherpreport;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Deadherpreport);
+_Report__WEBPACK_IMPORTED_MODULE_2__["default"].propTypes = {
+  photo_id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
 
 /***/ }),
 
@@ -499,7 +908,13 @@ function (_React$Component) {
             lineNumber: 94
           },
           __self: this
-        }, "This species should be marked as:"), " ", this.props.venomous);
+        }, this.props.currentTaxonCommon, " -- ", this.props.currentTaxonSci), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 94
+          },
+          __self: this
+        }), " should be marked as: ", this.props.venomous);
       } else if (this.props.newTaxonCommon && this.props.newTaxonSci) {
         msg = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
           __source: {
@@ -519,7 +934,7 @@ function (_React$Component) {
             lineNumber: 96
           },
           __self: this
-        }), " ", this.props.currentTaxonSci, " -- ", this.props.currentTaxonCommon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+        }), " ", this.props.currentTaxonCommon, " -- ", this.props.currentTaxonSci, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
             lineNumber: 96
@@ -537,7 +952,7 @@ function (_React$Component) {
             lineNumber: 97
           },
           __self: this
-        }), this.props.newTaxonSci, " -- ", this.props.newTaxonCommon);
+        }), this.props.newTaxonCommon, " -- ", this.props.newTaxonSci);
       } else if (this.props.noHerp) {
         msg = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
           __source: {
@@ -546,6 +961,14 @@ function (_React$Component) {
           },
           __self: this
         }, "Photo has no herp");
+      } else if (this.props.deadHerp) {
+        msg = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 101
+          },
+          __self: this
+        }, "Photo contains a dead herp");
       } else {
         alert("Messed up report, please contact the dev, https://github.com/n8ta/HerpID");
       }
@@ -554,7 +977,7 @@ function (_React$Component) {
         className: "report",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 104
+          lineNumber: 106
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Zoom_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -562,32 +985,32 @@ function (_React$Component) {
         no_text: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 105
+          lineNumber: 107
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 106
+          lineNumber: 108
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 107
+          lineNumber: 109
         },
         __self: this
       }, msg), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 108
+          lineNumber: 110
         },
         __self: this
       }, user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: 'buttons',
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 109
+          lineNumber: 111
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -600,21 +1023,21 @@ function (_React$Component) {
         xmlns: "http://www.w3.org/2000/svg",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 110
+          lineNumber: 112
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
         id: "Accept",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 110
+          lineNumber: 112
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
         d: "M16,4A12,12,0,1,0,28,16,12.0137,12.0137,0,0,0,16,4Zm5.207,9.707-6.8154,6.8155L10.7,15.6a1,1,0,1,1,1.6-1.2l2.3086,3.0776L19.793,12.293a1,1,0,0,1,1.414,1.414Z",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 110
+          lineNumber: 112
         },
         __self: this
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -627,20 +1050,20 @@ function (_React$Component) {
         xmlns: "http://www.w3.org/2000/svg",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 111
+          lineNumber: 113
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 111
+          lineNumber: 113
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
         d: "M16,4A12,12,0,1,0,28,16,12.0134,12.0134,0,0,0,16,4Zm4.707,15.293a1,1,0,1,1-1.414,1.414L16,17.4141,12.707,20.707a1,1,0,0,1-1.414-1.414L14.5859,16,11.293,12.707a1,1,0,0,1,1.414-1.414L16,14.5859l3.293-3.2929a1,1,0,0,1,1.414,1.414L17.4141,16Z",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 111
+          lineNumber: 113
         },
         __self: this
       }))))));
@@ -671,7 +1094,8 @@ Handlereport.propTypes = {
   userSciAcc: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number,
   userComAcc: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number,
   approveUrl: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  rejectUrl: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string
+  rejectUrl: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  deadHerp: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (Handlereport);
 
@@ -884,6 +1308,149 @@ Name.propTypes = {
 
 /***/ }),
 
+/***/ "./app/javascript/components/Noherpreport.js":
+/*!***************************************************!*\
+  !*** ./app/javascript/components/Noherpreport.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Report__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Report */ "./app/javascript/components/Report.js");
+var _jsxFileName = "/Users/n8ta/code/SnakeID/app/javascript/components/Noherpreport.js";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Noherpreport =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Noherpreport, _React$Component);
+
+  function Noherpreport(props) {
+    var _this;
+
+    _classCallCheck(this, Noherpreport);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Noherpreport).call(this, props));
+    var auth_token = document.querySelector("meta[name='csrf-token']").content;
+    _this.state = {
+      csrf: auth_token,
+      submitted: false
+    };
+    _this.post = _this.post.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Noherpreport, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(next_props, next_state) {
+      // Update when submitted changes state or props change
+      if (next_props.photo_id != this.props.photo_id || next_state.submitted == true && this.state.submitted == false) {
+        this.state.submitted = false;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, {
+    key: "post",
+    value: function post() {
+      this.setState({
+        submitted: true
+      });
+      var auth_token = document.querySelector("meta[name='csrf-token']").content;
+      this.setState({
+        mode: 'loading'
+      });
+      fetch("/reports?type=NoHerpReport&photo_id=" + this.props.photo_id, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': auth_token,
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      }).then(function (res) {
+        return res.json();
+      }).then(function (result) {});
+      setTimeout(function () {
+        window.location.reload();
+      }, 1000);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.submitted == false) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 54
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.post,
+          className: 'small',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 55
+          },
+          __self: this
+        }, "No Herp"));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 60
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: 'small submitted',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 61
+          },
+          __self: this
+        }, "Submitted Report, thanks!"));
+      }
+    }
+  }]);
+
+  return Noherpreport;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Noherpreport);
+_Report__WEBPACK_IMPORTED_MODULE_2__["default"].propTypes = {
+  photo_id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
+
+/***/ }),
+
 /***/ "./app/javascript/components/Report.js":
 /*!*********************************************!*\
   !*** ./app/javascript/components/Report.js ***!
@@ -1053,7 +1620,7 @@ function (_React$Component) {
           key: name,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 86
+            lineNumber: 85
           },
           __self: this
         }, " ", name, " -- ", comm));
@@ -1086,7 +1653,7 @@ function (_React$Component) {
           onClick: this.clear_radio,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 106
+            lineNumber: 105
           },
           __self: this
         }, "Clear");
@@ -1099,7 +1666,7 @@ function (_React$Component) {
         id: "report_form",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 113
+          lineNumber: 112
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1108,7 +1675,7 @@ function (_React$Component) {
         defaultValue: "\u2713",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 113
+          lineNumber: 112
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1117,7 +1684,7 @@ function (_React$Component) {
         defaultValue: this.state.csrf,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 114
+          lineNumber: 113
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1126,7 +1693,7 @@ function (_React$Component) {
         value: window.location,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 117
+          lineNumber: 116
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Zoom_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -1135,27 +1702,27 @@ function (_React$Component) {
         no_text: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 119
+          lineNumber: 118
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 120
+          lineNumber: 119
         },
         __self: this
       }, "Fill out one of these options"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "field hidden",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 122
+          lineNumber: 121
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "report_photo_id",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 123
+          lineNumber: 122
         },
         __self: this
       }, "Photo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1165,34 +1732,34 @@ function (_React$Component) {
         id: "report_photo_id",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 124
+          lineNumber: 123
         },
         __self: this
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "field",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 128
+          lineNumber: 127
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "report_taxon_input",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 129
+          lineNumber: 128
         },
         __self: this
       }, "Species Incorrect, Shold be:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 129
+          lineNumber: 128
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: 'warning top',
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 130
+          lineNumber: 129
         },
         __self: this
       }, this.state.specie_error), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1204,33 +1771,33 @@ function (_React$Component) {
         name: "report[taxon]",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 131
+          lineNumber: 130
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: 'report_suggestions',
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 135
+          lineNumber: 134
         },
         __self: this
       }, options)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "field",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 139
+          lineNumber: 138
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 140
+          lineNumber: 139
         },
         __self: this
       }, "Species venomous tag is wrong"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 140
+          lineNumber: 139
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1242,20 +1809,20 @@ function (_React$Component) {
         id: "report_venomous",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 141
+          lineNumber: 140
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "report_venomous",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 142
+          lineNumber: 141
         },
         __self: this
       }, "Venomous"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 143
+          lineNumber: 142
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1267,20 +1834,20 @@ function (_React$Component) {
         id: "report_nonvenomous",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 144
+          lineNumber: 143
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "report_nonvenomous",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 146
+          lineNumber: 145
         },
         __self: this
       }, "Nonvenomous"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 147
+          lineNumber: 146
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1292,27 +1859,27 @@ function (_React$Component) {
         id: "report_unknown",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 148
+          lineNumber: 147
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "report_unknown",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 149
+          lineNumber: 148
         },
         __self: this
       }, "Unknown"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 150
+          lineNumber: 149
         },
         __self: this
       }), clear), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "field",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 154
+          lineNumber: 153
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1323,21 +1890,21 @@ function (_React$Component) {
         name: "report[no_herp]",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 155
+          lineNumber: 154
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "report_no_herp",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 156
+          lineNumber: 155
         },
         __self: this
       }, "Empty photo?")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "actions",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 159
+          lineNumber: 158
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1350,7 +1917,7 @@ function (_React$Component) {
         "data-disable-with": "Create Report",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 160
+          lineNumber: 159
         },
         __self: this
       })));
@@ -2489,10 +3056,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Zoom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Zoom.js */ "./app/javascript/components/Zoom.js");
-/* harmony import */ var _Report_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Report.js */ "./app/javascript/components/Report.js");
-/* harmony import */ var _Signup_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Signup.js */ "./app/javascript/components/Signup.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Noherpreport_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Noherpreport.js */ "./app/javascript/components/Noherpreport.js");
+/* harmony import */ var _Deadherpreport_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Deadherpreport.js */ "./app/javascript/components/Deadherpreport.js");
+/* harmony import */ var _Signup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Signup.js */ "./app/javascript/components/Signup.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _Badidreport__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Badidreport */ "./app/javascript/components/Badidreport.js");
 var _jsxFileName = "/Users/n8ta/code/SnakeID/app/javascript/components/SpeciesPicker.js";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2510,6 +3079,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -2540,10 +3111,10 @@ function (_React$Component) {
       common_chosen: undefined,
       asked_about_signup: undefined,
       iterations: 0,
-      venmous: undefined
+      venomous: undefined,
+      photo_id: props.photo_id
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    _this.handleReport = _this.handleReport.bind(_assertThisInitialized(_this));
     _this.next = _this.next.bind(_assertThisInitialized(_this));
     console.log(Cookies.get("asked_about_signup"));
     var asked_about_signup = Cookies.get("asked_about_signup");
@@ -2600,7 +3171,7 @@ function (_React$Component) {
           className: sci_btn_class,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 75
+            lineNumber: 77
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2611,14 +3182,14 @@ function (_React$Component) {
           onClick: this.handleClick,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 76
+            lineNumber: 78
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "common_name",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 78
+            lineNumber: 80
           },
           __self: this
         }, this.state.options['sci'][i]))));
@@ -2627,7 +3198,7 @@ function (_React$Component) {
           className: common_btn_class,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 83
+            lineNumber: 85
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2638,14 +3209,14 @@ function (_React$Component) {
           onClick: this.handleClick,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 84
+            lineNumber: 86
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "sci_name",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 86
+            lineNumber: 88
           },
           __self: this
         }, this.state.options['common'][i]))));
@@ -2687,16 +3258,10 @@ function (_React$Component) {
           message: undefined,
           num_chosen: 0,
           venomous: undefined,
-          iterations: this.state.iterations + 1
+          iterations: this.state.iterations + 1,
+          photo_id: this.state.next_photo_id
         });
       }
-    }
-  }, {
-    key: "handleReport",
-    value: function handleReport() {
-      this.setState({
-        mode: 'report'
-      });
     }
   }, {
     key: "handleClick",
@@ -2761,7 +3326,7 @@ function (_React$Component) {
           sci_correct: result['sci_correct'],
           common_correct: result['common_correct'],
           venomous: result['venomous'],
-          photo_id: result['photo_id']
+          next_photo_id: result['next_photo_id']
         });
 
         _this2.preload(result['next_image_path']);
@@ -2777,26 +3342,27 @@ function (_React$Component) {
       var left = '';
       var right = '';
       var form = '';
+      var bad_id_report = '';
       var left_title = "Scientific";
       var right_title = "Common";
-      var report = '';
-      var zoom = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Zoom_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        url: this.state.image_path,
-        venomous: this.state.venomous,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 198
-        },
-        __self: this
-      });
 
       if (this.state.mode == 'answered') {
+        bad_id_report = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Badidreport__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          photo_id: this.state.photo_id,
+          taxon_com: this.state.common_name,
+          taxon_sci: this.state.sci_name,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 198
+          },
+          __self: this
+        });
         next_button = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           id: 'next',
           className: "center",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 200
+            lineNumber: 199
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2804,13 +3370,13 @@ function (_React$Component) {
           onClick: this.next,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 201
+            lineNumber: 200
           },
           __self: this
         }, "Next ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 201
+            lineNumber: 200
           },
           __self: this
         })));
@@ -2820,7 +3386,7 @@ function (_React$Component) {
           className: "incorrect",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 205
+            lineNumber: 204
           },
           __self: this
         }, "Scientific \u2717");
@@ -2828,7 +3394,7 @@ function (_React$Component) {
           className: "incorrect",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 206
+            lineNumber: 205
           },
           __self: this
         }, " Common \u2717");
@@ -2838,7 +3404,7 @@ function (_React$Component) {
             className: "correct",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 208
+              lineNumber: 207
             },
             __self: this
           }, "Scientific \u2713");
@@ -2849,29 +3415,11 @@ function (_React$Component) {
             className: "correct",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 211
+              lineNumber: 210
             },
             __self: this
           }, " Common \u2713");
         }
-
-        report = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          onClick: this.handleReport,
-          className: 'center',
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 213
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: '#',
-          className: 'main',
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 213
-          },
-          __self: this
-        }, "Contribute a Correction"));
       } else if (this.state.mode == 'waiting') {
         left = sci_options;
         right = common_options;
@@ -2879,20 +3427,20 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 220
+            lineNumber: 217
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Signup_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Signup_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 222
+            lineNumber: 219
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "center",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 223
+            lineNumber: 220
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2900,90 +3448,90 @@ function (_React$Component) {
           onClick: this.next,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 224
+            lineNumber: 221
           },
           __self: this
         }, "No Thanks ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 224
+            lineNumber: 221
           },
           __self: this
         }))));
-      } else if (this.state.mode == "report") {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "center",
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 230
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 231
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 232
-          },
-          __self: this
-        }, "New Report"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Report_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          photo_id: this.state.photo_id,
-          url: this.state.image_path,
-          venomous: this.state.venomous,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 233
-          },
-          __self: this
-        })));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "species",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 241
+          lineNumber: 227
         },
         __self: this
-      }, zoom, form, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Zoom_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        photo_id: this.state.photo_id,
+        url: this.state.image_path,
+        venomous: this.state.venomous,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 228
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "center",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 229
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Noherpreport_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        photo_id: this.state.photo_id,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 230
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Deadherpreport_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        photo_id: this.state.photo_id,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 231
+        },
+        __self: this
+      })), form, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: ['two-col', this.state.mode].join(' '),
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 244
+          lineNumber: 234
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 245
+          lineNumber: 235
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 246
+          lineNumber: 236
         },
         __self: this
       }, left_title), left), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 249
+          lineNumber: 239
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 250
+          lineNumber: 240
         },
         __self: this
-      }, right_title), right)), report, next_button, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+      }, right_title), right)), bad_id_report, next_button, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 260
+          lineNumber: 247
         },
         __self: this
       }));
@@ -2994,8 +3542,9 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 SpeciesPicker.propTypes = {
-  options: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object,
-  image_path: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string
+  options: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.object,
+  image_path: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string,
+  photo_id: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string
 };
 /* harmony default export */ __webpack_exports__["default"] = (SpeciesPicker);
 /*
@@ -3299,6 +3848,223 @@ Subregions.propTypes = {
 
 /***/ }),
 
+/***/ "./app/javascript/components/Venomreport.js":
+/*!**************************************************!*\
+  !*** ./app/javascript/components/Venomreport.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Report__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Report */ "./app/javascript/components/Report.js");
+var _jsxFileName = "/Users/n8ta/code/SnakeID/app/javascript/components/Venomreport.js";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Venomreport =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Venomreport, _React$Component);
+
+  function Venomreport(props) {
+    var _this;
+
+    _classCallCheck(this, Venomreport);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Venomreport).call(this, props));
+    var auth_token = document.querySelector("meta[name='csrf-token']").content;
+    _this.state = {
+      csrf: auth_token,
+      submitted: false,
+      active: false
+    };
+    _this.post = _this.post.bind(_assertThisInitialized(_this));
+    _this.activate = _this.activate.bind(_assertThisInitialized(_this)); // Activate  3 venom buttons
+
+    return _this;
+  }
+
+  _createClass(Venomreport, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(next_props, next_state) {
+      // Update when submitted changes state or props change
+      if (next_props.photo_id != this.props.photo_id || next_state.submitted == true && this.state.submitted == false || this.state.active != next_state.active || this.state.submitted != next_state.submitted) {
+        this.state.submitted = false;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, {
+    key: "activate",
+    value: function activate() {
+      this.setState({
+        active: true
+      });
+    }
+  }, {
+    key: "post",
+    value: function post(arg) {
+      if (this.state.submitted != false) {
+        alert('Report already submitted');
+        return;
+      }
+
+      this.setState({
+        submitted: arg
+      });
+      var auth_token = document.querySelector("meta[name='csrf-token']").content;
+      this.setState({
+        mode: 'loading'
+      });
+      fetch('/reports?type=VenomReport&photo_id=' + this.props.photo_id + '&venomous=' + arg, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': auth_token,
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      }).then(function (res) {
+        return res.json();
+      }).then(function (result) {
+        console.log(result);
+        console.log('submitted report');
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var msg = "";
+      var venomous_class = "";
+
+      if (this.state.submitted == "venomous") {
+        venomous_class = "submitted";
+        nonvenmous_class = "disabled";
+        unknown_class = "disabled";
+        msg = "Submitted Thanks!";
+      }
+
+      var nonvenmous_class = "";
+
+      if (this.state.submitted == "nonvenomous") {
+        nonvenmous_class = "submitted";
+        venomous_class = "disabled";
+        unknown_class = "disabled";
+        msg = "Submitted Thanks!";
+      }
+
+      var unknown_class = "";
+
+      if (this.state.submitted == "unknown") {
+        unknown_class = "submitted";
+        nonvenmous_class = "disabled";
+        venomous_class = "disabled";
+        msg = "Submitted Thanks!";
+      }
+
+      console.log("vc", venomous_class, "ncc", nonvenmous_class, "ucc", unknown_class, "state", this.state.submitted);
+
+      if (this.state.active) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 84
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 85
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function () {
+            this.post("venomous");
+          }.bind(this),
+          className: ['small', venomous_class].join(" "),
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 86
+          },
+          __self: this
+        }, "Venomous"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function () {
+            this.post("nonvenomous");
+          }.bind(this),
+          className: ['small', nonvenmous_class].join(" "),
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 87
+          },
+          __self: this
+        }, "Nonvenmous"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function () {
+            this.post("unknown");
+          }.bind(this),
+          className: ['small', unknown_class].join(" "),
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 88
+          },
+          __self: this
+        }, "Unknown")), msg);
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "center",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 95
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.activate,
+          className: 'small',
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 96
+          },
+          __self: this
+        }, "Contribute Info"));
+      }
+    }
+  }]);
+
+  return Venomreport;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Venomreport);
+_Report__WEBPACK_IMPORTED_MODULE_2__["default"].propTypes = {
+  photo_id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
+
+/***/ }),
+
 /***/ "./app/javascript/components/Zoom.js":
 /*!*******************************************!*\
   !*** ./app/javascript/components/Zoom.js ***!
@@ -3310,8 +4076,9 @@ Subregions.propTypes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Venomreport_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Venomreport.js */ "./app/javascript/components/Venomreport.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 var _jsxFileName = "/Users/n8ta/code/SnakeID/app/javascript/components/Zoom.js";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3329,6 +4096,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -3395,38 +4163,39 @@ function (_React$Component) {
 
       if (this.props.no_text == true) {} else {
         if (this.props.venomous == "venomous") {
-          venomous = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          venomous = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             id: "poison_icon",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 51
+              lineNumber: 52
             },
             __self: this
           }, "Venomous");
         } else if (this.props.venomous == "nonvenomous") {
-          venomous = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          venomous = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             id: "poison_icon",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 53
+              lineNumber: 54
             },
             __self: this
           }, "Nonvenomous");
         } else if (this.props.venomous == "unknown") {
-          venomous = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          venomous = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             id: "poison_icon",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 55
+              lineNumber: 56
             },
             __self: this
-          }, "We don't know if it's venomous", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          }, "We don't know if it's venomous", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Venomreport_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            photo_id: this.props.photo_id,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 55
+              lineNumber: 56
             },
             __self: this
-          }, "If you do please contribute info below"));
+          }));
         }
       }
 
@@ -3480,9 +4249,10 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 Zoom.propTypes = {
-  url: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  venomous: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  no_text: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
+  url: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  photo_id: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number,
+  venomous: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  no_text: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (Zoom);
 
@@ -45769,4 +46539,4 @@ module.exports = function(module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=application-26106cea0953a6920f41.js.map
+//# sourceMappingURL=application-2406c7bd8ae6a0bdf3d3.js.map

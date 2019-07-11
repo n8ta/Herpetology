@@ -60,7 +60,6 @@ class Report extends React.Component {
         this.setState({specie_error: '', specie_class: 'valid', search_results: [], });
         this.clear_radio();
         this.render();
-
     }
 
     clear_radio() {

@@ -1,11 +1,41 @@
 class Report < ApplicationRecord
+  self.abstract_class = true
 
-  belongs_to :taxon, optional: true # Suggested taxon by reporter
-  belongs_to :photo
+  # require_dependency "bad_id_report"
+  # require_dependency "dead_herp_report"
+  # require_dependency "no_herp_report"
+  # require_dependency "venom_report"
 
-  belongs_to :created_by, class_name: 'User', inverse_of: :created_reports, optional: true
-  belongs_to :handled_by, class_name: 'User', inverse_of: :handled_reports, optional: true
+  def self.all_reports
+    reports = BadIdReport.all.to_a
+    reports.concat(DeadHerpReport.all.to_a)
+    reports.concat(NoHerpReport.all.to_a)
+    reports.concat(VenomReport.all.to_a)
+  end
 
-  scope :pending, -> { where(handled: false) }
+  def self.pending
+    self.all_reports.select { |r| r.handled == false}
+  end
+
+
+  # All implentations of the abstract class have the following columns
+  # - timestamps
+  # - handled_by: user
+  # - created_by: user
+  # - handled: bool
+
+  def approve(approver)
+    self.handled_by = approver
+    self.approved = true
+    self.handled = true
+    self.save!
+  end
+
+  def reject(rejecter)
+     self.handled_by = rejecter
+     self.approved = false
+     self.handled = true
+     self.save!
+  end
 
 end
