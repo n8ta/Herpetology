@@ -1,11 +1,6 @@
 class Report < ApplicationRecord
   self.abstract_class = true
 
-  # require_dependency "bad_id_report"
-  # require_dependency "dead_herp_report"
-  # require_dependency "no_herp_report"
-  # require_dependency "venom_report"
-
   def self.all_reports
     reports = BadIdReport.all.to_a
     reports.concat(DeadHerpReport.all.to_a)
@@ -25,14 +20,14 @@ class Report < ApplicationRecord
   # - handled: bool
 
   def approve(approver)
-    self.handled_by = approver
+    self.handled_by_id = approver.id
     self.approved = true
     self.handled = true
     self.save!
   end
 
   def reject(rejecter)
-     self.handled_by = rejecter
+     self.handled_by_id = rejecter.id
      self.approved = false
      self.handled = true
      self.save!
