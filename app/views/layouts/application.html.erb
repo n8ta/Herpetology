@@ -19,6 +19,8 @@
 <% end %>
 
 
+<% UserMailer.with(user: current_user).welcome.deliver_now %>
+
 <body><div id="logo-holder">
   <div id="logo">
     <% if current_user %>
