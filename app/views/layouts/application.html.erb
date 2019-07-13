@@ -18,9 +18,6 @@
   gtag('config', 'UA-111016820-5');</script>
 <% end %>
 
-
-<% UserMailer.with(user: current_user).welcome.deliver_now %>
-
 <body><div id="logo-holder">
   <div id="logo">
     <% if current_user %>
