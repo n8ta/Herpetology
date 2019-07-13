@@ -8,32 +8,23 @@
   <%= csp_meta_tag %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" integrity="sha384-8kKqrPvADL3/ZYJGtcqeG+fveXaJxTaI7LF1/a9QGZpkRVZSurP858KKE6rtnLLs" crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous" integriy="sha384-szBDCttiBKEqclgvjfm0xu/GOyoGJH3pVG2Ptr69bXpDc9ZU0Ed0BYkeZZ98F7Ym"></script>
-
 </head>
 <% unless Rails.env == "development" %>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5"></script>
   <script>window.dataLayer = window.dataLayer || [];
 
-  function gtag() {
-      dataLayer.push(arguments);
-  }
-
+  function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', 'UA-111016820-5');</script>
 <% end %>
 
 
-<body>
-<div id="logo-holder">
+<body><div id="logo-holder">
   <div id="logo">
-    <!--  <div id="info">45,000 Regions - 16,000 Species - 340,000 Unqiue Photos </div>-->
     <% if current_user %>
       <%= react_component("Menubutton") %>
       <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
       <span>&nbsp &nbsp &nbsp &nbsp &nbsp</span>
-      <%#= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'right_of_logo' %>
     <% else %>
       <%= react_component("Menubutton") %>
       <a id='logo_anchor' href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
