@@ -109,8 +109,6 @@ module Quiz
     end
 
     def pick_taxon
-      render 'user_mailer/welcome'
-      return
       @taxons = [Taxon.find(7), Taxon.find(5), Taxon.find(9), Taxon.find(6)]
     end
 
