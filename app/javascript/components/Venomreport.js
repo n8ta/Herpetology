@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Report from "./Report";
+import Alert from "./Alert";
 
 class Venomreport extends React.Component {
   constructor(props) {
@@ -93,7 +94,7 @@ class Venomreport extends React.Component {
       } else {
         return (
             <div className="center">
-              <button onClick={this.activate} className={'small'}>Contribute Info</button>
+              <button onClick={this.activate} className={'small'}><Alert/> Contribute Info</button>
             </div>
         );
       }

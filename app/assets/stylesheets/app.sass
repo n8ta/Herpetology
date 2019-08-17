@@ -25,6 +25,16 @@ body
     flex-direction: column
   position: relative
   #menubutton
+    position: relative
+    #menubutton-alert.active
+      position: absolute
+      width: 1.5rem
+      height: 1.5rem
+      border-radius: 1.5rem
+      content: "1"
+      right: .5rem
+      top: .5rem
+      background-color: red !important
     height: 100%
     display: flex
     justify-content: center
@@ -153,6 +163,13 @@ body
   li
     padding-right: .5rem
 
+.alert
+  display: inline-block
+  svg
+    fill: white
+    height: 1.3rem
+    width: 1.3rem
+
 
 
 .species
@@ -177,8 +194,11 @@ body
     background: linear-gradient(to right, $dark-green, $blue)
     &:hover
       background: linear-gradient(to left, $dark-green, $blue)
+      button
+        background-color: $dark-green
     &.correct
       button
+        font-shadow: 1px 1px white, -1px -1px white, 1px -1px white, -1px 1px white
         font-weight: 700
         color: $darker-green
     &.incorrect
@@ -190,9 +210,6 @@ body
         background-color: $dark-green
         color: white
         font-weight: 900
-    &:hover
-      button
-        background-color: $dark-green
     &:active
       button
         background-color: $darker-green
@@ -207,10 +224,11 @@ body
       margin-top: .3rem
 
   .two-col
-    min-height: 40rem
+    min-height: 35rem
     display: grid
     grid-template-columns: 1fr 1fr
     grid-column-gap: 1rem
+    margin-bottom: 2rem
     div
       grid-area: auto
 

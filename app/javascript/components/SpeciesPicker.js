@@ -225,11 +225,11 @@ class SpeciesPicker extends React.Component {
         }
         return (
             <div className="species">
-                <Zoom photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 <div className="center">
                     <Noherpreport photo_id={this.state.photo_id}></Noherpreport>
                     <Deadherpreport photo_id={this.state.photo_id}></Deadherpreport>
                 </div>
+                <Zoom photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>

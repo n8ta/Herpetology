@@ -13,7 +13,7 @@
 <h2>Pick your Herp</h2>
 <ul id="pick_taxons">
   <% @taxons.each do |txn| %>
-    <%= link_to quiz_pick_region_path(txn), class: 'main_link_wrap' do %>
+    <%= link_to taxon_regions_path(txn), class: 'main_link_wrap' do %>
       <li>
         <%= image_tag txn.photo.url %>
         <div class="prebutton">
@@ -28,11 +28,11 @@
 <div class="center">
   <% if @taxons.size != Taxon.roots.size %>
 
-    <%= link_to "More", quiz_pick_taxon_all_path, class: 'main' %>
+    <%= link_to "More", all_taxons_path, class: 'main' %>
 
   <% else %>
 
-    <%= link_to "Less", quiz_pick_taxon_path, class: 'main' %>
+    <%= link_to "Less", taxons_path , class: 'main' %>
 
 
   <% end %></div>

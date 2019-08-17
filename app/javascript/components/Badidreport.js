@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import SpeciesPicker from "./SpeciesPicker";
-
+import Alert from "./Alert";
 class Badidreport extends React.Component {
     constructor(props) {
         super(props);
@@ -79,7 +79,7 @@ class Badidreport extends React.Component {
 
             return (
                 <div className="center">
-                    <button onClick={this.activate} className={'small'}>This ID is wrong!</button>
+                    <button onClick={this.activate} className={'small'}><Alert/>This ID is wrong!</button>
                 </div>)
 
         } else if (this.state.active == true && this.state.submitted == false) {

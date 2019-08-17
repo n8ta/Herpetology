@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import SpeciesPicker from "./SpeciesPicker";
 
 
 class Menubutton extends React.Component {
@@ -22,10 +23,12 @@ class Menubutton extends React.Component {
 
                 } else {
                     menu.style.height = 'auto';
-                    menu.style.minHeight = "100vh"
+                    menu.style.minHeight = "100vh";
+                    content.style.display = "none";
                 }
             }.bind(this), 700);
         } else {
+            content.style.display = "unset";
             menu.style.height = menu.clientHeight.toString() + "px";
             menu.style.minHeight = "unset";
             setTimeout(function() {
@@ -37,8 +40,13 @@ class Menubutton extends React.Component {
 
 
     render() {
+        let cls = "";
+        if (this.props.alert == true) {
+            cls = "active"
+        }
         return (
             <div id='menubutton'>
+                <div id='menubutton-alert' className={cls}></div>
                 <button onClick={this.toggle}
                         className={["special", "hamburger", "hamburger--vortex", this.state.mode].join(" ")}
                         type="button">
@@ -47,8 +55,14 @@ class Menubutton extends React.Component {
                 </span>
                 </button>
             </div>
+
         );
     }
 }
+
+SpeciesPicker.propTypes = {
+    alert: PropTypes.bool,
+
+};
 
 export default Menubutton

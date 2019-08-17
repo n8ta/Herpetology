@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Report from "./Report";
+import Alert from "./Alert";
 
 class Deadherpreport extends React.Component {
     constructor(props) {
@@ -49,7 +50,7 @@ class Deadherpreport extends React.Component {
         if (this.state.submitted == false) {
             return (
                 <div className="center">
-                    <button onClick={this.post} className={'small'}>Dead Herp</button>
+                    <button onClick={this.post} className={'small'}><Alert/>Dead Herp</button>
                 </div>
             );
         } else {

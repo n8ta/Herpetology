@@ -1,14 +1,11 @@
-module Quiz
-  class QuizController < ApplicationController
+module Game
+  class GameController < ApplicationController
     before_action :set_taxon, only: [:pick_region, :game, :guess]
     before_action :set_region, only: [:game, :guess]
 
-    def pick_region
-      if @taxon.taxon != nil
-        flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
-        redirect_to '/'
-      end
-      @regions = @taxon.valid_regions.countries
+
+    def mode
+      # Pick "compete" or "learn"
     end
 
     def scoreboard
@@ -103,14 +100,6 @@ module Quiz
       @options = options[0]
     end
 
-    def pick_taxon_all
-      @taxons = Taxon.roots.includes(:common_names)
-      render 'pick_taxon'
-    end
-
-    def pick_taxon
-      @taxons = [Taxon.find(7), Taxon.find(5), Taxon.find(9), Taxon.find(6)]
-    end
 
     private
 

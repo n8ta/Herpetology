@@ -1,13 +1,21 @@
 class RegionsController < ApplicationController
   before_action :set_region, only: [:show, :edit, :update, :destroy]
+  before_action :set_taxon, only: [:index]
 
   # GET /regions
   # GET /regions.json
+
   def index
-    @regions = Region.countries.all.select { |t1| t1.taxons.species.select{ |sp| sp.root_taxon_id = @taxon.id && sp.photos.any? } .count > 5 }
+    if @taxon.taxon != nil
+      flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
+      redirect_to '/'
+    end
+    @regions = @taxon.valid_regions.countries
   end
 
+
   def show
+
   end
 
   private
@@ -15,6 +23,11 @@ class RegionsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_region
     @region = Region.find(params[:id])
+    @taxon = Taxon.find(params[:taxon_id])
+  end
+
+
+  def set_taxon
     @taxon = Taxon.find(params[:taxon_id])
   end
 

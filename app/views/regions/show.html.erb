@@ -1,10 +1,20 @@
-<h2><%= link_to @taxon.common_names[0].name, taxon_path(@taxon) %> > <%= @taxon.name.titleize %></h2>
+<h2>Do you want to</h2>
 
-<%= react_component('Tierlist', {taxon_id: @taxon.id, id: @region.id}) %>
+<div class="centered_md_col">
+  <div class="col-6">
+    <%= link_to taxon_region_game_mode_path(@taxon, @region, "learn") do %>
+      <button class="main">Learn</button>
+    <% end %>
+    <p>You will be given a small set of species to practice and then move on once you have mastered them. Nothing gets
+      recorded for the scoreboard</p>
+  </div>
+  <div class="col-6">
+    <%= link_to taxon_region_game_mode_path(@taxon, @region, "quiz") do %>
+      <button class="main">Compete</button>
+    <% end %>
+    <p>You will be given all of the species present in the region all at once. Results will be posted on the
+      scoreboard.</p>
 
+  </div>
 
-<p>Currently we have <%= @species.length %> species in this region with photos
-  and <%= @tier.taxons.species.select {|sp| sp.root == @taxon}.length %> total</p>
-<hr>
-<%= react_component('SpeciesPicker', {image_path: @photo.image_path.url,
-                                      options: @options}) %>
+</div>

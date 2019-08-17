@@ -32,7 +32,7 @@
   </div>
   <div id="menu" class="center drop_down_menu">
     <ul id="menu-inner">
-      <li><h4><%= link_to quiz_scoreboard_path do %>
+      <li><h4><%= link_to scoreboard_path do %>
           Scoreboard
           <% if current_user %>
             (<%= current_user.place_on_scoreboard.ordinalize %>)

@@ -18,7 +18,13 @@ class TaxonsController < ApplicationController
   end
 
   def index
-    @taxons = Taxon.where(taxon: nil)
+    @taxons = [Taxon.find(7), Taxon.find(5), Taxon.find(9), Taxon.find(6)]
+  end
+
+
+  def index_all
+    @taxons = Taxon.roots.includes(:common_names)
+    render 'index'
   end
 
   # def edit

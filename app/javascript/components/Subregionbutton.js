@@ -20,11 +20,13 @@ class Subregionbutton extends React.Component {
         if (this.state.mode == "") {
 
         } else {
+          content.style.display = "none";
           sugregions.style.height = 'auto';
           sugregions.style.minHeight = "100vh"
         }
       }.bind(this), 700);
     } else {
+      content.style.display = "unset";
       sugregions.style.height = sugregions.clientHeight.toString() + "px";
       sugregions.style.minHeight = "unset";
       setTimeout(function() {

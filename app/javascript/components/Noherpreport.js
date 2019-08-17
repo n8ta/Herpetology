@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Report from "./Report";
+import Alert from "./Alert";
 
 class Noherpreport extends React.Component {
     constructor(props) {
@@ -49,10 +50,11 @@ class Noherpreport extends React.Component {
 
 
     render() {
+
         if (this.state.submitted == false) {
             return (
                 <div className="center">
-                    <button onClick={this.post} className={'small'}>No Herp</button>
+                    <button onClick={this.post} className={'small'}><Alert/> No Herp</button>
                 </div>
             );
         } else {

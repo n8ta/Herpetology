@@ -1,0 +1,2 @@
+module ModeHelper
+end
