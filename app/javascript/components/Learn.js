@@ -19,7 +19,8 @@ class Learn extends React.Component {
             progress: 0,
             taxons: this.props.taxons,
             num_taxons: this.props.taxons.length,
-            loaded_taxons: 0
+            loaded_taxons: 0,
+            left_is_correct: Math.random() > .5
         };
         let taxons = this.props.taxons;
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
@@ -43,8 +44,18 @@ class Learn extends React.Component {
             });
         }
         this.render = this.render.bind(this);
+        this.current = this.current.bind(this);
+        this.wrong = this.current.bind(this);
 
 
+    }
+
+    current(which) {
+        return this.state.taxons[0]
+    }
+
+    rand() {
+        return this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)]
     }
 
 
@@ -59,21 +70,37 @@ class Learn extends React.Component {
                 </div>
             )
         } else {
+            let zoom_left = <Zoom url={this.current().photos[Math.floor(Math.random()*this.current().photos.length)]}/>;
+            let rand = this.rand();
+            let zoom_right = <Zoom url={rand.photos[Math.floor(Math.random()*rand.photos.length)]}/>;
+            if (!this.state.left_is_correct) {
+                let tmp = zoom_left;
+                zoom_left = zoom_right;
+                zoom_right = tmp;
+            }
+
             return (
                 <div id={"learn"}>
-                    <h3 className={"center"}>So which is which?</h3>
-                    <ul>
-                        <li></li>
-                    </ul>
+                    <p className={"text-center lead"}>
+                        Which of these photos is a
+                        <span className={'common_name'}> {this.current().common_name} </span>
+                        (<span className={'scientific_name'}>{this.current().name}</span>)
+                    </p>
 
                     <div className={'two-col'}>
 
                         <div>
-                            <Zoom url={this.state.taxons[0].photos[0]}/>
+                            <div className={'center'}>
+                                <button className={'main'}><h4>This one!</h4></button>
+                            </div>
+                            {zoom_left}
                         </div>
 
                         <div>
-                            <Zoom url={this.state.taxons[1].photos[0]}/>
+                            <div className={'center'}>
+                                <button className={'main'}><h4>This one!</h4></button>
+                            </div>
+                            {zoom_right}
                         </div>
                     </div>
 
