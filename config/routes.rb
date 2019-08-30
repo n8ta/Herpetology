@@ -35,6 +35,10 @@ Rails.application.routes.draw do
       get 'all' => 'taxons#index_all', as: 'all'
       get 'search/:name' => 'taxons#search', as: 'search'
     end
+    member do
+      get 'photos/rand' => 'taxons#photos_rand', as: 'rand'
+      get 'photos/plenty' => 'taxons#photos_plenty', as: 'plenty'
+    end
     resources :regions, only: [:show, :index] do
       member do
         get ':mode' => 'game#game', as: 'game'

@@ -65,6 +65,7 @@
           <%= link_to "Signup", '/users/sign_up' %>
         <% end %>
       </li>
+      <li><p>Do not use information learned here in life or death situations. All data on which species are venomous is crowdsourced and thus almost certainly incomplete and may be inaccurate (though people seem to be acting in good faith). When in ANY doubt leave a herp alone.</p></li>
       <li>
         <% unless current_user.nil? %>
           <h4>  <%= link_to destroy_user_session_path, method: :delete do %> Sign Out

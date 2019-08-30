@@ -18,7 +18,8 @@
     <%= link_to render('statics/world'), root_path %> >
     <%= link_to @taxon.common_names[0].name, taxon_path(@taxon) %> >
     <%= region_array.html_safe %>
-    <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s %> species</span>
+    <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s %>
+      species</span>
     <% if @taxon.valid_regions.where(region: @region).any? %>
       <%= react_component('Subregionbutton') %>
     <% end %>
@@ -30,6 +31,10 @@
   <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
 <% end %>
 
+<% if @mode == "learn" %>
+  <%= react_component('Learn', {taxons: @species}) %>
+<% elsif @mode == "quiz" %>
+  <%= react_component('SpeciesPicker', {photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
+<% end %>
 
 
-<%= react_component('SpeciesPicker', {photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>

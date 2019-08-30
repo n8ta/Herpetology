@@ -1,5 +1,5 @@
 class TaxonsController < ApplicationController
-  before_action :set_taxon, only: [:show, :edit, :update, :destroy]
+  before_action :set_taxon, only: [:show, :edit, :update, :destroy, :photos_plenty, :photos_rand]
 
   def search
     name = params[:name]
@@ -25,6 +25,21 @@ class TaxonsController < ApplicationController
   def index_all
     @taxons = Taxon.roots.includes(:common_names)
     render 'index'
+  end
+
+  def photos_rand
+    photos = @taxon.photos.where(dead: false)
+    photo = photos[rand(photos.size-1)]
+    render :json => {id: photo.id, taxon_id: photo.taxon.id, url: photo.image_path.url}
+  end
+
+  def photos_plenty
+    if Rails.env.development?
+      sleep rand()*0.5
+    end
+    photos = @taxon.photos.where(dead: false).take(ENV['how_many_photos_is_enough_for_learning_mode'].to_i).map{|p|  {id: p.id, taxon_id: p.taxon_id, url: p.image_path.url}}
+    render :json => photos
+
   end
 
   # def edit

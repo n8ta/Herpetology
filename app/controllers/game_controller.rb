@@ -1,6 +1,7 @@
 class GameController < ApplicationController
   before_action :set_taxon, only: [:pick_region, :game, :guess]
   before_action :set_region, only: [:game, :guess]
+  before_action :set_mode, only: [:game, :guess]
 
   def scoreboard
     limit = 10
@@ -91,12 +92,17 @@ class GameController < ApplicationController
   end
 
   def game
-    @regions = @region.regions
-    @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
-    options = specie_hash(@species)
-    correct_specie = options[1]
-    @photo = correct_specie.photos[rand(correct_specie.photos.size)]
-    @options = options[0]
+    if @mode == "quiz"
+      @regions = @region.regions
+      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
+      options = specie_hash(@species)
+      correct_specie = options[1]
+      @photo = correct_specie.photos[rand(correct_specie.photos.size)]
+      @options = options[0]
+    elsif @mode == "learn"
+      @regions = @region.regions
+      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
+    end
   end
 
 
@@ -162,6 +168,11 @@ class GameController < ApplicationController
 
   def set_taxon
     @taxon = Taxon.find params[:taxon_id]
+  end
+
+  def set_mode
+    @mode = params[:mode]
+    raise if (@mode != "quiz") && (@mode != "learn")
   end
 
   def set_region
