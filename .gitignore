@@ -1,4 +1,6 @@
 .env
+public/assets
+public/packs
 config/credentials.ymc.enc
 .DS_Store
 public/uploads
@@ -23,7 +25,6 @@ config/master.key
 /node_modules
 /yarn-error.log
 
-/public/assets
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.

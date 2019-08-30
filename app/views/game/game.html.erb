@@ -6,7 +6,7 @@
      cur = cur.region
    end
    region_array = region_array.reverse
-   region_array = region_array.map {|ra| "<a href='#{quiz_game_path(@taxon, ra)}'>#{ra.name}</a>"}.join(" > ")
+   region_array = region_array.map {|ra| "<a href='#{taxon_region_path(@taxon, ra)}'>#{ra.name}</a>"}.join(" > ")
 %>
 
 <% content_for :title do %>
@@ -15,8 +15,8 @@
 
 <% content_for :breadcrumb do %>
   <h2>
-    <%= link_to render('quiz/world'), root_path %> >
-    <%= link_to @taxon.common_names[0].name, quiz_pick_region_path(@taxon) %> >
+    <%= link_to render('statics/world'), root_path %> >
+    <%= link_to @taxon.common_names[0].name, taxon_path(@taxon) %> >
     <%= region_array.html_safe %>
     <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s %> species</span>
     <% if @taxon.valid_regions.where(region: @region).any? %>

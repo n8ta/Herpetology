@@ -4,7 +4,7 @@
 
 <% content_for :breadcrumb do %>
   <h2>
-    <%= link_to root_path do %><%= render 'game/world' %><% end %> >
+    <%= link_to root_path do %><%= render 'statics/world' %><% end %> >
     <%= link_to @taxon.common_names[0].name, taxon_regions_path(@taxon) %>
   </h2>
 <% end %>

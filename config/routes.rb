@@ -36,10 +36,9 @@ Rails.application.routes.draw do
       get 'search/:name' => 'taxons#search', as: 'search'
     end
     resources :regions, only: [:show, :index] do
-      namespace 'game' do
+      member do
         get ':mode' => 'game#game', as: 'game'
-        # get 'taxon/:taxon_id/region/:region_id' => 'quiz#game', as: 'quiz'
-        # post 'taxon/:taxon_id/region/:region_id' => 'quiz#guess', as: 'guess' end
+        post ':mode' => 'game#guess', as: 'guess'
       end
     end
   end

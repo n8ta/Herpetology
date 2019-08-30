@@ -1,20 +1,17 @@
 <h2>Do you want to</h2>
 
-<div class="centered_md_col">
-  <div class="col-6">
-    <%= link_to taxon_region_game_mode_path(@taxon, @region, "learn") do %>
-      <button class="main">Learn</button>
+<div class="row centered_md_col">
+  <div class="center">
+    <%= link_to game_taxon_region_path(@taxon, @region, "learn") do %>
+      <button>Learn 📖</button>
     <% end %>
-    <p>You will be given a small set of species to practice and then move on once you have mastered them. Nothing gets
-      recorded for the scoreboard</p>
-  </div>
-  <div class="col-6">
-    <%= link_to taxon_region_game_mode_path(@taxon, @region, "quiz") do %>
-      <button class="main">Compete</button>
+    &nbsp     &nbsp
+    <%= link_to game_taxon_region_path(@taxon, @region, "quiz") do %>
+      <button>Compete ⚔</button>
     <% end %>
-    <p>You will be given all of the species present in the region all at once. Results will be posted on the
-      scoreboard.</p>
 
   </div>
-
+  <p>In learning mode you will be given a small set of species to practice, nothing gets put on the scoreboard. In
+    quiz/compete mode you will be given all of the species present in the region. Results will be posted on the
+    scoreboard.</p>
 </div>

@@ -48,20 +48,25 @@ class SpeciesPicker extends React.Component {
             let sci_btn_class = "";
             let common_btn_class = "";
 
+            let sci_mark = "";
+            let common_mark = "";
+
             if (this.state.mode == "answered") {
                 if (tmp == this.state.sci_correct_index) {
-                    sci_btn_class = "correct"
+                    sci_btn_class = "correct";
+                    sci_mark = "✓";
                 } else if (tmp == this.state.sci_chosen) {
-                    sci_btn_class = "incorrect"
-                } else {
+                    sci_btn_class = "incorrect";
+                    sci_mark = "✗";
                 }
                 if (tmp == this.state.common_correct_index) {
-                    common_btn_class = "correct"
-                } else if (tmp == this.state.common_chosen) {
-                    common_btn_class = "incorrect"
-                } else {
-                }
+                    common_btn_class = "correct";
+                    common_mark = "✓";
 
+                } else if (tmp == this.state.common_chosen) {
+                    common_btn_class = "incorrect";
+                    common_mark = "✗";
+                }
             } else {
 
                 if (tmp == this.state.sci_chosen) {
@@ -77,7 +82,7 @@ class SpeciesPicker extends React.Component {
                 <li key={i} className={sci_btn_class}>
                     <button className={'special'} disabled={sci_disabled} data-type={'sci'} data-index={i}
                             onClick={this.handleClick}>
-                        <span className="common_name">{this.state.options['sci'][i]}</span>
+                        <span className="common_name">{this.state.options['sci'][i]} {sci_mark}</span>
                     </button>
                 </li>);
 
@@ -85,7 +90,7 @@ class SpeciesPicker extends React.Component {
                 <li key={i} className={common_btn_class}>
                     <button className={'special'} disabled={common_disabled} data-type={'common'} data-index={i}
                             onClick={this.handleClick}>
-                        <span className="sci_name">{this.state.options['common'][i]}</span>
+                        <span className="sci_name">{this.state.options['common'][i]} {common_mark}</span>
                     </button>
                 </li>);
         }
@@ -103,7 +108,7 @@ class SpeciesPicker extends React.Component {
 
         if (this.state.asked_about_signup == false && this.state.iterations == 6) {
             this.setState({mode: "signup", asked_about_signup: true});
-            Cookies.set("asked_about_signup",true,{expires: 1})
+            Cookies.set("asked_about_signup", true, {expires: 1})
         } else {
             this.setState({
                 common_name: undefined,
@@ -195,7 +200,8 @@ class SpeciesPicker extends React.Component {
         let left_title = "Scientific";
         let right_title = "Common";
         if (this.state.mode == 'answered') {
-            bad_id_report = <Badidreport photo_id={this.state.photo_id} taxon_com={this.state.common_name} taxon_sci={this.state.sci_name}/>
+            bad_id_report = <Badidreport photo_id={this.state.photo_id} taxon_com={this.state.common_name}
+                                         taxon_sci={this.state.sci_name}/>
             next_button = <div id={'next'} className={"center"}>
                 <button className={'main happypath'} onClick={this.next}>Next <br/></button>
             </div>;
