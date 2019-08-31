@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 class Subregions extends React.Component {
     constructor(props) {
+        console.log(props);
         super(props);
         this.state = {'mode': 'loading'};
         this.load = this.load.bind(this);
