@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
-import SpeciesPicker from "./SpeciesPicker";
 import Zoom from "./Zoom";
 import Name from "./Name";
+import Progressbar from "./Progressbar";
 
 class Learn extends React.Component {
 
@@ -14,6 +14,7 @@ class Learn extends React.Component {
 
     keydown(ev) {
         if (ev.key == " " || ev.key == "ArrowUp") {
+            ev.preventDefault();
             this.new_question();
         }
         if (ev.key == "ArrowLeft") {
@@ -83,7 +84,6 @@ class Learn extends React.Component {
 
     }
 
-    // Current correct taxon TODO: non dummy
     current(which) {
         return this.state.taxons[0]
     }
@@ -94,6 +94,12 @@ class Learn extends React.Component {
         }
         let left_correct = Math.random() > .5;
 
+        let place = Math.floor(Math.random() * this.state.taxons.length);
+        let reordered = this.state.taxons;
+        let cur = reordered.pop();
+        reordered.splice(place, 0, cur);
+        this.setState({taxons: reordered});
+
 
         let incorrect_answer = this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)];
         while (incorrect_answer.id == this.state.taxons[0].id) {
@@ -101,9 +107,7 @@ class Learn extends React.Component {
         }
 
         let correct_photo = this.current().photos[Math.floor(Math.random() * this.current().photos.length)];
-        console.log(correct_photo);
         let incorrect_photo = incorrect_answer.photos[Math.floor(Math.random() * incorrect_answer.photos.length)];
-        console.log(incorrect_photo);
         this.setState({
             incorrect_answer: incorrect_answer,
             correct_answer: this.state.taxons[0],
@@ -119,18 +123,19 @@ class Learn extends React.Component {
 
 
     answer(clicked_left) {
-        if (this.state.mode == "answered") { return }
-        if (this.state.mode == "ready") {
-            this.setState({
-                mode: "answered", clicked_left,
-                left_class: this.state.left_is_correct ? "correct" : "",
-                right_class: this.state.left_is_correct ? "" : "correct"
-            })
+        if (this.state.mode == "answered") {
+            return
         }
         // If they clicked left and left is correct, they got it right
         // If they click right and right is correct, they got it right
         // This looks more complex than it is
-        this.setState({correct: ((this.state.left_is_correct && clicked_left) || (!this.state.left_is_correct && !clicked_left))});
+        let correct = ((this.state.left_is_correct && clicked_left) || (!this.state.left_is_correct && !clicked_left))
+        this.setState({
+            correct: correct,
+            mode: "answered", clicked_left: clicked_left,
+            left_class: this.state.left_is_correct ? "correct" : "",
+            right_class: this.state.left_is_correct ? "" : "correct"
+        });
     }
 
 
@@ -146,7 +151,7 @@ class Learn extends React.Component {
             // Default to left correct, if it's not switch everything
             let msg = <span>Which of these is a<span
                 className={'common_name'}> {this.current().common_name} </span>(<span
-                className={'sci_name'}>{this.current().name}</span>)<br/></span>
+                className={'sci_name'}>{this.current().name}</span>)?<br/></span>;
             let next_button = "";
             let zoom_left = <Zoom url={this.state.correct_photo}/>;
             let zoom_right = <Zoom url={this.state.incorrect_photo}/>;
@@ -175,8 +180,9 @@ class Learn extends React.Component {
                         left_text = "✗"
                     }
                 } else {
-                    msg = <span>❌ <span className="font-heavy">Incorrect</span> ❌ <br/>that was a <Name commonName={this.state.incorrect_answer.common_name}
-                                                                   sciName={this.state.incorrect_answer.name}></Name></span>;
+                    msg = <span>❌ <span className="font-heavy">Incorrect</span> ❌ <br/>that was a <Name
+                        commonName={this.state.incorrect_answer.common_name}
+                        sciName={this.state.incorrect_answer.name}></Name></span>;
                     if (this.state.left_is_correct) {
                         left_text = "✓";
                         right_text = "✗"
@@ -186,12 +192,18 @@ class Learn extends React.Component {
                     }
                 }
             } else {
-                left_text = <span title={'Left arrow key'}>◀ This one!</span>;
-                right_text = <span title={'Right arrow keys'}>This one! ▶</span>;
+                left_text = "◀ This one!";
+                right_text = "This one! ▶";
             }
 
 
             return (<div id={"learn"}>
+                <div>
+                    <Progressbar seen={10} correct={5} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
+                    <Progressbar seen={0} correct={0} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
+                    <Progressbar seen={10} correct={10} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
+                    <Progressbar seen={3} correct={1} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
+                </div>
                 <p className={"text-center lead"}>
                     {msg}
                 </p>
@@ -200,18 +212,22 @@ class Learn extends React.Component {
 
                     <div>
                         <div className={'center'}>
-                            <button disabled={this.state.mode == "answered"} onClick={function () {
-                                this.answer(true)
-                            }.bind(this)} className={'main ' + this.state.left_class}><h4>{left_text}</h4></button>
+                            <button title={'Left arrow key'} disabled={this.state.mode == "answered"}
+                                    onClick={function () {
+                                        this.answer(true)
+                                    }.bind(this)} className={'main ' + this.state.left_class}><h4>{left_text}</h4>
+                            </button>
                         </div>
                         {zoom_left}
                     </div>
 
                     <div>
                         <div className={'center'}>
-                            <button disabled={this.state.mode == "answered"} onClick={function () {
-                                this.answer(false)
-                            }.bind(this)} className={'main ' + this.state.right_class}><h4>{right_text}</h4></button>
+                            <button title={'Right arrow keys'} disabled={this.state.mode == "answered"}
+                                    onClick={function () {
+                                        this.answer(false)
+                                    }.bind(this)} className={'main ' + this.state.right_class}><h4>{right_text}</h4>
+                            </button>
                         </div>
                         {zoom_right}
                     </div>
@@ -224,8 +240,9 @@ class Learn extends React.Component {
     }
 }
 
-SpeciesPicker.propTypes = {
+Learn.propTypes = {
     taxons: PropTypes.array,
+    working_size: PropTypes.number,
 };
 
 
