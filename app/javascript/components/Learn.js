@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import Zoom from "./Zoom";
 import Name from "./Name";
 import Progressbar from "./Progressbar";
+import Info from "./Info";
+import Tippy from "@tippy.js/react";
 
 class Learn extends React.Component {
 
@@ -56,11 +58,12 @@ class Learn extends React.Component {
             done: false,
 
         };
-        let taxons = this.props.taxons;
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
-        for (let i = 0; i < taxons.length; i++) {
+        let photos = [];
+        for (let i = 0; i < txns.length; i++) {
+            let num_preloaded = 0;
 
-            fetch("/taxons/" + taxons[i].id + "/photos/plenty", {
+            fetch("/taxons/" + txns[i].id + "/photos/plenty", {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -72,9 +75,12 @@ class Learn extends React.Component {
             }).then(res => res.json()).then((result) => {
                 for (let j = 0; j < result.length; j++) {
                     let url = result[j]['url'];
-                    this.preload(url);
-                    // Create and push to array, how bout that syntax
-                    this.state.taxons[i].photos.push(url);
+                    if (num_preloaded < 3) {
+                        this.preload(url);
+                        num_preloaded = num_preloaded + 2;
+                    }
+
+                    txns[i].photos.push(url);
                     if (this.props.taxons.length - (this.state.loaded_taxons + 1) < 1) {
                         this.new_question();
                         this.setState({mode: "ready"});
@@ -83,6 +89,8 @@ class Learn extends React.Component {
                 this.setState({loaded_taxons: this.state.loaded_taxons + 1});
             });
         }
+        this.state.taxons = txns;
+
         this.render = this.render.bind(this);
         this.current = this.current.bind(this);
         this.new_question = this.new_question.bind(this);
@@ -238,7 +246,7 @@ class Learn extends React.Component {
                     msg = <span>❌ <span className="font-heavy">Incorrect</span> ❌ <br/>that was a <Name
                         commonName={this.state.incorrect_answer.common_name}
                         sciName={this.state.incorrect_answer.name}></Name></span>;
-                        hide_arrows_class = "hidden"
+                    hide_arrows_class = "hidden"
                 }
             } else {
                 left_text = "This one";
@@ -257,42 +265,53 @@ class Learn extends React.Component {
             );
 
             console.log(hide_arrows_class);
-            return (<div id={"learn"}>
-                <div className={'center'}>
-                    {progbars}
-                </div>
-                <div className={"text-center lead"}>
-                    <div className={'lead_text'}>{msg}</div>
-                    {next_button}
-                </div>
+            return (
+                <div id={"learn"}>
+                    <div id='progbar_container' className={'center'}>
+                        {progbars}
+                        <Tippy content="These bars show your progress on the 6 species you are currently learning"
+                               placement={'bottom'}>
+                            <div><Info></Info></div>
 
+                        </Tippy>
 
-                <div className={'two-col'}>
-
-                    <div onClick={function () {
-                        this.answer(false)
-                    }.bind(this)}>
-                        <div className={'center'}>
-                            <button  title={'Left arrow key'} disabled={this.state.mode == "answered"}
-                                    className={hide_arrows_class + ' main ' + this.state.left_class}><h4>{left_text}</h4>
-                            </button>
-                        </div>
-                        {zoom_left}
                     </div>
 
-                    <div onClick={function () {
-                        this.answer(false)
-                    }.bind(this)}>
-                        <div className={'center'}>
-                            <button title={'Right arrow keys'} disabled={this.state.mode == "answered"} className={hide_arrows_class + ' main ' + this.state.right_class}><h4>{right_text}</h4>
-                            </button>
-                        </div>
-                        {zoom_right}
+                    <div className={"text-center lead"}>
+                        <div className={'lead_text'}>{msg}</div>
+                        {next_button}
                     </div>
-                </div>
 
 
-            </div>)
+                    <div className={'two-col'}>
+
+                        <div onClick={function () {
+                            this.answer(false)
+                        }.bind(this)}>
+                            <div className={'center'}>
+                                <button title={'Left arrow key'} disabled={this.state.mode == "answered"}
+                                        className={hide_arrows_class + ' main ' + this.state.left_class}>
+                                    <h4>{left_text}</h4>
+                                </button>
+                            </div>
+                            {zoom_left}
+                        </div>
+
+                        <div onClick={function () {
+                            this.answer(false)
+                        }.bind(this)}>
+                            <div className={'center'}>
+                                <button title={'Right arrow keys'} disabled={this.state.mode == "answered"}
+                                        className={hide_arrows_class + ' main ' + this.state.right_class}>
+                                    <h4>{right_text}</h4>
+                                </button>
+                            </div>
+                            {zoom_right}
+                        </div>
+                    </div>
+
+
+                </div>)
         }
     }
 }
