@@ -1,15 +1,21 @@
 @import 'vars'
 
 #learn
-  p.lead, p.lead *
-    color: $brown
+  .hidden
+    display: none
+  .lead_text, .lead_text *
     font-size: 4rem
-    height: 22rem
-
+  .lead
+    color: $brown
+    min-height: 22rem
+    padding-top: 3rem
+  .lead button
+    font-size: 2rem
   .two-col
     display: grid
     grid-template-columns: 50% 50%
     grid-column-gap: 1rem
+
 
     div
       grid-area: auto

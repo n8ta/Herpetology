@@ -35,6 +35,7 @@ class Learn extends React.Component {
             txns[i].seen = 0;
             txns[i].correct = 0;
             txns[i].score = 0.0; // rolling average
+            txns[i].photos = [];
         }
         this.state = {
             mode: "loading",
@@ -73,7 +74,7 @@ class Learn extends React.Component {
                     let url = result[j]['url'];
                     this.preload(url);
                     // Create and push to array, how bout that syntax
-                    (this.state.taxons[i].photos = this.state.taxons[i].photos || []).push(url);
+                    this.state.taxons[i].photos.push(url);
                     if (this.props.taxons.length - (this.state.loaded_taxons + 1) < 1) {
                         this.new_question();
                         this.setState({mode: "ready"});
@@ -128,6 +129,8 @@ class Learn extends React.Component {
             incorrect_answer = this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)];
         }
 
+
+        console.log(correct_answer.photos.length);
         let correct_photo = correct_answer.photos[Math.floor(Math.random() * correct_answer.photos.length)];
         let incorrect_photo = incorrect_answer.photos[Math.floor(Math.random() * incorrect_answer.photos.length)];
         this.setState({
@@ -195,6 +198,7 @@ class Learn extends React.Component {
             let zoom_right = <Zoom url={this.state.incorrect_photo}/>;
             let left_text = undefined;
             let right_text = undefined;
+            let hide_arrows_class = "";
             if (!this.state.left_is_correct) {
                 let tmp = zoom_left;
                 zoom_left = zoom_right;
@@ -202,8 +206,8 @@ class Learn extends React.Component {
             }
             if (this.state.mode == "answered") {
 
-                next_button = <div title='You can use the up arrow as well' id={'next'} className={"center"}>
-                    <button className={'main happypath'} onClick={this.new_question}>Next (▲) <br/></button>
+                next_button = <div title='You can use the up arrow as well' className={"center"}>
+                    <button onClick={this.new_question}>Next (▲) <br/></button>
                 </div>;
 
                 if (this.state.correct == true) {
@@ -229,28 +233,16 @@ class Learn extends React.Component {
                             commonName={this.state.incorrect_answer.common_name}
                             sciName={this.state.incorrect_answer.name}></Name></span>;
                     }
-                    if (this.state.left_is_correct) {
-                        left_text = "✓";
-                        right_text = "✗"
-                    } else {
-                        right_text = "✓";
-                        left_text = "✗"
-                    }
+                    hide_arrows_class = "hidden";
                 } else {
                     msg = <span>❌ <span className="font-heavy">Incorrect</span> ❌ <br/>that was a <Name
                         commonName={this.state.incorrect_answer.common_name}
                         sciName={this.state.incorrect_answer.name}></Name></span>;
-                    if (this.state.left_is_correct) {
-                        left_text = "✓";
-                        right_text = "✗"
-                    } else {
-                        right_text = "✓";
-                        left_text = "✗"
-                    }
+                        hide_arrows_class = "hidden"
                 }
             } else {
-                left_text = "◀ This one!";
-                right_text = "This one! ▶";
+                left_text = "This one";
+                right_text = "This one";
             }
 
             let progbars = this.state.working_set.concat(this.state.current);
@@ -264,39 +256,40 @@ class Learn extends React.Component {
                              sci_name={taxon.name} common_name={taxon.common_name}></Progressbar>
             );
 
+            console.log(hide_arrows_class);
             return (<div id={"learn"}>
                 <div className={'center'}>
                     {progbars}
                 </div>
-                <p className={"text-center lead"}>
-                    {msg}
-                </p>
+                <div className={"text-center lead"}>
+                    <div className={'lead_text'}>{msg}</div>
+                    {next_button}
+                </div>
+
 
                 <div className={'two-col'}>
 
-                    <div>
+                    <div onClick={function () {
+                        this.answer(false)
+                    }.bind(this)}>
                         <div className={'center'}>
-                            <button title={'Left arrow key'} disabled={this.state.mode == "answered"}
-                                    onClick={function () {
-                                        this.answer(true)
-                                    }.bind(this)} className={'main ' + this.state.left_class}><h4>{left_text}</h4>
+                            <button  title={'Left arrow key'} disabled={this.state.mode == "answered"}
+                                    className={hide_arrows_class + ' main ' + this.state.left_class}><h4>{left_text}</h4>
                             </button>
                         </div>
                         {zoom_left}
                     </div>
 
-                    <div>
+                    <div onClick={function () {
+                        this.answer(false)
+                    }.bind(this)}>
                         <div className={'center'}>
-                            <button title={'Right arrow keys'} disabled={this.state.mode == "answered"}
-                                    onClick={function () {
-                                        this.answer(false)
-                                    }.bind(this)} className={'main ' + this.state.right_class}><h4>{right_text}</h4>
+                            <button title={'Right arrow keys'} disabled={this.state.mode == "answered"} className={hide_arrows_class + ' main ' + this.state.right_class}><h4>{right_text}</h4>
                             </button>
                         </div>
                         {zoom_right}
                     </div>
                 </div>
-                {next_button}
 
 
             </div>)
