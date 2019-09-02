@@ -29,29 +29,36 @@ class Learn extends React.Component {
 
         super(props);
 
-        tippy('#learn', {
-            animateFill: true,
-            animation: 'scale',
-            placement: 'top',
-            content: "Welcome to learn mode"
-        });
-
-
         window.addEventListener('keydown', this.keydown.bind(this));
+        let txns = this.props.taxons;
+        for (let i = 0; i < txns.length; i++) {
+            txns[i].seen = 0;
+            txns[i].correct = 0;
+            txns[i].score = 0.0; // rolling average
+        }
         this.state = {
             mode: "loading",
+            complete_taxons: [],
             progress: 0,
-            taxons: this.props.taxons,
+            taxons: txns,
             num_taxons: this.props.taxons.length,
             loaded_taxons: 0,
             left_is_correct: undefined,
             left_class: '', // correct or incorrect
             right_class: '',
             incorrect_answer: undefined,
+            current: this.props.taxons[0],
+            correct: undefined,
+            working_set: this.props.taxons.slice(1, 6), // TODO : Local storage
+            pending_set: this.props.taxons.slice(6, 100),
+            mastered: false, // Last species was mastered
+            done: false,
+
         };
         let taxons = this.props.taxons;
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         for (let i = 0; i < taxons.length; i++) {
+
             fetch("/taxons/" + taxons[i].id + "/photos/plenty", {
                 method: 'GET',
                 headers: {
@@ -70,11 +77,9 @@ class Learn extends React.Component {
                     if (this.props.taxons.length - (this.state.loaded_taxons + 1) < 1) {
                         this.new_question();
                         this.setState({mode: "ready"});
-
                     }
                 }
                 this.setState({loaded_taxons: this.state.loaded_taxons + 1});
-
             });
         }
         this.render = this.render.bind(this);
@@ -85,35 +90,53 @@ class Learn extends React.Component {
     }
 
     current(which) {
-        return this.state.taxons[0]
+        return this.state.current
     }
 
     new_question() {
         if (!(this.state.mode == "answered" || this.state.mode == "loading")) {
             return
         }
+
         let left_correct = Math.random() > .5;
 
-        let place = Math.floor(Math.random() * this.state.taxons.length);
-        let reordered = this.state.taxons;
-        let cur = reordered.pop();
-        reordered.splice(place, 0, cur);
-        this.setState({taxons: reordered});
+        let place = Math.floor(Math.random() * this.state.working_set.length);
+
+        let reordered = this.state.working_set;
 
 
+        if (this.state.current.score >= 0.75) {
+            if (this.state.pending_set.length > 0) {
+                let pending_set = this.state.pending_set;
+                let new_taxon = pending_set.pop();
+                this.setState({pending_set: pending_set});
+                reordered.push(new_taxon)
+            } else {
+                ga('send', 'event', 'learn', 'done', 'true');
+                this.setState({done: true})
+
+            }
+        } else {
+            reordered.splice(place, 0, this.state.current);
+        }
+
+        // new correct answer
+        let correct_answer = reordered.pop();
+        // new incorrect
         let incorrect_answer = this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)];
-        while (incorrect_answer.id == this.state.taxons[0].id) {
+        while (incorrect_answer.id == correct_answer.id) {
             incorrect_answer = this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)];
         }
 
-        let correct_photo = this.current().photos[Math.floor(Math.random() * this.current().photos.length)];
+        let correct_photo = correct_answer.photos[Math.floor(Math.random() * correct_answer.photos.length)];
         let incorrect_photo = incorrect_answer.photos[Math.floor(Math.random() * incorrect_answer.photos.length)];
         this.setState({
             incorrect_answer: incorrect_answer,
-            correct_answer: this.state.taxons[0],
+            current: correct_answer,
             left_is_correct: left_correct,
             correct_photo: correct_photo,
             incorrect_photo: incorrect_photo,
+            working_set: reordered,
             left_class: '',
             right_class: '',
             mode: 'ready',
@@ -129,12 +152,27 @@ class Learn extends React.Component {
         // If they clicked left and left is correct, they got it right
         // If they click right and right is correct, they got it right
         // This looks more complex than it is
-        let correct = ((this.state.left_is_correct && clicked_left) || (!this.state.left_is_correct && !clicked_left))
+        let correct = ((this.state.left_is_correct && clicked_left) || (!this.state.left_is_correct && !clicked_left));
+
+        ga('send', 'event', 'learn', 'answer', correct);
+
+        let current = this.state.current;
+        if (correct) {
+            current.correct += 1;
+            current.score = (current.score * this.props.factor) + (1.0 - this.props.factor);
+        } else {
+            current.score = current.score * this.props.factor;
+        }
+        current.seen += 1;
+        this.state.taxons[0].seen += 1;
         this.setState({
             correct: correct,
+            current: current,
             mode: "answered", clicked_left: clicked_left,
             left_class: this.state.left_is_correct ? "correct" : "",
-            right_class: this.state.left_is_correct ? "" : "correct"
+            right_class: this.state.left_is_correct ? "" : "correct",
+            mastered: current.score >= 0.75,
+
         });
     }
 
@@ -169,9 +207,28 @@ class Learn extends React.Component {
                 </div>;
 
                 if (this.state.correct == true) {
-                    msg = <span>🎉 <span class="font-heavy">Correct</span> 🎉 <br/>the other was a <Name
-                        commonName={this.state.incorrect_answer.common_name}
-                        sciName={this.state.incorrect_answer.name}></Name></span>;
+
+                    if (this.state.mastered) {
+                        if (this.state.done) {
+                            msg = <span>🎉 <span
+                                className={"font-heavy"}>You've just learned the {this.props.root_taxon_name} of {this.props.region_name}</span></span>
+                            next_button = <a href={window.location}>
+                                <div id={'next'} className={"center"}>
+                                    <button className={'main happypath'}>Start over?<br/></button>
+                                </div>
+                            </a>;
+                        } else {
+                            msg = <span>🎉 <span
+                                className={"font-heavy"}>Mastered</span> 🎉 <br/>You just mastered the <Name
+                                commonName={this.state.current.common_name}
+                                sciName={this.state.current.name}></Name></span>;
+                        }
+
+                    } else {
+                        msg = <span>✓ <span className={"font-heavy"}>Correct</span> ✓ <br/>the other was a <Name
+                            commonName={this.state.incorrect_answer.common_name}
+                            sciName={this.state.incorrect_answer.name}></Name></span>;
+                    }
                     if (this.state.left_is_correct) {
                         left_text = "✓";
                         right_text = "✗"
@@ -196,13 +253,20 @@ class Learn extends React.Component {
                 right_text = "This one! ▶";
             }
 
+            let progbars = this.state.working_set.concat(this.state.current);
+            progbars = progbars.sort(function (a, b) {
+                return a.id - b.id
+            });
+
+            progbars = progbars.map((taxon) =>
+                <Progressbar key={Math.random()} score={taxon.score * 1.334}
+                             seen={taxon.seen} correct={taxon.correct}
+                             sci_name={taxon.name} common_name={taxon.common_name}></Progressbar>
+            );
 
             return (<div id={"learn"}>
-                <div>
-                    <Progressbar seen={10} correct={5} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
-                    <Progressbar seen={0} correct={0} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
-                    <Progressbar seen={10} correct={10} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
-                    <Progressbar seen={3} correct={1} sci_name={"Morelia Viridis"} common_name={"Green Tree Python"}></Progressbar>
+                <div className={'center'}>
+                    {progbars}
                 </div>
                 <p className={"text-center lead"}>
                     {msg}
@@ -243,6 +307,9 @@ class Learn extends React.Component {
 Learn.propTypes = {
     taxons: PropTypes.array,
     working_size: PropTypes.number,
+    factor: PropTypes.number,
+    region_name: PropTypes.string,
+    root_taxon_name: PropTypes.string,
 };
 
 
