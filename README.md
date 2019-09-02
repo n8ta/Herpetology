@@ -12,6 +12,8 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
+- Learning mode persistent data
+- Learning mode reports
 - Messaging
 - Quiz on venomous as well as name
 - React component for forgot password
@@ -24,7 +26,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Learn to spell venemous...
 
 # Done:
-- 
+- Learning Mode (September 1, 2019)
 - Make sure we have accurate data on venomous species, this may be possible to do by hand (reports will help too) (July 10, 2019)
 - Add "Dead herp" to report options (July 10, 2019)
 - Admin Interface to handle reports (July 7, 2019)
