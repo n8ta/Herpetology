@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>HerpID | <%= yield :title %></title>
+  <title>HerpetologyPro | <%= yield :title %></title>
   <meta name="description" value="HerpID teaches people to identify reptiles and amphibians">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= csrf_meta_tags %>
@@ -22,16 +22,17 @@
   <div id="logo">
     <% if current_user %>
       <%= react_component("Menubutton") %>
-      <a id="logo_anchor" href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+      <a id="logo_anchor" href="/"><h1>Herpetology<span id="herpID">Pro</span></h1></a>
       <span>&nbsp &nbsp &nbsp &nbsp &nbsp</span>
     <% else %>
       <%= react_component("Menubutton") %>
-      <a id='logo_anchor' href="/"><h1>Herp<span id="herpID">ID</span></h1></a>
+      <a id='logo_anchor' href="/"><h1>Herpetology<span id="herpID">Pro</span></h1></a>
       <%= link_to 'Sign In/Up', '/users/sign_up', class: 'right_of_logo' %>
     <% end %>
   </div>
   <div id="menu" class="center drop_down_menu">
     <ul id="menu-inner">
+      <li><h4><a href="/">Home</a></h4></li>
       <li><h4><%= link_to scoreboard_path do %>
           Scoreboard
           <% if current_user %>

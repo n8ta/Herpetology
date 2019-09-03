@@ -5,9 +5,14 @@ import Name from "./Name";
 import Progressbar from "./Progressbar";
 import Info from "./Info";
 import Tippy from "@tippy.js/react";
+import Masteredlist from "./Masteredlist";
 
 class Learn extends React.Component {
 
+
+    reload() {
+        location.reload();
+    }
     preload(image_path) {
         let image = new Image();
         image.onload;
@@ -54,6 +59,7 @@ class Learn extends React.Component {
             correct: undefined,
             working_set: this.props.taxons.slice(1, 6), // TODO : Local storage
             pending_set: this.props.taxons.slice(6, 100),
+            mastered_set: [],
             mastered: false, // Last species was mastered
             done: false,
 
@@ -113,19 +119,26 @@ class Learn extends React.Component {
 
         let reordered = this.state.working_set;
 
-
-        if (this.state.current.score >= 0.75) {
+        if (this.state.current.score >= 0.1) {
+            // You just mastered the current one!
             if (this.state.pending_set.length > 0) {
+                // Pop of the pending set and put it on the working set
                 let pending_set = this.state.pending_set;
                 let new_taxon = pending_set.pop();
                 this.setState({pending_set: pending_set});
                 reordered.push(new_taxon)
             } else {
+
+                // Pending set is empty, we're done her!
                 ga('send', 'event', 'learn', 'done', 'true');
                 this.setState({done: true})
-
             }
+            // We've mastered add it to the mastered set
+            let old_mastered = this.state.mastered_set;
+            old_mastered.push(this.state.current);
+            this.setState({mastered_set: old_mastered});
         } else {
+            // It isn't mastered put it back in the working set
             reordered.splice(place, 0, this.state.current);
         }
 
@@ -182,7 +195,7 @@ class Learn extends React.Component {
             mode: "answered", clicked_left: clicked_left,
             left_class: this.state.left_is_correct ? "correct" : "",
             right_class: this.state.left_is_correct ? "" : "correct",
-            mastered: current.score >= 0.75,
+            mastered: current.score >= 0.1,
 
         });
     }
@@ -225,8 +238,8 @@ class Learn extends React.Component {
                             msg = <span>🎉 <span
                                 className={"font-heavy"}>You've just learned the {this.props.root_taxon_name} of {this.props.region_name}</span></span>
                             next_button = <a href={window.location}>
-                                <div id={'next'} className={"center"}>
-                                    <button className={'main happypath'}>Start over?<br/></button>
+                                <div className={"center"}>
+                                    <button onClick={this.reload} className={'main'}>Start over?<br/></button>
                                 </div>
                             </a>;
                         } else {
@@ -267,6 +280,8 @@ class Learn extends React.Component {
             console.log(hide_arrows_class);
             return (
                 <div id={"learn"}>
+                    {/*<Masteredlist mastered={this.state.mastered_set}></Masteredlist>*/}
+                    <Masteredlist mastered={this.state.mastered_set}></Masteredlist>
                     <div id='progbar_container' className={'center'}>
                         {progbars}
                         <Tippy content="These bars show your progress on the 6 species you are currently learning"
@@ -286,7 +301,7 @@ class Learn extends React.Component {
                     <div className={'two-col'}>
 
                         <div onClick={function () {
-                            this.answer(false)
+                            this.answer(true)
                         }.bind(this)}>
                             <div className={'center'}>
                                 <button title={'Left arrow key'} disabled={this.state.mode == "answered"}

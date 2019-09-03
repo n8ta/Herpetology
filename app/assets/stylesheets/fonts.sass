@@ -39,24 +39,42 @@ html
 
 
 #logo
+  *
+    font-size: 4rem
+
   a:not(#logo_anchor)
     color: $mid-green
+
   a:hover
-    color: rgb(210,210,210)
+    color: rgb(210, 210, 210)
+
   a:active
     color: white
 
 #breadcrumb
   text-align: center
-  *, a
+
+  *:not(.dropdown_link), a:not(.dropdown_link)
     font-size: 2.5rem
-  .subhead
-    font-size: .8em
-    margin-left: .2em
+
+
+.dropdown_link
+  font-family: bd-book-italic
+  text-decoration: underline
+  font-size: 2rem
+  margin-left: .2em
+  text-underline: white
+  &:hover
+    text-color: $mid-green
+    svg
+      fill: $dark-green
+
+
+
 #flash
   text-align: center
 
-h1,h2,h3,h4
+h1, h2, h3, h4
   margin: 0
   padding: 0
   text-align: center
@@ -97,21 +115,26 @@ button.main
 a
   font-family: bd-smallcap-book
   color: white
+
   &:hover
     color: $darker-green
+
   &:active
     color: $brown
+
   &.main
     font-size: 2.5rem
 
 .scoreboard
   margin-bottom: 2rem
   text-align: center
+
   .rank
     //font-family: serif
     //text-decoration: underline
     //font-size: 2.5rem
     margin-right: 2rem
+
   .score
     color: white
 
@@ -119,10 +142,13 @@ a
 #menu
   *
     color: white
+
   a
     color: white
+
     &:hover
       color: $light-green
+
     &:active
       color: $mid-green
 
