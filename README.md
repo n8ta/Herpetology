@@ -1,18 +1,21 @@
 # README
-HerpID is a WIP tool to teach people to identify herps based on their photos.
+HerpetologyPro is a WIP tool to teach people to identify herps based on their photos.
 
 I aim to make this a largely crowd sourced project with users uploading their own photos and 
-contributing to the pages on each species. The live version is hosted @ herpid.n8ta.com
+contributing to the pages on each species. The live version is hosted @ [herpetology.pro](herpetology.pro)
 when ready for launch. Get in touch with me if you are interested in contributing to this project. Or feel free to submit a PR.
 
 # Conventions
-- Code should use specie vs species to differentiate the plural. Same for genus vs genera etc.
+- Code should use specie vs species to differentiate the plural, I know that's it's not technically correct but rails heavily relies on singular/plural. Same for genus vs genera etc.
 - When variables are in an order use next and prev as prefixes.
 - Data is plural, datum is singular
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Learning mode persistent data
+- Learning mode signup prompt after a few questions (like comp mode)
+- Competitive mode tooltips
+- Learning mode tooltips
+- Learning mode persistent data with local storage
 - Learning mode reports
 - Messaging
 - Quiz on venomous as well as name
