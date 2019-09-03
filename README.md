@@ -2,7 +2,7 @@
 HerpetologyPro is a WIP tool to teach people to identify herps based on their photos.
 
 I aim to make this a largely crowd sourced project with users uploading their own photos and 
-contributing to the pages on each species. The live version is hosted @ [herpetology.pro](herpetology.pro)
+contributing to the pages on each species. The live version is hosted @ [herpetology.pro](https://herpetology.pro)
 when ready for launch. Get in touch with me if you are interested in contributing to this project. Or feel free to submit a PR.
 
 # Conventions
