@@ -16,7 +16,6 @@ class Signup extends React.Component {
             password_error: '',
             username_touched: false,
         };
-        console.log(auth_token);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleUsername = this.handleUsername.bind(this);
@@ -24,6 +23,7 @@ class Signup extends React.Component {
     }
 
     handleSubmit() {
+        ga('send', 'event', 'compete', 'signup', 'true');
         Cookies.set("asked_about_signup", true, {expires: 365})
     }
 
@@ -106,7 +106,6 @@ class Signup extends React.Component {
     }
 
     handleChange() {
-        console.log('handling change');
         let email = document.getElementById('user_email');
         let username = document.getElementById('user_username');
         let user_password = document.getElementById('user_password');
@@ -124,11 +123,9 @@ class Signup extends React.Component {
         if ((username.value == "") && (this.state.username_touched == true)) {
             username_valid = '';
             username_error = 'Enter a username';
-            console.log('set from handler');
         } else if (username.value == "") {
             username_valid = '';
             username_error = '';
-            console.log('set from handler');
         }
 
         if ((user_password.value != '') && (user_password_confirmation.value != '') && (user_password.value != user_password_confirmation.value)) {
@@ -148,9 +145,7 @@ class Signup extends React.Component {
 
         if ((this.state.email_valid == "valid") && (this.state.username_valid == "valid") && (this.state.password_valid == "valid")) {
             overall_state = 'ready';
-            console.log('ready');
         } else {
-            console.log('not ready');
             overall_state = '';
         }
 

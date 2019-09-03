@@ -48,13 +48,15 @@ body
     a
       margin: 0
       padding: 0
-    margin-left: 2rem
+    margin-left: 1rem
     margin-right: 2rem
   display: flex
   justify-content: center
   z-index: 5
   #herpID
     color: $light-green
+    @media (width < $breakpoint)
+      display: none
   background-color: $dark-green
   text-align: center
   #info
@@ -64,7 +66,7 @@ body
     text-decoration-style: unset
   a
     text-decoration: none
-  a.right_of_logo
+  .right_of_logo
     margin-top: .5rem
   h1
     margin-bottom: -1rem
@@ -136,7 +138,8 @@ body
   background-color: $darker-green
   #world
     height: 2.5rem
-    fill: white
+    *
+      fill: white !important
   #world:hover
       fill: $light-green
   &,h2, a

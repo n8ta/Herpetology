@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>HerpetologyPro | <%= yield :title %></title>
+  <title>HerpPro | <%= yield :title %></title>
   <meta name="description" value="HerpID teaches people to identify reptiles and amphibians">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= csrf_meta_tags %>
@@ -27,7 +27,9 @@
     <% else %>
       <%= react_component("Menubutton") %>
       <a id='logo_anchor' href="/"><h1>Herpetology<span id="herpID">Pro</span></h1></a>
-      <%= link_to 'Sign In/Up', '/users/sign_up', class: 'right_of_logo' %>
+      <%= link_to '/users/sign_up', class: 'right_of_logo' do %>
+      <%= render :partial => 'statics/login' %>
+      <% end %>
     <% end %>
   </div>
   <div id="menu" class="center drop_down_menu">
@@ -46,7 +48,7 @@
           <% end %></h4></li>
       <% end %>
       <li>
-        <h4><%= link_to "https://github.com/n8ta/HerpID", target: '_blank' do %>HerpID on Github
+        <h4><%= link_to "https://github.com/n8ta/HerpID", target: '_blank' do %>HerpPro on Github
           <% end %></h4><br/>
         <a class="github-button" href="https://github.com/n8ta/herpid/issues" data-icon="octicon-issue-opened" data-size="large" data-show-count="true" aria-label="Issue n8ta/herpid on GitHub">Issues</a><br/>
         <a class="github-button" href="https://github.com/n8ta/herpID" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star n8ta/herpID on GitHub">Star</a>

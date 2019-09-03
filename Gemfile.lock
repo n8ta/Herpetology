@@ -153,6 +153,9 @@ GEM
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
+    passenger (6.0.2)
+      rack
+      rake (>= 0.8.1)
     public_suffix (3.1.1)
     puma (4.1.0)
       nio4r (~> 2.0)
@@ -271,6 +274,7 @@ DEPENDENCIES
   lograge
   mysql2
   nokogiri
+  passenger
   puma
   rails (~> 5.2.3)
   react-rails

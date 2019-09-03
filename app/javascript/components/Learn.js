@@ -119,7 +119,7 @@ class Learn extends React.Component {
 
         let reordered = this.state.working_set;
 
-        if (this.state.current.score >= 0.1) {
+        if (this.state.current.score >= 0.75) {
             // You just mastered the current one!
             if (this.state.pending_set.length > 0) {
                 // Pop of the pending set and put it on the working set
@@ -195,7 +195,7 @@ class Learn extends React.Component {
             mode: "answered", clicked_left: clicked_left,
             left_class: this.state.left_is_correct ? "correct" : "",
             right_class: this.state.left_is_correct ? "" : "correct",
-            mastered: current.score >= 0.1,
+            mastered: current.score >= 0.75,
 
         });
     }

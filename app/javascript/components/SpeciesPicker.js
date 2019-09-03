@@ -104,6 +104,11 @@ class SpeciesPicker extends React.Component {
         image.src = image_path;
     }
 
+    cancel_signup() {
+        ga('send', 'event', 'compete', 'signup', 'false');
+        this.next()
+    }
+
     next() {
 
         if (this.state.asked_about_signup == false && this.state.iterations == 6) {
