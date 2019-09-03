@@ -66,6 +66,7 @@ class Learn extends React.Component {
         };
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         let photos = [];
+        let num_loaded_taxons = 0;
         for (let i = 0; i < txns.length; i++) {
             let num_preloaded = 0;
 
@@ -83,17 +84,20 @@ class Learn extends React.Component {
                     let url = result[j]['url'];
                     if (num_preloaded < 3) {
                         this.preload(url);
-                        num_preloaded = num_preloaded + 2;
+                        num_preloaded = num_preloaded + 1;
                     }
 
                     txns[i].photos.push(url);
-                    if (this.props.taxons.length - (this.state.loaded_taxons + 1) < 1) {
+                    if (this.props.taxons.length - (num_loaded_taxons+1) < 1) {
                         this.new_question();
                         this.setState({mode: "ready"});
                     }
                 }
-                this.setState({loaded_taxons: this.state.loaded_taxons + 1});
+                num_loaded_taxons = num_loaded_taxons + 1;
+                this.setState({loaded_taxons: num_loaded_taxons});
             });
+
+
         }
         this.state.taxons = txns;
 
@@ -149,9 +153,6 @@ class Learn extends React.Component {
         while (incorrect_answer.id == correct_answer.id) {
             incorrect_answer = this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)];
         }
-
-
-        console.log(correct_answer.photos.length);
         let correct_photo = correct_answer.photos[Math.floor(Math.random() * correct_answer.photos.length)];
         let incorrect_photo = incorrect_answer.photos[Math.floor(Math.random() * incorrect_answer.photos.length)];
         this.setState({
@@ -277,7 +278,6 @@ class Learn extends React.Component {
                              sci_name={taxon.name} common_name={taxon.common_name}></Progressbar>
             );
 
-            console.log(hide_arrows_class);
             return (
                 <div id={"learn"}>
                     {/*<Masteredlist mastered={this.state.mastered_set}></Masteredlist>*/}
