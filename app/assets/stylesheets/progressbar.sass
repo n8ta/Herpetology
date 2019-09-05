@@ -1,8 +1,9 @@
 @import "vars"
 
 .progress-bar
+  transition: border 1s ease-in
   width: 9rem
-  border-radius: .3rem
+  border-radius: .5rem
   height: 2rem
   background-color: $darker-green
   display: inline-block
@@ -10,6 +11,7 @@
   margin-right: .5rem
   position: relative
   .progress-bar-inner
+    transition: width .1s ease-in
     background-color: $brown
     height: 100%
     border-radius: .5rem
@@ -20,3 +22,8 @@
     color: $light-green
     position: absolute
     font-family: bd-old-book
+.progress-bar.wide
+  width: 18rem
+.progress-bar.flash
+  border: 5px solid white
+  border-radius: 5px

@@ -46,11 +46,11 @@ class Masteredlist extends React.Component {
             let txn = this.props.mastered[i];
             mastered_items.push(<li key={i}>
                 <img src={txn.photos[0]}/>
-                <div><Name commonName={txn.common_name} sciName={txn.name}/> {txn.correct}/{txn.seen}</div>
+                <div><Name commonName={txn.common_name} sciName={txn.name}/> {txn.correct}/{txn.seen}<br/><button onClick={() => this.props.reset_func(txn.id)}>Reset this taxon</button></div>
             </li>)
         }
         let msg = "";
-        let inner_msg = <li>I haven't yet written the code to store this data so if you reload the page you will start over</li>;
+        let inner_msg = <li></li>;
         if (this.props.mastered.length == 0) {
             inner_msg = <li>None yet!</li>
         }
@@ -80,6 +80,7 @@ class Masteredlist extends React.Component {
 
 Masteredlist.propTypes = {
     mastered: PropTypes.array,
+    reset_func: PropTypes.func,
 };
 
 

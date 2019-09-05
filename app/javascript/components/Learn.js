@@ -2,17 +2,24 @@ import React from "react"
 import PropTypes from "prop-types"
 import Zoom from "./Zoom";
 import Name from "./Name";
-import Progressbar from "./Progressbar";
+import Speciesprogressbar from "./Speciesprogressbar";
 import Info from "./Info";
 import Tippy from "@tippy.js/react";
 import Masteredlist from "./Masteredlist";
+import Progressbar from "./Progressbar";
 
 class Learn extends React.Component {
 
 
     reload() {
+        for (let i = 0; i < this.props.taxons.length; i++) {
+            console.log('rm');
+            window.localStorage.removeItem('taxon-' + this.props.taxons[i].id)
+        }
+        alert('a');
         location.reload();
     }
+
     preload(image_path) {
         let image = new Image();
         image.onload;
@@ -44,6 +51,7 @@ class Learn extends React.Component {
             txns[i].score = 0.0; // rolling average
             txns[i].photos = [];
         }
+
         this.state = {
             mode: "loading",
             complete_taxons: [],
@@ -57,17 +65,29 @@ class Learn extends React.Component {
             incorrect_answer: undefined,
             current: this.props.taxons[0],
             correct: undefined,
-            working_set: this.props.taxons.slice(1, 6), // TODO : Local storage
-            pending_set: this.props.taxons.slice(6, 100),
+            working_set: [],
+            pending_set: [],
             mastered_set: [],
             mastered: false, // Last species was mastered
             done: false,
-
         };
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         let photos = [];
         let num_loaded_taxons = 0;
+
+        let pending_set = []; // Split txns in to these three arrays
+        let working_set = [];
+        let mastered_set = [];
+
         for (let i = 0; i < txns.length; i++) {
+            let stored_txn = window.localStorage.getItem('taxon-' + txns[i].id);
+            if (stored_txn != undefined) {
+                stored_txn = JSON.parse(stored_txn);
+                txns[i].score = stored_txn.score;
+                txns[i].seen = stored_txn.seen;
+                txns[i].correct = stored_txn.correct;
+            }
+
             let num_preloaded = 0;
 
             fetch("/taxons/" + txns[i].id + "/photos/plenty", {
@@ -80,6 +100,7 @@ class Learn extends React.Component {
                 },
                 credentials: 'same-origin',
             }).then(res => res.json()).then((result) => {
+                // Setup photos
                 for (let j = 0; j < result.length; j++) {
                     let url = result[j]['url'];
                     if (num_preloaded < 3) {
@@ -88,15 +109,44 @@ class Learn extends React.Component {
                     }
 
                     txns[i].photos.push(url);
-                    if (this.props.taxons.length - (num_loaded_taxons+1) < 1) {
-                        this.new_question();
-                        this.setState({mode: "ready"});
+                }
+                // Check if we're done loading all taxons, if so setup working/mastered/and pending sets
+                if ((this.props.taxons.length - (num_loaded_taxons + 1)) < 1) {
+                    // Done loading taxons
+                    for (let k = 0; k < txns.length; k++) {
+                        if (txns[k].score >= this.props.mastery_cutoff_score) {
+                            console.log('mastered', txns[k]);
+                            mastered_set.push(txns[k])
+                        } else {
+                            if (working_set.length < 6) {
+                                working_set.push(txns[k])
+                            } else {
+                                pending_set.push(txns[k])
+                            }
+                        }
+                    }
+                    let current = working_set.pop();
+
+                    if (working_set.length == 0) {
+                        this.reload()
+                    } else {
+
+
+                        this.setState({
+                            mode: "ready",
+                            current: current,
+                            pending_set: pending_set,
+                            working_set: working_set,
+                            mastered_set: mastered_set
+                        }, function () {
+                            this.new_question(true)
+                        });
+
                     }
                 }
                 num_loaded_taxons = num_loaded_taxons + 1;
                 this.setState({loaded_taxons: num_loaded_taxons});
             });
-
 
         }
         this.state.taxons = txns;
@@ -105,17 +155,18 @@ class Learn extends React.Component {
         this.current = this.current.bind(this);
         this.new_question = this.new_question.bind(this);
         this.keydown = this.keydown.bind(this);
-
+        this.reset_mastered = this.reset_mastered.bind(this);
     }
 
     current(which) {
         return this.state.current
     }
 
-    new_question() {
-        if (!(this.state.mode == "answered" || this.state.mode == "loading")) {
+    new_question(first_time) {
+        if (this.state.mode == "loading" && !first_time) {
             return
         }
+
 
         let left_correct = Math.random() > .5;
 
@@ -123,7 +174,8 @@ class Learn extends React.Component {
 
         let reordered = this.state.working_set;
 
-        if (this.state.current.score >= 0.75) {
+
+        if (this.state.current.score >= this.props.mastery_cutoff_score) {
             // You just mastered the current one!
             if (this.state.pending_set.length > 0) {
                 // Pop of the pending set and put it on the working set
@@ -134,8 +186,11 @@ class Learn extends React.Component {
             } else {
 
                 // Pending set is empty, we're done her!
-                ga('send', 'event', 'learn', 'done', 'true');
-                this.setState({done: true})
+                if (this.state.working_set.length == 0) {
+                    ga('send', 'event', 'learn', 'done', 'true');
+                    this.setState({done: true})
+                }
+
             }
             // We've mastered add it to the mastered set
             let old_mastered = this.state.mastered_set;
@@ -146,9 +201,7 @@ class Learn extends React.Component {
             reordered.splice(place, 0, this.state.current);
         }
 
-        // new correct answer
         let correct_answer = reordered.pop();
-        // new incorrect
         let incorrect_answer = this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)];
         while (incorrect_answer.id == correct_answer.id) {
             incorrect_answer = this.state.taxons[Math.floor(Math.random() * this.state.taxons.length)];
@@ -189,25 +242,64 @@ class Learn extends React.Component {
             current.score = current.score * this.props.factor;
         }
         current.seen += 1;
-        this.state.taxons[0].seen += 1;
+        window.localStorage.setItem('taxon-' + current.id, JSON.stringify({
+            score: current.score,
+            seen: current.seen,
+            correct: current.correct,
+            version: 1
+        }));
+
+
         this.setState({
             correct: correct,
             current: current,
             mode: "answered", clicked_left: clicked_left,
             left_class: this.state.left_is_correct ? "correct" : "",
             right_class: this.state.left_is_correct ? "" : "correct",
-            mastered: current.score >= 0.75,
+            mastered: current.score >= this.props.mastery_cutoff_score,
 
         });
     }
 
 
+    reset_mastered = (taxon_id) => {
+
+        // Called to reset a taxon
+        let mastered_set = this.state.mastered_set;
+        let working_set = this.state.working_set;
+        let pending_set = this.state.pending_set;
+        for (let i = 0; i < mastered_set.length; i++) {
+            let txn = mastered_set[i];
+            if (txn.id == taxon_id) {
+                let mastered = mastered_set.splice(i, 1);
+                mastered = mastered[0];
+                mastered.seen = 0;
+                mastered.correct = 0;
+                mastered.score = 0;
+                window.localStorage.setItem('taxon-' + mastered.id, JSON.stringify({
+                    score: 0,
+                    seen: 0,
+                    correct: 0,
+                    version: 1
+                }));
+                if (working_set.size < 6) {
+                    working_set.push(mastered);
+                } else {
+                    pending_set.push(mastered);
+                }
+
+            }
+        }
+        this.setState({mastered_set: mastered_set, working_set: working_set, pending_set: pending_set})
+    };
+
     render() {
-        if (this.state.mode == "loading") {
+        if ((this.state.mode == "loading") && (this.state.done != true)) {
             return (<div id={'learn'}>
                 <h3 className="center">Loading...</h3>
                 <div className={'center'}>
-                    <progress max={1.0} value={this.state.loaded_taxons / this.state.num_taxons}></progress>
+                    <Progressbar wide={true} width={100 * this.state.loaded_taxons / this.state.num_taxons}
+                                 msg={this.state.loaded_taxons + "/" + this.state.num_taxons}/>
                 </div>
             </div>)
         } else {
@@ -226,7 +318,7 @@ class Learn extends React.Component {
                 zoom_left = zoom_right;
                 zoom_right = tmp;
             }
-            if (this.state.mode == "answered") {
+            if (this.state.mode == "answered" || (this.state.mode == "answered" )) {
 
                 next_button = <div title='You can use the up arrow as well' className={"center"}>
                     <button onClick={this.new_question}>Next (▲) <br/></button>
@@ -236,13 +328,17 @@ class Learn extends React.Component {
 
                     if (this.state.mastered) {
                         if (this.state.done) {
-                            msg = <span>🎉 <span
-                                className={"font-heavy"}>You've just learned the {this.props.root_taxon_name} of {this.props.region_name}</span></span>
-                            next_button = <a href={window.location}>
-                                <div className={"center"}>
-                                    <button onClick={this.reload} className={'main'}>Start over?<br/></button>
+                            return (
+                                <div>
+                                <span>🎉
+                                    <span className={"font-heavy"}>You've just learned the {this.props.root_taxon_name} of {this.props.region_name}</span></span>
+                                    <a href={window.location}>
+                                        <div className={"center"}>
+                                            <button onClick={this.reload} className={'main'}>Start over?<br/></button>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>;
+                            )
                         } else {
                             msg = <span>🎉 <span
                                 className={"font-heavy"}>Mastered</span> 🎉 <br/>You just mastered the <Name
@@ -273,15 +369,20 @@ class Learn extends React.Component {
             });
 
             progbars = progbars.map((taxon) =>
-                <Progressbar key={Math.random()} score={taxon.score * 1.334}
-                             seen={taxon.seen} correct={taxon.correct}
-                             sci_name={taxon.name} common_name={taxon.common_name}></Progressbar>
+                <Speciesprogressbar
+                    key={Math.random()} score={taxon.score * 1.334}
+                    seen={taxon.seen} correct={taxon.correct}
+                    sci_name={taxon.name} common_name={taxon.common_name}></Speciesprogressbar>
             );
 
             return (
                 <div id={"learn"}>
-                    {/*<Masteredlist mastered={this.state.mastered_set}></Masteredlist>*/}
-                    <Masteredlist mastered={this.state.mastered_set}></Masteredlist>
+                    <Masteredlist reset_func={this.reset_mastered.bind(this)}
+                                  mastered={this.state.mastered_set}></Masteredlist>
+                    <div className="center main_progbar_holder">
+                        <Progressbar wide={true} width={100 * this.state.mastered_set.length / this.state.taxons.length}
+                                     msg={"Overall Progress " + this.state.mastered_set.length + "/" + this.state.taxons.length}></Progressbar>
+                    </div>
                     <div id='progbar_container' className={'center'}>
                         {progbars}
                         <Tippy content="These bars show your progress on the 6 species you are currently learning"
@@ -337,6 +438,7 @@ Learn.propTypes = {
     factor: PropTypes.number,
     region_name: PropTypes.string,
     root_taxon_name: PropTypes.string,
+    mastery_cutoff_score: PropTypes.number,
 };
 
 
