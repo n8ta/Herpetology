@@ -23,7 +23,7 @@ class Speciesprogressbar extends React.Component {
         return (
             <Tippy content={content} placement={'bottom'}>
                 <span>
-                <Progressbar width={this.props.score*100} msg={this.props.score*100+"%"}/>
+                <Progressbar width={this.props.score*100} msg={(this.props.score*100).toFixed(0)+"%"}/>
                 </span>
             </Tippy>
         );

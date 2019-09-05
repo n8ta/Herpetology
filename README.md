@@ -13,10 +13,8 @@ when ready for launch. Get in touch with me if you are interested in contributin
 
 # Todo:
 - Google/reddit/fb/myspace/whatever social sign ouath
-- Learning mode signup prompt after a few questions (like comp mode)
 - Competitive mode tooltips
 - Learning mode tooltips
-- Learning mode persistent data with local storage
 - Learning mode reports
 - Messaging
 - Quiz on venomous as well as name
@@ -30,6 +28,8 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Learn to spell venemous...
 
 # Done:
+- Learning mode signup prompt after a few questions (like comp mode) (September 5, 2019)
+- Learning mode persistent data with local storage (September 4, 2019)
 - Learning Mode (September 1, 2019)
 - Make sure we have accurate data on venomous species, this may be possible to do by hand (reports will help too) (July 10, 2019)
 - Add "Dead herp" to report options (July 10, 2019)

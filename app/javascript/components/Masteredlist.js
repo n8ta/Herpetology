@@ -1,8 +1,8 @@
 import React from "react"
 import Chevron from "./Chevron";
-import Name from "./Name";
-import Zoom from "./Zoom";
+import Taxon from "./Taxon";
 import PropTypes from "prop-types"
+import Check from "./svgs/Check";
 
 
 class Masteredlist extends React.Component {
@@ -44,10 +44,9 @@ class Masteredlist extends React.Component {
         let mastered_items = [];
         for (let i = 0; i < this.props.mastered.length; i++) {
             let txn = this.props.mastered[i];
-            mastered_items.push(<li key={i}>
-                <img src={txn.photos[0]}/>
-                <div><Name commonName={txn.common_name} sciName={txn.name}/> {txn.correct}/{txn.seen}<br/><button onClick={() => this.props.reset_func(txn.id)}>Reset this taxon</button></div>
-            </li>)
+            mastered_items.push(
+                <Taxon key={txn.id} taxon={txn} reset_func={this.props.reset_func}></Taxon>
+            )
         }
         let msg = "";
         let inner_msg = <li></li>;
@@ -66,10 +65,10 @@ class Masteredlist extends React.Component {
         return (
             <div id={'mastered_list_wrap'}>
                 <div className={'center'}>
-                    <a className={'dropdown_link '+active} onClick={this.toggle.bind(this)}>{msg} <Chevron/></a>
+                    <a className={'dropdown_link ' + active} onClick={this.toggle.bind(this)}>{msg} <Chevron/></a>
                 </div>
                 <div id={'mastered_list'} className={'drop_down_menu'}>
-                        <ul id={'mastered_list_ul'}>{mastered_items}{inner_msg}</ul>
+                    <ul id={'mastered_list_ul'}>{mastered_items}{inner_msg}</ul>
 
                 </div>
             </div>

@@ -4,6 +4,7 @@ import Zoom from "./Zoom";
 import Name from "./Name";
 import Speciesprogressbar from "./Speciesprogressbar";
 import Info from "./Info";
+import Signup from "./Signup";
 import Tippy from "@tippy.js/react";
 import Masteredlist from "./Masteredlist";
 import Progressbar from "./Progressbar";
@@ -13,8 +14,7 @@ class Learn extends React.Component {
 
     reload() {
         for (let i = 0; i < this.props.taxons.length; i++) {
-            console.log('rm');
-            window.localStorage.removeItem('taxon-' + this.props.taxons[i].id)
+            window.localStorage.removeItem(this.props.region_id + '-' + this.props.taxons[i].id)
         }
         alert('a');
         location.reload();
@@ -70,6 +70,7 @@ class Learn extends React.Component {
             mastered_set: [],
             mastered: false, // Last species was mastered
             done: false,
+            questions_completed: 0,
         };
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         let photos = [];
@@ -80,7 +81,7 @@ class Learn extends React.Component {
         let mastered_set = [];
 
         for (let i = 0; i < txns.length; i++) {
-            let stored_txn = window.localStorage.getItem('taxon-' + txns[i].id);
+            let stored_txn = window.localStorage.getItem(this.props.region_id + '-' + txns[i].id);
             if (stored_txn != undefined) {
                 stored_txn = JSON.parse(stored_txn);
                 txns[i].score = stored_txn.score;
@@ -115,7 +116,6 @@ class Learn extends React.Component {
                     // Done loading taxons
                     for (let k = 0; k < txns.length; k++) {
                         if (txns[k].score >= this.props.mastery_cutoff_score) {
-                            console.log('mastered', txns[k]);
                             mastered_set.push(txns[k])
                         } else {
                             if (working_set.length < 6) {
@@ -162,8 +162,19 @@ class Learn extends React.Component {
         return this.state.current
     }
 
+    cancel_signup() {
+        this.setState({mode: "answered"}, this.new_question);
+    }
+
     new_question(first_time) {
         if (this.state.mode == "loading" && !first_time) {
+            return
+        }
+
+
+        if ((this.state.questions_completed == 5) && (!Cookies.get("asked_about_signup"))) {
+            this.setState({mode: "signup"});
+            Cookies.set("asked_about_signup", true, {expires: 1});
             return
         }
 
@@ -227,6 +238,7 @@ class Learn extends React.Component {
         if (this.state.mode == "answered") {
             return
         }
+
         // If they clicked left and left is correct, they got it right
         // If they click right and right is correct, they got it right
         // This looks more complex than it is
@@ -242,7 +254,7 @@ class Learn extends React.Component {
             current.score = current.score * this.props.factor;
         }
         current.seen += 1;
-        window.localStorage.setItem('taxon-' + current.id, JSON.stringify({
+        window.localStorage.setItem(this.props.region_id + '-' + current.id, JSON.stringify({
             score: current.score,
             seen: current.seen,
             correct: current.correct,
@@ -257,12 +269,14 @@ class Learn extends React.Component {
             left_class: this.state.left_is_correct ? "correct" : "",
             right_class: this.state.left_is_correct ? "" : "correct",
             mastered: current.score >= this.props.mastery_cutoff_score,
+            questions_completed: this.state.questions_completed + 1,
 
         });
     }
 
+    reset_mastered = (taxon) => {
 
-    reset_mastered = (taxon_id) => {
+        let taxon_id = taxon.id;
 
         // Called to reset a taxon
         let mastered_set = this.state.mastered_set;
@@ -276,7 +290,7 @@ class Learn extends React.Component {
                 mastered.seen = 0;
                 mastered.correct = 0;
                 mastered.score = 0;
-                window.localStorage.setItem('taxon-' + mastered.id, JSON.stringify({
+                window.localStorage.setItem(this.props.region_id + '-' + mastered.id, JSON.stringify({
                     score: 0,
                     seen: 0,
                     correct: 0,
@@ -294,7 +308,19 @@ class Learn extends React.Component {
     };
 
     render() {
-        if ((this.state.mode == "loading") && (this.state.done != true)) {
+        if (this.state.mode == "signup") {
+            return (
+                <div>
+                    <div>
+                        <Signup></Signup>
+                    </div>
+                    <div className={'center'}>
+                        <button onClick={this.cancel_signup.bind(this)}>No thanks!</button>
+                    </div>
+                </div>
+
+            )
+        } else if ((this.state.mode == "loading") && (this.state.done != true)) {
             return (<div id={'learn'}>
                 <h3 className="center">Loading...</h3>
                 <div className={'center'}>
@@ -318,7 +344,7 @@ class Learn extends React.Component {
                 zoom_left = zoom_right;
                 zoom_right = tmp;
             }
-            if (this.state.mode == "answered" || (this.state.mode == "answered" )) {
+            if (this.state.mode == "answered" || (this.state.mode == "answered")) {
 
                 next_button = <div title='You can use the up arrow as well' className={"center"}>
                     <button onClick={this.new_question}>Next (▲) <br/></button>
@@ -331,7 +357,8 @@ class Learn extends React.Component {
                             return (
                                 <div>
                                 <span>🎉
-                                    <span className={"font-heavy"}>You've just learned the {this.props.root_taxon_name} of {this.props.region_name}</span></span>
+                                    <span
+                                        className={"font-heavy"}>You've just learned the {this.props.root_taxon_name} of {this.props.region_name}</span></span>
                                     <a href={window.location}>
                                         <div className={"center"}>
                                             <button onClick={this.reload} className={'main'}>Start over?<br/></button>
@@ -395,6 +422,8 @@ class Learn extends React.Component {
 
                     <div className={"text-center lead"}>
                         <div className={'lead_text'}>{msg}</div>
+                    </div>
+                    <div className={'center'}>
                         {next_button}
                     </div>
 
@@ -437,6 +466,7 @@ Learn.propTypes = {
     working_size: PropTypes.number,
     factor: PropTypes.number,
     region_name: PropTypes.string,
+    region_id: PropTypes.number,
     root_taxon_name: PropTypes.string,
     mastery_cutoff_score: PropTypes.number,
 };
