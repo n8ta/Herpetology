@@ -28,8 +28,6 @@
     <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s %>
       species</span>
 
-
-
     <% if @taxon.valid_regions.where(region: @region).any? %>
       <%= react_component('Subregionbutton') %>
     <% end %>

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-  devise_for :users, :controllers => {:registrations => 'users/registrations'}
+  devise_for :users, :controllers => {registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks'}
   devise_scope :user do
     post '/users/email_available/:email' => 'users/registrations#email_available'
     post '/users/username_available/:username' => 'users/registrations#username_available'
@@ -9,9 +9,14 @@ Rails.application.routes.draw do
     post '/users/hide_dead' => 'users/sessions#hide_dead', as: 'hide_dead'
     get '/users/show_dead' => 'users/sessions#show_dead'
     get '/users/hide_dead' => 'users/sessions#hide_dead'
+    get '/users/set_username' => 'social#set_username', as: "set_username"
   end
 
   get '/photos/:photo_id/report' => 'reports#new', as: 'new_photo_report'
+
+
+
+  post '/google_token' => 'social#google_token', as: "google_token"
 
 
   resources :user_taxon_data, only: [:show]

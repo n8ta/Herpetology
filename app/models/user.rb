@@ -1,12 +1,24 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # :confirmable, :lockable, :timeoutable, :trackable and
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
 
   validates :email, presence: true
-  validates :encrypted_password, presence: true
 
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    firstname = data[:first_name]
+    lastname = data[:last_name]
+    email = data[:email]
+
+    user = User.find_by(email: email, google_user: true)
+    return user if user
+
+    user = User.create(email: email, google_user: true, username: nil, password: SecureRandom.hex(30)) ## This is hacky as fuck and I'm well aware
+    user.save!
+    return user
+  end
 
   def approved_reports
     Report.all_reports.select{ |rep| rep.created_by_id == self.id && rep.approved == true }

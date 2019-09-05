@@ -1,4 +1,5 @@
 import React from "react"
+import Googlebutton from "./Googlebutton";
 import PropTypes from "prop-types"
 
 class Signup extends React.Component {
@@ -174,9 +175,15 @@ class Signup extends React.Component {
                     <div className={'center'}>
                         <p>Creating an account puts you on the scoreboard and lets us tailor the species you see to show you those you need to practice more.</p>
                     </div>
+
+
+                    <Googlebutton/>
+
                     <div className={'center'}>
                         <form onKeyUp={this.handleChange} className="new_user" id="sign_up_new_user" action="/users"
                               acceptCharset="UTF-8" method="post">
+
+
 
                             <input name="utf8" type="hidden" value="✓"/>
                             <input type="hidden" name="authenticity_token" value={this.state.csrf}/>

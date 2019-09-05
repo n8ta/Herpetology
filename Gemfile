@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem 'omniauth-google-oauth2'
 gem 'passenger'
 gem 'jquery-rails'
 gem 'fog-aws'

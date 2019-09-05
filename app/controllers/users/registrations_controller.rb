@@ -7,18 +7,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def username_available
     username = Base64.decode64(params[:username])
     if User.find_by(username: username).nil?
-      render :json => {valid: true}
+      return render :json => {valid: true}
     else
-      render :json => {valid: false}
+      return render :json => {valid: false}
     end
   end
 
   def email_available
     email = Base64.decode64(params[:email])
     if User.find_by(email: email).nil?
-      render :json => {valid: true}
+      return render :json => {valid: true}
     else
-      render :json => {valid: false}
+      return render :json => {valid: false}
     end
 
   end
