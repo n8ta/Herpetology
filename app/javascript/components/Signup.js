@@ -176,8 +176,9 @@ class Signup extends React.Component {
                         <p>Creating an account puts you on the scoreboard and lets us tailor the species you see to show you those you need to practice more.</p>
                     </div>
 
-
-                    <Googlebutton/>
+                    <div className={'center'}>
+                    <Googlebutton return_url={this.props.return_url}/>
+                    </div>
 
                     <div className={'center'}>
                         <form onKeyUp={this.handleChange} className="new_user" id="sign_up_new_user" action="/users"
@@ -244,6 +245,10 @@ class Signup extends React.Component {
 
         )
     }
+};
+
+Signup.propTypes = {
+    return_url: PropTypes.string,
 };
 
 export default Signup

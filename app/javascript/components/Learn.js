@@ -312,7 +312,7 @@ class Learn extends React.Component {
             return (
                 <div>
                     <div>
-                        <Signup></Signup>
+                        <Signup return_url={window.location.href}></Signup>
                     </div>
                     <div className={'center'}>
                         <button onClick={this.cancel_signup.bind(this)}>No thanks!</button>

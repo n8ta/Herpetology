@@ -1,9 +1,11 @@
-# README
-HerpetologyPro is a WIP tool to teach people to identify herps based on their photos.
+# Herpetology
+HerpetologyPro is a *beta* tool to teach people to identify herps based on their photos.
 
 I aim to make this a largely crowd sourced project with users uploading their own photos and 
 contributing to the pages on each species. The live version is hosted @ [herpetology.pro](https://herpetology.pro)
 when ready for launch. Get in touch with me if you are interested in contributing to this project. Or feel free to submit a PR.
+
+This project is an exercise in wheel building all forms, games, models, etc, except auth are homegrown.
 
 # Conventions
 - Code should use specie vs species to differentiate the plural, I know that's it's not technically correct but rails heavily relies on singular/plural. Same for genus vs genera etc.
@@ -12,7 +14,6 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Google/reddit/fb/myspace/whatever social sign ouath
 - Competitive mode tooltips
 - Learning mode tooltips
 - Learning mode reports
@@ -28,6 +29,7 @@ when ready for launch. Get in touch with me if you are interested in contributin
 - Learn to spell venemous...
 
 # Done:
+- Google/reddit/fb/myspace/whatever social sign ouath (September 5, 2019) Oh Ya!
 - Learning mode signup prompt after a few questions (like comp mode) (September 5, 2019)
 - Learning mode persistent data with local storage (September 4, 2019)
 - Learning Mode (September 1, 2019)

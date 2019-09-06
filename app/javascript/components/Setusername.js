@@ -9,14 +9,25 @@ class Setusername extends React.Component {
       csrf: auth_token,
       username_valid: '',
       username_error: '',
+      submit_disabled: true,
     };
     this.handleUsername = this.handleUsername.bind(this);
+  }
+
+  submit() {
+    if (this.state.submit_disabled) {return}
   }
 
   handleUsername() {
 
     let username = document.getElementById('user_username');
     let encoded = btoa(username.value);
+
+    if (username.value == "") {
+      this.setState({username_valid: "", username_error: "", username_class: '', submit_disabled: true});
+      return
+    }
+
     let auth_token = document.querySelector("meta[name='csrf-token']").content;
     fetch('/users/username_available/' + encoded, {
       method: 'POST',
@@ -31,9 +42,9 @@ class Setusername extends React.Component {
 
     }).then(res => res.json()).then((result) => {
       if (result.valid) {
-        this.setState({username_valid: "valid", username_error: "", username_class: ''})
+        this.setState({username_valid: "valid", username_error: "", username_class: '', submit_disabled: false})
       } else {
-        this.setState({username_valid: "invalid", username_error: "Username is taken", username_class: ''})
+        this.setState({username_valid: "invalid", username_error: "Username is taken", username_class: '', submit_disabled: true})
       }
     });
 
@@ -47,13 +58,13 @@ class Setusername extends React.Component {
 
   render() {
     return (
-        <div className={'center'}>
+        <div id='set_username' className={'center'}>
           <div id={''}>
             <div className={'center'}>
               <h2>Pick your username</h2>
             </div>
             <div className={'center'}>
-              <p>This will be visible to other users</p>
+              <em>This will be visible to other users</em>
             </div>
 
             <div className={'center'}>
@@ -72,8 +83,8 @@ class Setusername extends React.Component {
                          name="user[username]"
                          id="user_username"/>
                   <div className={this.state.username_class}></div>
-
                   <div className={'warning'}>{this.state.username_error}</div>
+                  <div className={'center'}><button onClick={this.submit.bind(this)} value="Confirm" disabled={this.state.submit_disabled}>Confirm</button></div>
                 </div>
               </form>
             </div>

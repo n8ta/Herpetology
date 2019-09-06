@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get '/users/show_dead' => 'users/sessions#show_dead'
     get '/users/hide_dead' => 'users/sessions#hide_dead'
     get '/users/set_username' => 'social#set_username', as: "set_username"
+    post '/users/set_username' => 'social#post_set_username', as: "post_set_username"
+    post '/users/set_return_url' => 'social#set_return_url', as: "set_return_url"
   end
 
   get '/photos/:photo_id/report' => 'reports#new', as: 'new_photo_report'

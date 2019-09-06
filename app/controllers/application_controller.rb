@@ -3,9 +3,11 @@ class ApplicationController < ActionController::Base
   before_action :create_username
 
   def create_username
-    path = request.path
-    if (path[0..24] == "/users/username_available")
+    controller = request.controller_class.to_s
+    if ((controller == "SocialController") || (controller == "Users::RegistrationsController"))
+      puts "SKIPPING"
     elsif (current_user && current_user.username.nil?)
+      puts "REDIRECTING TO SET USERNAME"
       return render 'social/set_username'
     end
   end
