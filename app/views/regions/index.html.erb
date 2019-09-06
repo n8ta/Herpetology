@@ -10,9 +10,4 @@
 <% end %>
 
 
-<h2>Pick your Region</h2>
-<ul id="pick_region">
-  <% @regions.each do |reg| %>
-    <li><%= link_to reg.name, taxon_region_path(@taxon, reg) %></li>
-  <% end %>
-</ul>
+<%= react_component "Regionpicker", {regions: @regions, taxon: @taxon} %>

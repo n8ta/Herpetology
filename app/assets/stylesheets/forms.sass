@@ -105,31 +105,31 @@ form
 
   label
     margin-top: 2.5rem
-  input
-    border: 0
-    border-radius: 1rem
-    padding: 1rem
-    color: white
-    background-color: $dark-green
+input
+  border: 0
+  border-radius: 1rem
+  padding: 1rem
+  color: white
+  background-color: $dark-green
 
-  input.valid
-    background-color: $blue
+input.valid
+  background-color: $blue
+  color: white
+input[type=submit]
+  margin-top: 2rem
+  width: unset
+  color: $light-green
+input[type=submit].ready
+  margin-top: 2rem
+  color: white
+  box-shadow: rgba(255,255,255,.3) .1rem .1rem 1rem, rgba(255,255,255,.3) -.1rem -.1rem 1rem, rgba(255,255,255,.3) -.1rem .1rem 1rem, rgba(255,255,255,.3) .1rem -.1rem 1rem
+  &:hover
+    background-color: $darker-green
+    box-shadow: rgba(255,255,255,.4) .1rem .1rem 1rem, rgba(255,255,255,.4) -.1rem -.1rem 1rem, rgba(255,255,255,.4) -.1rem .1rem 1rem, rgba(255,255,255,.4) .1rem -.1rem 1rem
+  &:active
+    background-color: $brown
     color: white
-  input[type=submit]
-    margin-top: 2rem
-    width: unset
-    color: $light-green
-  input[type=submit].ready
-    margin-top: 2rem
-    color: white
-    box-shadow: rgba(255,255,255,.3) .1rem .1rem 1rem, rgba(255,255,255,.3) -.1rem -.1rem 1rem, rgba(255,255,255,.3) -.1rem .1rem 1rem, rgba(255,255,255,.3) .1rem -.1rem 1rem
-    &:hover
-      background-color: $darker-green
-      box-shadow: rgba(255,255,255,.4) .1rem .1rem 1rem, rgba(255,255,255,.4) -.1rem -.1rem 1rem, rgba(255,255,255,.4) -.1rem .1rem 1rem, rgba(255,255,255,.4) .1rem -.1rem 1rem
-    &:active
-      background-color: $brown
-      color: white
-      box-shadow: rgba(255,255,255,.8) .1rem .1rem 1rem, rgba(255,255,255,.8) -.1rem -.1rem 1rem, rgba(255,255,255,.8) -.1rem .1rem 1rem, rgba(255,255,255,.8) .1rem -.1rem 1rem
+    box-shadow: rgba(255,255,255,.8) .1rem .1rem 1rem, rgba(255,255,255,.8) -.1rem -.1rem 1rem, rgba(255,255,255,.8) -.1rem .1rem 1rem, rgba(255,255,255,.8) .1rem -.1rem 1rem
 
   #report_suggestions
     a
