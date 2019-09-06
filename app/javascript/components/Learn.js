@@ -21,9 +21,9 @@ class Learn extends React.Component {
     }
 
     preload(image_path) {
-        let image = new Image();
-        image.onload;
-        image.src = image_path;
+        // let image = new Image();
+        // image.onload;
+        // image.src = image_path;
     }
 
     keydown(ev) {
