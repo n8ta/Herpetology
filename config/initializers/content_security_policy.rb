@@ -9,7 +9,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src    :self, :https, :data
   policy.img_src     :self, :https, "*"
   policy.object_src  :none
-  policy.script_src  :self, "unsafe-inline", "apis.google.com", "unpkg.com", "cdn.jsdelivr.net", "api.github.com", "www.google-analytics.com", "buttons.github.io", "www.googletagmanager.com"
+  policy.script_src  :self, :https, "unsafe-inline", "apis.google.com", "unpkg.com", "cdn.jsdelivr.net", "api.github.com", "www.google-analytics.com", "buttons.github.io", "www.googletagmanager.com"
   policy.style_src   :self, :https, "unsafe-inline"
   policy.connect_src :self, :https, "api.github.com"
   policy.frame_ancestors "none"
