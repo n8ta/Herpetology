@@ -44,8 +44,6 @@ Rails.application.configure do
       'Feature-Policy' => "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'self'; sync-xhr 'none'; usb 'none'; vr 'none'"
   }
 
-  config.serve_static_assets = true
-
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 

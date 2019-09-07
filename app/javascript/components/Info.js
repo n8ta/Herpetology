@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 class Info extends React.Component {
     render() {
         return (
-            <img src={"/assets/info.png"}/>
+            <img src={"/images/info.png"}/>
         );
     }
 }
