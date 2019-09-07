@@ -32,7 +32,7 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all.pending
+    @reports = Report.pending
   end
 
   # GET /reports/1
@@ -75,10 +75,9 @@ class ReportsController < ApplicationController
       puts @report.inspect
     when "NoHerpReport"
       @report = NoHerpReport.new(no_herp_params)
+    when "BadRegionReport"
+      @report = BadRegionReport.new(bad_region_params)
     end
-
-    puts "type: "
-    puts type.inspect
 
     @report.created_by_id = current_user.id if current_user
     respond_to do |format|
@@ -89,6 +88,10 @@ class ReportsController < ApplicationController
       else
         format.json {render json: @report.errors, status: :unprocessable_entity}
       end
+    end
+
+    unless params[:no_flash]
+      flash[:notice] = "Report created, if you come across the same issue again there is no need to report it twice it will be handled."
     end
   end
 
@@ -105,6 +108,8 @@ class ReportsController < ApplicationController
       @report = VenomReport.find(params[:id])
     when "NoHerpReport"
       @report = NoHerpReport.find(params[:id])
+    when "BadRegionReport"
+      @report = BadRegionReport.find(params[:id])
     end
   end
 
@@ -133,7 +138,15 @@ class ReportsController < ApplicationController
     a = Hash.new
     a[:photo_id] = params[:photo_id]
     return a
+  end
 
+  def bad_region_params
+    params.require(:region_id)
+    params.require(:taxon_id)
+    prms = Hash.new
+    prms[:region_id] = params[:region_id]
+    prms[:taxon_id] = params[:taxon_id]
+    return prms
   end
 
 end

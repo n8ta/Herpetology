@@ -7,8 +7,10 @@ class SocialController < ApplicationController
     current_user.username = username
     current_user.save!
     flash[:notice] = "Username set to " + username
-    if session[:return_url]
-      redirect_to session[:return_url]
+    url = session[:return_url]
+    if url
+      session[:return_url] = nil
+      redirect_to url
     else
       redirect_to '/'
     end

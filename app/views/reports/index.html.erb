@@ -46,8 +46,14 @@ end %>
       when "NoHerpReport"
         component_params[:photoUrl] = report.photo.image_path.url
         component_params[:noHerp] = true
+      when "BadRegionReport"
+        component_params[:photoUrl] = report.taxon.photos[0].image_path.url
+        component_params[:taxon] = report.taxon
+        component_params[:region] = report.region
+        component_params[:badRegion] = true
+
       end
-      %>
+       %>
       <%= react_component("Handlereport", component_params) %>
     <% end %>
 

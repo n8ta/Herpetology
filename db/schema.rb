@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_214854) do
+ActiveRecord::Schema.define(version: 2019_09_06_190731) do
 
   create_table "bad_id_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
@@ -23,6 +23,19 @@ ActiveRecord::Schema.define(version: 2019_09_05_214854) do
     t.bigint "photo_id", null: false
     t.index ["photo_id"], name: "index_bad_id_reports_on_photo_id"
     t.index ["taxon_id"], name: "index_bad_id_reports_on_taxon_id"
+  end
+
+  create_table "bad_region_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.boolean "handled", default: false, null: false
+    t.boolean "approved", default: false
+    t.bigint "created_by_id"
+    t.bigint "handled_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "region_id", null: false
+    t.bigint "taxon_id", null: false
+    t.index ["region_id"], name: "index_bad_region_reports_on_region_id"
+    t.index ["taxon_id"], name: "index_bad_region_reports_on_taxon_id"
   end
 
   create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -169,6 +182,8 @@ ActiveRecord::Schema.define(version: 2019_09_05_214854) do
 
   add_foreign_key "bad_id_reports", "photos"
   add_foreign_key "bad_id_reports", "taxons"
+  add_foreign_key "bad_region_reports", "regions"
+  add_foreign_key "bad_region_reports", "taxons"
   add_foreign_key "common_names", "taxons"
   add_foreign_key "dead_herp_reports", "photos"
   add_foreign_key "messages", "users", column: "dst"

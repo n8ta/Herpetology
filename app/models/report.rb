@@ -6,6 +6,7 @@ class Report < ApplicationRecord
     reports.concat(DeadHerpReport.all.to_a)
     reports.concat(NoHerpReport.all.to_a)
     reports.concat(VenomReport.all.to_a)
+    reports.concat(BadRegionReport.all.to_a)
   end
 
   def self.pending

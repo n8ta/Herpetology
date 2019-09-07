@@ -9,6 +9,14 @@ class Region < ApplicationRecord
 
   scope :countries, -> {where(region: nil)}
 
+
+  def remove_taxon(taxon)
+    self.taxons.delete(taxon)
+    self.regions.each do |region|
+      region.remove_taxon(taxon)
+    end
+  end
+
   def not_own_parent
     regions = []
     current = self

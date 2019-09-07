@@ -42,7 +42,7 @@
 <% if @mode == "learn" %>
   <%= react_component('Learn', {region_id: @region.id, root_taxon_name: @taxon.root.common_name, taxons: @species, mastery_cutoff_score: 0.75, working_size: 6, factor: (3.0 / 4.0), region_name: @region.name}) %>
 <% elsif @mode == "quiz" %>
-  <%= react_component('SpeciesPicker', {photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
+  <%= react_component('SpeciesPicker', {region: @region, photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
 <% end %>
 
 

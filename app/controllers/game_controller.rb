@@ -101,7 +101,18 @@ class GameController < ApplicationController
       @options = options[0]
     elsif @mode == "learn"
       @regions = @region.regions
-      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
+      @taxons = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
+      @taxons = @taxons.map {|tx| tx.attributes}
+      @taxons.each do |sp|
+        if (sp["venomous"] == true)
+          sp[:venomous] = "venomous"
+        elsif (sp["venomous"] == false)
+          sp[:venomous] = "nonvenomous"
+        else
+          sp[:venomous] = "unknown"
+        end
+      end
+      @species = @taxons
     end
   end
 
