@@ -2,8 +2,8 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # To allow /public/uploads from carrier wave
-  config.serve_static_assets = true
-  config.assets.compile = true
+  config.serve_static_assets = false
+  config.assets.compile = false
 
   config.force_ssl = true
 
@@ -43,6 +43,17 @@ Rails.application.configure do
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
+
+
+  config.action_dispatch.default_headers = {
+      'Referrer-Policy' => 'no-referrer',
+      'X-Content-Type-Options' => 'nosniff',
+      'X-Frame-Options' => 'DENY',
+      'X-XSS-Protection' => '1; mode=block',
+      'Strict-Transport-Security' => "max-age=31536000; includeSubDomains; preload",
+      'Feature-Policy' => "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'self'; sync-xhr 'none'; usb 'none'; vr 'none'"
+  }
+
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
