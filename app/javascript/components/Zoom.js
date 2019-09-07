@@ -7,6 +7,7 @@ class Zoom extends React.Component {
         super(props);
         this.mouseMove = this.mouseMove.bind(this);
         this.mouseLeave = this.mouseLeave.bind(this);
+        this.apply_style= this.apply_style.bind(this);
         this.state = {
             mode: 'waiting',
             id: btoa(Math.random().toString(36)), // ~Random id so we can have two on the same page
@@ -16,7 +17,7 @@ class Zoom extends React.Component {
     }
 
     ComponentDidUpdate() {
-        this.render()
+        this.render();
     }
 
     mouseMove(e) {
@@ -28,22 +29,25 @@ class Zoom extends React.Component {
             mode: 'live',
             origin: origin
         });
+        this.apply_style();
     }
 
     mouseLeave() {
         this.state.mode = 'waiting'
     }
 
-    render() {
-        let style = {
-            backgroundImage: "url('" + this.props.url + "')",
-        };
+    apply_style() {
+        let zoom = document.getElementById('zoom_' + this.state.id);
+        if (zoom == undefined) {return};
+        zoom.style.backgroundImage = "url('" + this.props.url + "')";
         if (this.state && this.state.mode == 'live') {
-            style = {
-                backgroundImage: "url('" + this.props.url + "')",
-                transformOrigin: this.state.origin,
-            };
+            zoom.style.transformOrigin = this.state.origin
         }
+    }
+
+
+    render() {
+        this.apply_style();
         let venomous = "";
         if (this.props.no_text == true) {
 
@@ -66,7 +70,7 @@ class Zoom extends React.Component {
                     {venomous}
                     <div className={'zoom_inner'} id={'zoom_container_' + this.state.id} onMouseLeave={this.mouseLeave}
                          onMouseMove={this.mouseMove}>
-                        <div className={'zoom'} id={'zoom_' + this.state.id} style={style}>
+                        <div className={'zoom'} id={'zoom_' + this.state.id}>
                             <img alt='Photo of an unknown reptile or amphibean' className={'zoom_image'}
                                  id={'zoom_image_' + this.state.id}
                                  src={this.props.url}/>

@@ -31,11 +31,21 @@ ReactRailsUJS.useContext(componentRequireContext);
 import Rails from 'rails-ujs';
 import Turbolinks from 'turbolinks';
 
-
-
 Rails.start();
-// Turbolinks.start();
 
 ReactRailsUJS.mountComponents();
-console.log("mount");
 
+
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/google_token');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+    };
+    xhr.send('idtoken=' + id_token);
+};
+
+
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-111016820-5');

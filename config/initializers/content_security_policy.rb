@@ -5,15 +5,15 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 #
 Rails.application.config.content_security_policy do |policy|
-  policy.default_src :self, :https
+  policy.default_src "none"
   policy.font_src    :self, :https, :data
   policy.img_src     :self, :https, "*"
   policy.object_src  :none
-  policy.script_src  :self, :https, "apis.google.com" "unpkg.com" "unsafe-inline" "cdn.jsdelivr.net" "api.github.com" "www.google-analytics.com" "buttons.github.io" "www.googletagmanager.com"
+  policy.script_src  :self, :https, "apis.google.com" "unpkg.com" "cdn.jsdelivr.net" "api.github.com" "www.google-analytics.com" "buttons.github.io" "www.googletagmanager.com"
   policy.style_src   :self, :https, "unsafe-inline"
   policy.connect_src :self, :https, "api.github.com"
   policy.frame_ancestors "none"
-  # Specify URI for violation reports
+
   # policy.report_uri "/csp-violation-report-endpoint"
 end
 
