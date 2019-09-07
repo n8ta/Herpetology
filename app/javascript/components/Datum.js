@@ -39,7 +39,6 @@ class Datum extends React.Component {
                 common_seen: result['common_seen'],
                 tip: result['tip'],
             });
-            console.log(result);
         });
     }
 

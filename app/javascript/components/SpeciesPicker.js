@@ -1,10 +1,9 @@
 import React from "react"
 import Zoom from './Zoom.js';
-import Noherpreport from './Noherpreport.js';
-import Deadherpreport from './Deadherpreport.js';
+import Reportmanager from "./reports/Reportmanager";
 import Signup from './Signup.js';
+
 import PropTypes from "prop-types"
-import Badidreport from "./Badidreport";
 
 class SpeciesPicker extends React.Component {
     constructor(props) {
@@ -27,14 +26,13 @@ class SpeciesPicker extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.next = this.next.bind(this);
 
-        console.log(Cookies.get("asked_about_signup"));
         let asked_about_signup = Cookies.get("asked_about_signup");
         if (asked_about_signup == undefined) {
             this.state.asked_about_signup = false;
         } else {
             this.state.asked_about_signup = true;
         }
-        Cookies.get("asked_about_signup");
+        Cookies.set("asked_about_signup");
 
 
     }
@@ -132,6 +130,7 @@ class SpeciesPicker extends React.Component {
                 venomous: undefined,
                 iterations: this.state.iterations + 1,
                 photo_id: this.state.next_photo_id,
+                species_id: undefined,
             });
         }
 
@@ -201,12 +200,9 @@ class SpeciesPicker extends React.Component {
         let left = '';
         let right = '';
         let form = '';
-        let bad_id_report = '';
         let left_title = "Scientific";
         let right_title = "Common";
         if (this.state.mode == 'answered') {
-            bad_id_report = <Badidreport photo_id={this.state.photo_id} taxon_com={this.state.common_name}
-                                         taxon_sci={this.state.sci_name}/>
             next_button = <div id={'next'} className={"center"}>
                 <button className={'main happypath'} onClick={this.next}>Next <br/></button>
             </div>;
@@ -236,10 +232,18 @@ class SpeciesPicker extends React.Component {
         }
         return (
             <div className="species">
-                <div className="center">
-                    <Noherpreport photo_id={this.state.photo_id}></Noherpreport>
-                    <Deadherpreport photo_id={this.state.photo_id}></Deadherpreport>
-                </div>
+                    <Reportmanager
+                        after_report={function () {
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 750)
+                        }}
+                        photo_id={this.state.photo_id}
+                        taxon_id={this.state.species_id}
+                        region_id={this.props.region.id}
+                        taxon_com={this.state.common_name}
+                        taxon_sci={this.state.sci_name}
+                    ></Reportmanager>
                 <Zoom photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
@@ -252,7 +256,6 @@ class SpeciesPicker extends React.Component {
                         {right}
                     </div>
                 </div>
-                {bad_id_report}
                 {next_button}
 
                 <br/>
@@ -266,6 +269,7 @@ SpeciesPicker.propTypes = {
     options: PropTypes.object,
     image_path: PropTypes.string,
     photo_id: PropTypes.string,
+    region: PropTypes.object,
 };
 
 export default SpeciesPicker

@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Report from "./Report";
-import Alert from "./Alert";
+import Alert from "../Alert";
 
 class Noherpreport extends React.Component {
     constructor(props) {
@@ -27,8 +26,12 @@ class Noherpreport extends React.Component {
     post() {
         this.setState({submitted: true});
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
+        let no_flash = "";
+        if (this.props.no_flash == true) {
+            no_flash = "&no_flash=true"
+        }
         this.setState({mode: 'loading'});
-        fetch("/reports?type=NoHerpReport&photo_id="+this.props.photo_id, {
+        fetch("/reports?type=NoHerpReport&photo_id="+this.props.photo_id+no_flash, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -39,11 +42,8 @@ class Noherpreport extends React.Component {
             credentials: 'same-origin',
 
         }).then(res => res.json()).then((result) => {
+            this.props.after_report()
         });
-
-        setTimeout(function() {
-            window.location.reload();
-        }, 1000)
 
 
     }
@@ -70,6 +70,7 @@ class Noherpreport extends React.Component {
 
 export default Noherpreport
 
-Report.propTypes = {
+Noherpreport.propTypes = {
     photo_id: PropTypes.number,
+    after_report: PropTypes.func,
 };

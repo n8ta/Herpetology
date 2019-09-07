@@ -48,8 +48,6 @@ class Venomreport extends React.Component {
       credentials: 'same-origin',
 
     }).then(res => res.json()).then((result) => {
-        console.log(result);
-      console.log('submitted report');
     })
   }
 
@@ -79,7 +77,6 @@ class Venomreport extends React.Component {
           msg = "Submitted Thanks!";
       }
 
-      console.log("vc",venomous_class,"ncc",nonvenmous_class,"ucc",unknown_class,"state",this.state.submitted);
       if (this.state.active) {
         return(
             <div>

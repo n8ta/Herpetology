@@ -29,14 +29,11 @@ class Scoreboard extends React.Component {
 
     render() {
         if (this.state.mode == "ready") {
-            console.log('ready');
             let scores = [];
             for (let i = 0; i<this.state.scores.length; i++) {
                 let score = this.state.scores[i];
-                console.log(score);
                 scores.push( <li key={score['rank']}>{score['rank']} {score['name']} {score['score']}</li> )
             }
-            console.log(this.state);
             return (
                 <div id={'scoreboard'}>
                     <p>Scoreboard</p>
@@ -46,7 +43,6 @@ class Scoreboard extends React.Component {
                 </div>
             );
         } else if (this.state.mode == "loading") {
-            console.log('loading');
             return (
                 <div id={'scoreboard'}>
                     <p>Loading Scoreboard...</p>

@@ -1,5 +1,6 @@
 import React from "react"
 import Zoom from './Zoom.js';
+import Name from './Name.js';
 import PropTypes from "prop-types"
 
 class Handlereport extends React.Component {
@@ -51,7 +52,6 @@ class Handlereport extends React.Component {
             credentials: 'same-origin',
 
         }).then(res => res.json()).then((result) => {
-            console.log(result);
             this.setState({msg: result['msg']});
         })
     }
@@ -64,42 +64,49 @@ class Handlereport extends React.Component {
         let approve_class = "";
         let reject_class = "";
         let disabled = 'false'
-        if (this.state.mode == "approved" ) {
+        if (this.state.mode == "approved") {
             if (this.state.confirmed == true) {
                 approve_class = "confirmed"
             } else {
                 approve_class = "active";
             }
             reject_class = "disabled";
-            disabled = 'true' ;
+            disabled = 'true';
         } else if (this.state.mode == "rejected") {
             if (this.state.confirmed == true) {
                 reject_class = "confirmed"
             } else {
                 reject_class = "active";
             }
-            approve_class ="disabled";
+            approve_class = "disabled";
             disabled = 'true';
 
         }
 
 
         if (this.props.userId) {
-            user = <React.Fragment><strong>Created by: </strong> {this.props.userUsername}, {this.props.userSciAcc}% Sci, {this.props.userComAcc}% Com, {this.props.userTotal} Total IDs </React.Fragment>
+            user = <React.Fragment><strong>Created by: </strong> {this.props.userUsername}, {this.props.userSciAcc}%
+                Sci, {this.props.userComAcc}% Com, {this.props.userTotal} Total IDs </React.Fragment>
         } else {
             user = <React.Fragment><strong>Created by:</strong> a user without an account</React.Fragment>
         }
 
         if (this.props.venomous) {
-            msg = <React.Fragment><strong>{this.props.currentTaxonCommon} -- {this.props.currentTaxonSci}</strong><br/> should be marked as: {this.props.venomous}</React.Fragment>
+            msg =
+                <React.Fragment><strong>{this.props.currentTaxonCommon} -- {this.props.currentTaxonSci}</strong><br/> should
+                    be marked as: {this.props.venomous}</React.Fragment>
         } else if (this.props.newTaxonCommon && this.props.newTaxonSci) {
-            msg = <React.Fragment> <strong>Currently:</strong><br/> {this.props.currentTaxonCommon} -- {this.props.currentTaxonSci}<br/>
-                <strong>Reported as:</strong><br/>{this.props.newTaxonCommon} -- {this.props.newTaxonSci}</React.Fragment>
+            msg = <React.Fragment>
+                <strong>Currently:</strong><br/> {this.props.currentTaxonCommon} -- {this.props.currentTaxonSci}<br/>
+                <strong>Reported as:</strong><br/>{this.props.newTaxonCommon} -- {this.props.newTaxonSci}
+            </React.Fragment>
         } else if (this.props.noHerp) {
             msg = <strong>Photo has no herp</strong>
         } else if (this.props.deadHerp) {
             msg = <strong>Photo contains a dead herp</strong>
-        } else {
+        } else if (this.props.badRegion) {
+            msg = <strong><Name commonName={this.props.taxon.common_name} sciName={this.props.taxon.name}></Name> isn't present in {this.props.region.name}</strong>
+            } else {
             alert("Messed up report, please contact the dev, https://github.com/n8ta/HerpID")
         }
         return (
@@ -138,5 +145,6 @@ Handlereport.propTypes = {
     approveUrl: PropTypes.string,
     rejectUrl: PropTypes.string,
     deadHerp: PropTypes.bool,
+    badRegion: PropTypes.bool,
 };
 export default Handlereport

@@ -10,7 +10,7 @@ class Taxon extends React.Component {
     let taxon = this.props.taxon;
     return (
         <li key={taxon.id}>
-          <img src={taxon.photos[0]}/>
+          <img src={taxon.photos[0].url}/>
           <div>
             <div>
               <Name commonName={taxon.common_name} sciName={taxon.name}/>

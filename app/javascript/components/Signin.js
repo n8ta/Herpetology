@@ -45,7 +45,6 @@ class Signin extends React.Component {
         }
         user_password=user_password.value;
         if (user_password == '') {
-            console.log("Password not ready");
             this.setState({password_ready: false, password_class: ''});
         } else {
             this.setState({password_ready: true, password_class: 'valid'})

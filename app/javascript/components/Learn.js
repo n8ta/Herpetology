@@ -8,6 +8,7 @@ import Signup from "./Signup";
 import Tippy from "@tippy.js/react";
 import Masteredlist from "./Masteredlist";
 import Progressbar from "./Progressbar";
+import Reportmanager from "./reports/Reportmanager";
 
 class Learn extends React.Component {
 
@@ -16,7 +17,6 @@ class Learn extends React.Component {
         for (let i = 0; i < this.props.taxons.length; i++) {
             window.localStorage.removeItem(this.props.region_id + '-' + this.props.taxons[i].id)
         }
-        alert('a');
         location.reload();
     }
 
@@ -109,7 +109,7 @@ class Learn extends React.Component {
                         num_preloaded = num_preloaded + 1;
                     }
 
-                    txns[i].photos.push(url);
+                    txns[i].photos.push(result[j]);
                 }
                 // Check if we're done loading all taxons, if so setup working/mastered/and pending sets
                 if ((this.props.taxons.length - (num_loaded_taxons + 1)) < 1) {
@@ -130,10 +130,7 @@ class Learn extends React.Component {
                     if (working_set.length == 0) {
                         this.reload()
                     } else {
-
-
                         this.setState({
-                            mode: "ready",
                             current: current,
                             pending_set: pending_set,
                             working_set: working_set,
@@ -169,7 +166,7 @@ class Learn extends React.Component {
     new_question(first_time) {
         if (this.state.mode == "loading" && !first_time) {
             return
-        }
+        } // If we're still loading do nothing unless this is the first run in which case we set mode ready at the end
 
 
         if ((this.state.questions_completed == 5) && (!Cookies.get("asked_about_signup"))) {
@@ -177,7 +174,6 @@ class Learn extends React.Component {
             Cookies.set("asked_about_signup", true, {expires: 1});
             return
         }
-
 
         let left_correct = Math.random() > .5;
 
@@ -230,7 +226,11 @@ class Learn extends React.Component {
             right_class: '',
             mode: 'ready',
             correct: undefined,
-        })
+        });
+
+        if (first_time) {
+            this.setState({mode: "ready"})
+        }
     }
 
 
@@ -321,30 +321,38 @@ class Learn extends React.Component {
 
             )
         } else if ((this.state.mode == "loading") && (this.state.done != true)) {
-            return (<div id={'learn'}>
-                <h3 className="center">Loading...</h3>
-                <div className={'center'}>
-                    <Progressbar wide={true} width={100 * this.state.loaded_taxons / this.state.num_taxons}
-                                 msg={this.state.loaded_taxons + "/" + this.state.num_taxons}/>
-                </div>
-            </div>)
+            return (
+                <div id={'learn'}>
+                    <h3 className="center">Loading...</h3>
+                    <div className={'center'}>
+                        <Progressbar wide={true} width={100 * this.state.loaded_taxons / this.state.num_taxons}
+                                     msg={this.state.loaded_taxons + "/" + this.state.num_taxons}/>
+                    </div>
+                </div>)
         } else {
+
             // Default to left correct, if it's not switch everything
             let msg = <span>Which of these is a<span
                 className={'common_name'}> {this.current().common_name} </span>(<span
                 className={'sci_name'}>{this.current().name}</span>)?<br/></span>;
             let next_button = "";
-            let zoom_left = <Zoom url={this.state.correct_photo}/>;
-            let zoom_right = <Zoom url={this.state.incorrect_photo}/>;
+
+            let correct_venomous = undefined;
+            let incorrect_venomous = undefined;
+
+            let zoom_left;
+            let zoom_right;
+
             let left_text = undefined;
             let right_text = undefined;
             let hide_arrows_class = "";
-            if (!this.state.left_is_correct) {
-                let tmp = zoom_left;
-                zoom_left = zoom_right;
-                zoom_right = tmp;
-            }
             if (this.state.mode == "answered" || (this.state.mode == "answered")) {
+
+                zoom_left = <Zoom photo_id={this.state.correct_photo.id} venomous={this.state.current.venomous}
+                                  url={this.state.correct_photo.url}/>;
+                zoom_right =
+                    <Zoom photo_id={this.state.incorrect_photo.id} venomous={this.state.incorrect_answer.venomous}
+                          url={this.state.incorrect_photo.url}/>;
 
                 next_button = <div title='You can use the up arrow as well' className={"center"}>
                     <button onClick={this.new_question}>Next (▲) <br/></button>
@@ -386,8 +394,16 @@ class Learn extends React.Component {
                     hide_arrows_class = "hidden"
                 }
             } else {
+                zoom_left = <Zoom url={this.state.correct_photo.url}/>;
+                zoom_right = <Zoom url={this.state.incorrect_photo.url}/>;
                 left_text = "This one";
                 right_text = "This one";
+            }
+
+            if (!this.state.left_is_correct) {
+                let tmp = zoom_left;
+                zoom_left = zoom_right;
+                zoom_right = tmp;
             }
 
             let progbars = this.state.working_set.concat(this.state.current);
@@ -401,6 +417,21 @@ class Learn extends React.Component {
                     seen={taxon.seen} correct={taxon.correct}
                     sci_name={taxon.name} common_name={taxon.common_name}></Speciesprogressbar>
             );
+
+            let report_left = <Reportmanager no_flash={true}
+                                             after_report={this.new_question}
+                                             photo_id={this.state.correct_photo.id}
+                                             taxon_id={this.state.current.id}
+                                             region_id={this.props.region_id}
+                                             taxon_com={this.state.current.common_name}
+                                             taxon_sci={this.state.current.name}></Reportmanager>;
+
+            let report_right = <Reportmanager no_flash={true} after_report={this.new_question}
+                                              photo_id={this.state.incorrect_photo.id}
+                                              taxon_id={this.state.incorrect_answer.id}
+                                              region_id={this.props.region_id}
+                                              taxon_com={this.state.incorrect_answer.common_name}
+                                              taxon_sci={this.state.incorrect_answer.name}></Reportmanager>;
 
             return (
                 <div id={"learn"}>
@@ -430,28 +461,33 @@ class Learn extends React.Component {
 
                     <div className={'two-col'}>
 
-                        <div onClick={function () {
-                            this.answer(true)
-                        }.bind(this)}>
-                            <div className={'center'}>
-                                <button title={'Left arrow key'} disabled={this.state.mode == "answered"}
-                                        className={hide_arrows_class + ' main ' + this.state.left_class}>
-                                    <h4>{left_text}</h4>
-                                </button>
+                        <div>
+                            <div onClick={function () {
+                                this.answer(true)}.bind(this)}>
+                                <div className={'center'}>
+                                    <button title={'Left arrow key'} disabled={this.state.mode == "answered"}
+                                            className={hide_arrows_class + ' main ' + this.state.left_class}>
+                                        <h4>{left_text}</h4>
+                                    </button>
+                                </div>
+                                {zoom_left}
                             </div>
-                            {zoom_left}
+                            {report_left}
                         </div>
 
-                        <div onClick={function () {
-                            this.answer(false)
-                        }.bind(this)}>
-                            <div className={'center'}>
-                                <button title={'Right arrow keys'} disabled={this.state.mode == "answered"}
-                                        className={hide_arrows_class + ' main ' + this.state.right_class}>
-                                    <h4>{right_text}</h4>
-                                </button>
+                        <div>
+                            <div onClick={function () {
+                                this.answer(false)
+                            }.bind(this)}>
+                                <div className={'center'}>
+                                    <button title={'Right arrow keys'} disabled={this.state.mode == "answered"}
+                                            className={hide_arrows_class + ' main ' + this.state.right_class}>
+                                        <h4>{right_text}</h4>
+                                    </button>
+                                </div>
+                                {zoom_right}
                             </div>
-                            {zoom_right}
+                            {report_right}
                         </div>
                     </div>
 

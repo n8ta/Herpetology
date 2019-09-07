@@ -1,14 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
-import SpeciesPicker from "./SpeciesPicker";
-import Alert from "./Alert";
+import SpeciesPicker from "../SpeciesPicker";
+import Alert from "../Alert";
 class Badidreport extends React.Component {
     constructor(props) {
         super(props);
         this.state = {active: false, submitted: false, search_results: [], specie_error: '', search_class: ''};
-        this.updateDataList = this.updateDataList.bind(this)
+        if (this.props.active == true) {
+            this.state.active = true
+        }
+        this.updateDataList = this.updateDataList.bind(this);
         this.activate = this.activate.bind(this)
     }
+
+
 
     updateDataList() {
         let search = document.getElementById('report_taxon_input');
@@ -41,7 +46,11 @@ class Badidreport extends React.Component {
 
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         this.setState({mode: 'loading'});
-        fetch('/reports?type=BadIdReport&photo_id='+this.props.photo_id+'&taxon_id='+taxon_id, {
+        let no_flash = "";
+        if (this.props.no_flash == true) {
+            no_flash = "&no_flash=true"
+        }
+        fetch('/reports?type=BadIdReport&photo_id='+this.props.photo_id+'&taxon_id='+taxon_id+no_flash, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -52,17 +61,15 @@ class Badidreport extends React.Component {
             credentials: 'same-origin',
 
         }).then(res => res.json()).then((result) => {
-            console.log('submitted report');
-        });
+            setTimeout(this.props.after_report,1500);
 
-        setTimeout(function() {
-            window.location.reload();
-        }, 1000)
+        });
 
     }
 
     activate() {
-        this.setState({active: true})
+        this.setState({active: true});
+        this.props.callback_fullscreen();
     }
 
 
@@ -79,7 +86,7 @@ class Badidreport extends React.Component {
 
             return (
                 <div className="center">
-                    <button onClick={this.activate} className={'small'}><Alert/>This ID is wrong!</button>
+                    <button disabled={this.props.disabled} onClick={this.activate} className={'small'}><Alert/>ID is wrong!</button>
                 </div>)
 
         } else if (this.state.active == true && this.state.submitted == false) {
@@ -94,7 +101,7 @@ class Badidreport extends React.Component {
                 </form>)
         } else {
             return (
-                <div id={'bad_id_report'}>
+                    <div id={'bad_id_report'}>
                     <div className="center">
                         <button className={'small submitted'}>Submitted, this will not count against your stats.
                         </button>
@@ -108,6 +115,10 @@ Badidreport.propTypes = {
     photo_id: PropTypes.number,
     taxon_com: PropTypes.string,
     taxon_sci: PropTypes.string,
+    disabled: PropTypes.bool,
+    callback_fullscreen: PropTypes.func,
+    active: PropTypes.bool,
+    after_report: PropTypes.func,
 };
 
 
