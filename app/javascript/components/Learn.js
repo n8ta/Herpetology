@@ -445,7 +445,7 @@ class Learn extends React.Component {
                         {progbars}
                         <Tippy content="These bars show your progress on the 6 species you are currently learning"
                                placement={'bottom'}>
-                            <div><Info></Info></div>
+                            <div><Info img_url={this.props.info_url}></Info></div>
 
                         </Tippy>
 
@@ -505,6 +505,7 @@ Learn.propTypes = {
     region_id: PropTypes.number,
     root_taxon_name: PropTypes.string,
     mastery_cutoff_score: PropTypes.number,
+    info_url: PropTypes.string,
 };
 
 
