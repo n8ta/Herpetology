@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_06_190731) do
+ActiveRecord::Schema.define(version: 2019_09_08_022216) do
 
   create_table "bad_id_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 2019_09_06_190731) do
     t.integer "user_class"
     t.boolean "show_dead_photos", default: false
     t.boolean "google_user", default: false
+    t.boolean "opt_out_of_email", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -3,14 +3,15 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
-  def show_dead
-    current_user.show_dead_photos = true
-    current_user.save
-  end
+  def settings
+    opt_out_of_email = params[:opt_out_of_email]
+    show_dead = params[:show_dead]
 
-  def hide_dead
-    current_user.show_dead_photos = false
+    current_user.opt_out_of_email = opt_out_of_email
+    current_user.show_dead_photos = show_dead
     current_user.save
+
+    render :json => {"opted_out_of_email": current_user.opt_out_of_email, "show_dead_photos": current_user.show_dead_photos}.to_json()
   end
 
   # GET /resource/sign_in

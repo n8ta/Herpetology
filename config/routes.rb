@@ -5,10 +5,9 @@ Rails.application.routes.draw do
   devise_scope :user do
     post '/users/email_available/:email' => 'users/registrations#email_available'
     post '/users/username_available/:username' => 'users/registrations#username_available'
-    post '/users/show_dead' => 'users/sessions#show_dead', as: 'show_dead'
-    post '/users/hide_dead' => 'users/sessions#hide_dead', as: 'hide_dead'
-    get '/users/show_dead' => 'users/sessions#show_dead'
-    get '/users/hide_dead' => 'users/sessions#hide_dead'
+
+    post '/users/settings' => 'users/sessions#settings', as: 'settings'
+
     get '/users/set_username' => 'social#set_username', as: "set_username"
     post '/users/set_username' => 'social#post_set_username', as: "post_set_username"
     post '/users/set_return_url' => 'social#set_return_url', as: "set_return_url"

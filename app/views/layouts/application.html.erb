@@ -56,7 +56,7 @@
       <li>
         <% if current_user %>
           <h4>Settings</h4>
-          <%= react_component('Settings', {show_dead: current_user.show_dead_photos}) %>
+          <%= react_component('Settings', {email_opted_out: current_user.opt_out_of_email, show_dead: current_user.show_dead_photos}) %>
         <% else %>
           <H4>Settings</H4>
           <p>If you make an account you can toggle seeing photos of dead animals on and off as well as see statistics on

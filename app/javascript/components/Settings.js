@@ -6,47 +6,56 @@ class Settings extends React.Component {
     constructor(props) {
         super(props);
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
-        this.state  = {show_dead: this.props.show_dead, csrf: auth_token};
-        this.update = this.update.bind(this);
+        this.state = {csrf: auth_token};
+        this.post = this.post.bind(this);
     }
 
-    update() {
-        this.state.show_dead = !this.state.show_dead;
-        let url =  "";
-        if (this.state.show_dead == true) {
-            url = "/users/show_dead"
-        } else if (this.state.show_dead == false) {
-            url = "/users/hide_dead"
-        }
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': this.state.csrf,
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            credentials: 'same-origin',
+    post() {
 
-        })
-
-
-
-
+        setTimeout(function () {
+            let opt_out = document.getElementById('opt_out').checked;
+            let show_dead = document.getElementById('show_dead').checked;
+            console.log("opt_out", opt_out);
+            console.log("show dead", show_dead);
+            this.state.show_dead = !this.state.show_dead;
+            let body = {};
+            body['opt_out_of_email'] = opt_out;
+            body['show_dead'] = show_dead;
+            fetch('/users/settings', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': this.state.csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(body),
+            })
+        }.bind(this), 100);
     }
+
     render() {
         return (
             <React.Fragment>
-                    <input defaultChecked={this.props.show_dead} onClick={this.update} type="checkbox" id={'show_dead'}/>
-                <label htmlFor="show_dead">Show dead animals</label>
+                <div>
+                    <input defaultChecked={this.props.show_dead} onClick={this.post} type="checkbox"
+                           id={'show_dead'}/>
+                    <label htmlFor="show_dead">Show dead animals</label>
+                </div>
+                <div>
+                    <input defaultChecked={this.props.opt_out} onClick={this.post} type="checkbox" id={'opt_out'}/>
+                    <label htmlFor="opt_out">Opt out of any email</label>
+                </div>
             </React.Fragment>
         );
     }
 }
 
-SpeciesPicker.propTypes = {
+Settings.propTypes = {
     show_dead: PropTypes.bool,
+    email_opted_out: PropTypes.bool,
 };
 
 export default Settings
