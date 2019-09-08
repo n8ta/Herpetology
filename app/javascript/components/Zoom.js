@@ -7,18 +7,16 @@ class Zoom extends React.Component {
         super(props);
         this.mouseMove = this.mouseMove.bind(this);
         this.mouseLeave = this.mouseLeave.bind(this);
-        this.apply_style= this.apply_style.bind(this);
+        this.apply_style = this.apply_style.bind(this);
         this.state = {
             mode: 'waiting',
             id: btoa(Math.random().toString(36)), // ~Random id so we can have two on the same page
         };
-        this.ComponentDidUpdate = this.ComponentDidUpdate.bind(this);
+        setTimeout(this.apply_style.bind(this),.01)
 
     }
 
-    ComponentDidUpdate() {
-        this.render();
-    }
+
 
     mouseMove(e) {
         let cont = document.getElementById('zoom_container_' + this.state.id);
