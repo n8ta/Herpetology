@@ -2,6 +2,10 @@
   <%= @taxon.common_names[0].name %>
 <% end %>
 
+<% content_for :head do %>
+  <meta property="og:image" content="<%= @taxon.photo.url %>" />
+<% end %>
+
 <% content_for :breadcrumb do %>
   <h2>
     <%= link_to root_path do %><%= render 'statics/world' %><% end %> >
