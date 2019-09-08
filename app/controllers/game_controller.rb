@@ -57,7 +57,7 @@ class GameController < ApplicationController
       venomous == "nonvenomous" if venomous == false
 
       specie_data = {
-          'sci_name': specie_m.name.to_s,
+          'sci_name': specie_m.sci_name.to_s,
           'common_name': specie_m.common_names.any? ? specie_m.common_names[0].name.to_s : nil,
           'species_id': specie_m.id,
           'venomous': venomous,
@@ -155,20 +155,14 @@ class GameController < ApplicationController
 
 
     photos = correct_specie.photos.where(hidden: false)
-    puts "Photo I"
-    puts photos.inspect
     unless current_user && current_user.show_dead_photos == true
       photos = photos.where(dead: false)
     end
-    puts "Photos:"
-    puts photos.inspect
     photo = photos[rand(photos.size - 1)]
-    puts "Photo:"
-    puts photo.inspect
 
     sci_index = rand(4)
     common_index = rand(4)
-    hash_data['sci'].insert(sci_index, correct_specie.name)
+    hash_data['sci'].insert(sci_index, correct_specie.sci_name)
     hash_data['common'].insert(common_index, correct_specie.common_names[0].name)
     session[:sci_index] = sci_index
     session[:common_index] = common_index

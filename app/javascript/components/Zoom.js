@@ -13,10 +13,7 @@ class Zoom extends React.Component {
             id: btoa(Math.random().toString(36)), // ~Random id so we can have two on the same page
         };
         setTimeout(this.apply_style.bind(this),.01)
-
     }
-
-
 
     mouseMove(e) {
         let cont = document.getElementById('zoom_container_' + this.state.id);
