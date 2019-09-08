@@ -273,7 +273,3 @@ SpeciesPicker.propTypes = {
 };
 
 export default SpeciesPicker
-
-/*
-*
-* */

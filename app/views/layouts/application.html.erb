@@ -11,21 +11,9 @@
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9+4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb" crossorigin="anonymous"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script type="text/javascript">
-      function onSignIn(googleUser) {
-          var id_token = googleUser.getAuthResponse().id_token;
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/google_token');
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          xhr.onload = function() {
-              console.log('Signed in as: ' + xhr.responseText);
-          };
-          xhr.send('idtoken=' + id_token);
-      };
-  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5"></script>
 </head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5"></script>
-<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-111016820-5');</script>
+
 <body>
 <div id="logo-holder">
   <div id="logo">
@@ -37,7 +25,7 @@
       <%= react_component("Menubutton") %>
       <a id='logo_anchor' href="/"><h1>Herpetology<span id="herpID">Pro</span></h1></a>
       <%= link_to '/users/sign_up', class: 'right_of_logo' do %>
-      <%= render :partial => 'statics/login' %>
+        <%= render :partial => 'statics/login' %>
       <% end %>
     <% end %>
   </div>
@@ -59,8 +47,7 @@
       <li>
         <h4><%= link_to "https://github.com/n8ta/Herpetology", target: '_blank' do %>HerpPro on Github
           <% end %></h4><br/>
-        <a class="github-button" href="https://github.com/n8ta/herpid/issues" data-icon="octicon-issue-opened" data-size="large" data-show-count="true" aria-label="Issue n8ta/herpid on GitHub">Issues</a><br/>
-        <a class="github-button" href="https://github.com/n8ta/herpID" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star n8ta/herpID on GitHub">Star</a>
+        <span>Drop me a star on github, it makes me look good (:</span>
       </li>
       <li>
         <h4>Developer: <%= link_to "https://n8ta.com/", target: '_blank' do %>Nate Tracy-Amoroso

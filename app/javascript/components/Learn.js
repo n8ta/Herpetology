@@ -27,7 +27,7 @@ class Learn extends React.Component {
     }
 
     keydown(ev) {
-        if (ev.key == " " || ev.key == "ArrowUp") {
+        if (ev.key == " " || ev.key == "ArrowDown") {
             ev.preventDefault();
             this.new_question();
         }
@@ -354,8 +354,8 @@ class Learn extends React.Component {
                     <Zoom photo_id={this.state.incorrect_photo.id} venomous={this.state.incorrect_answer.venomous}
                           url={this.state.incorrect_photo.url}/>;
 
-                next_button = <div title='You can use the up arrow as well' className={"center"}>
-                    <button onClick={this.new_question}>Next (▲) <br/></button>
+                next_button = <div title='You can use the down arrow as well' className={"center"}>
+                    <button onClick={this.new_question}>Next (▼) <br/></button>
                 </div>;
 
                 if (this.state.correct == true) {
