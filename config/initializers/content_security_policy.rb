@@ -11,7 +11,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.img_src     :self, :https, "*"
   policy.object_src  :none
   policy.script_src  :self, "apis.google.com unpkg.com cdn.jsdelivr.net api.github.com www.google-analytics.com www.googletagmanager.com"
-  policy.style_src   :self, :https
+  policy.style_src   :self, :https, "'unsafe-inline'"
   policy.connect_src :self, :https, "api.github.com"
   policy.frame_ancestors "'none'"
 
