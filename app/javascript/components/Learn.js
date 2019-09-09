@@ -465,7 +465,8 @@ class Learn extends React.Component {
                             <div onClick={function () {
                                 this.answer(true)}.bind(this)}>
                                 <div className={'center'}>
-                                    <button title={'Left arrow key'} disabled={this.state.mode == "answered"}
+                                    <button onClick={function () {
+                                        this.answer(true)}.bind(this)} title={'Left arrow key'} disabled={this.state.mode == "answered"}
                                             className={hide_arrows_class + ' main ' + this.state.left_class}>
                                         <h4>{left_text}</h4>
                                     </button>
@@ -476,11 +477,9 @@ class Learn extends React.Component {
                         </div>
 
                         <div>
-                            <div onClick={function () {
-                                this.answer(false)
-                            }.bind(this)}>
+                            <div onClick={function () {this.answer(false)}.bind(this)}>
                                 <div className={'center'}>
-                                    <button title={'Right arrow keys'} disabled={this.state.mode == "answered"}
+                                    <button onClick={function () {this.answer(false)}.bind(this)} title={'Right arrow keys'} disabled={this.state.mode == "answered"}
                                             className={hide_arrows_class + ' main ' + this.state.right_class}>
                                         <h4>{right_text}</h4>
                                     </button>
