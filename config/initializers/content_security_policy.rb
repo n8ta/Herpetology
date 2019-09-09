@@ -6,11 +6,11 @@
 #
 
 Rails.application.config.content_security_policy do |policy|
-  policy.default_src "none"
+  policy.default_src :none
   policy.font_src    :self, :https, :data
   policy.img_src     :self, :https, "*"
   policy.object_src  :none
-  policy.script_src  :self, :https, "apis.google.com unpkg.com cdn.jsdelivr.net api.github.com www.google-analytics.com www.googletagmanager.com"
+  policy.script_src  :self, "apis.google.com unpkg.com cdn.jsdelivr.net api.github.com www.google-analytics.com www.googletagmanager.com"
   policy.style_src   :self, :https
   policy.connect_src :self, :https, "api.github.com"
   policy.frame_ancestors "none"
