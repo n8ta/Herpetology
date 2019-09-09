@@ -194,7 +194,6 @@ class Learn extends React.Component {
 
                 // Pending set is empty, we're done her!
                 if (this.state.working_set.length == 0) {
-                    ga('send', 'event', 'learn', 'done', 'true');
                     this.setState({done: true})
                 }
 
@@ -234,6 +233,13 @@ class Learn extends React.Component {
     }
 
 
+
+    answer_true() {
+      this.answer(true);
+    }
+    answer_false() {
+        this.answer(false)
+    }
     answer(clicked_left) {
         if (this.state.mode == "answered") {
             return
@@ -244,7 +250,6 @@ class Learn extends React.Component {
         // This looks more complex than it is
         let correct = ((this.state.left_is_correct && clicked_left) || (!this.state.left_is_correct && !clicked_left));
 
-        ga('send', 'event', 'learn', 'answer', correct);
 
         let current = this.state.current;
         if (correct) {
@@ -462,11 +467,10 @@ class Learn extends React.Component {
                     <div className={'two-col'}>
 
                         <div>
-                            <div onClick={function () {
-                                this.answer(true)}.bind(this)}>
+                            <div onClick={this.answer_true.bind(this)}>
                                 <div className={'center'}>
-                                    <button onClick={function () {
-                                        this.answer(true)}.bind(this)} title={'Left arrow key'} disabled={this.state.mode == "answered"}
+                                    <button onClick={
+                                        this.answer_true.bind(this)} title={'Left arrow key'} disabled={this.state.mode == "answered"}
                                             className={hide_arrows_class + ' main ' + this.state.left_class}>
                                         <h4>{left_text}</h4>
                                     </button>
@@ -477,9 +481,9 @@ class Learn extends React.Component {
                         </div>
 
                         <div>
-                            <div onClick={function () {this.answer(false)}.bind(this)}>
+                            <div onClick={function () {this.answer_false}.bind(this)}>
                                 <div className={'center'}>
-                                    <button onClick={function () {this.answer(false)}.bind(this)} title={'Right arrow keys'} disabled={this.state.mode == "answered"}
+                                    <button onClick={this.answer_false.bind(this)} title={'Right arrow keys'} disabled={this.state.mode == "answered"}
                                             className={hide_arrows_class + ' main ' + this.state.right_class}>
                                         <h4>{right_text}</h4>
                                     </button>
