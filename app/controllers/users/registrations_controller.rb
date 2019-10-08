@@ -73,8 +73,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
+    flash[:notice] = "You have signed up! There is no confirmation email"
     if session[:return_url] != nil
-      flash[:notice] = "You have signed up! There is no confirmation email"
       return session[:return_url]
     else
       return '/'
