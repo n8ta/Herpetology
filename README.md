@@ -14,6 +14,7 @@ This project is an exercise in wheel building all forms, games, models, etc, exc
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
+- Fix reports being for incorrect photos / species on learning page
 - Competitive mode tooltips
 - Learning mode tooltips
 - Learning mode reports
@@ -28,7 +29,8 @@ This project is an exercise in wheel building all forms, games, models, etc, exc
 - Ruby version in gemfile
 - Learn to spell venemous...
 
-# Done:
+# Done: 
+- Fix signup path for devise (October 7, 2019)
 - Google/reddit/fb/myspace/whatever social sign ouath (September 5, 2019) Oh Ya!
 - Learning mode signup prompt after a few questions (like comp mode) (September 5, 2019)
 - Learning mode persistent data with local storage (September 4, 2019)
