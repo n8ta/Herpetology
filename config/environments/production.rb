@@ -16,7 +16,7 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = false
 
-  # Full error reports are disabled and caching is turned on.
+  # Full error reports are disame-originsabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
@@ -46,7 +46,7 @@ Rails.application.configure do
 
 
   config.action_dispatch.default_headers = {
-      'Referrer-Policy' => 'no-referrer',
+      'Referrer-Policy' => 'same-site',
       'X-Content-Type-Options' => 'nosniff',
       'X-Frame-Options' => 'DENY',
       'X-XSS-Protection' => '1; mode=block',
