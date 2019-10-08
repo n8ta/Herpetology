@@ -223,7 +223,7 @@ class SpeciesPicker extends React.Component {
             return (
                 <div>
 
-                    <Signup/>
+                    <Signup return_url={window.location}/>
                     <div className={"center"}>
                         <button className={'main badpath'} onClick={this.next}>No Thanks <br/></button>
                     </div>

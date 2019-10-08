@@ -188,7 +188,7 @@ class Signup extends React.Component {
 
                             <input name="utf8" type="hidden" value="✓"/>
                             <input type="hidden" name="authenticity_token" value={this.state.csrf}/>
-                            <input type="hidden" name="return_url" value={window.location}/>
+                            <input type="hidden" name="return_url" value={this.props.return_url}/>
 
                             <div className="field">
                                 <label htmlFor="user_email">Email</label><br/>

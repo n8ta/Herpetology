@@ -5,16 +5,13 @@ Rails.application.routes.draw do
   devise_scope :user do
     post '/users/email_available/:email' => 'users/registrations#email_available'
     post '/users/username_available/:username' => 'users/registrations#username_available'
-
     post '/users/settings' => 'users/sessions#settings', as: 'settings'
-
     get '/users/set_username' => 'social#set_username', as: "set_username"
     post '/users/set_username' => 'social#post_set_username', as: "post_set_username"
     post '/users/set_return_url' => 'social#set_return_url', as: "set_return_url"
   end
 
   get '/photos/:photo_id/report' => 'reports#new', as: 'new_photo_report'
-
 
 
   post '/google_token' => 'social#google_token', as: "google_token"
