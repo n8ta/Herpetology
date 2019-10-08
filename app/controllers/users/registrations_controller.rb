@@ -77,7 +77,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       flash[:notice] = "You have signed up! There is no confirmation email"
       return session[:return_url]
     else
-      super(resource)
+      return '/'
     end
   end
 
