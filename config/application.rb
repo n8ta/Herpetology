@@ -22,6 +22,16 @@ module Snakeid
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+
+    config.action_dispatch.default_headers = {
+        'Referrer-Policy' => 'same-site',
+        'X-Content-Type-Options' => 'nosniff',
+        'X-Frame-Options' => 'DENY',
+        'X-XSS-Protection' => '1; mode=block',
+        'Strict-Transport-Security' => "max-age=31536000; includeSubDomains; preload",
+        'Feature-Policy' => "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'self'; sync-xhr 'none'; usb 'none'; vr 'none'"
+    }
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

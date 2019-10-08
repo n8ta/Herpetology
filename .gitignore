@@ -1,4 +1,5 @@
 public/packs/manifest.json
+public/packs/*
 .env
 public/assets
 public/packs

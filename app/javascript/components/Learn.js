@@ -405,24 +405,6 @@ class Learn extends React.Component {
                 right_text = "This one";
             }
 
-            if (!this.state.left_is_correct) {
-                let tmp = zoom_left;
-                zoom_left = zoom_right;
-                zoom_right = tmp;
-            }
-
-            let progbars = this.state.working_set.concat(this.state.current);
-            progbars = progbars.sort(function (a, b) {
-                return a.id - b.id
-            });
-
-            progbars = progbars.map((taxon) =>
-                <Speciesprogressbar
-                    key={Math.random()} score={taxon.score * 1.334}
-                    seen={taxon.seen} correct={taxon.correct}
-                    sci_name={taxon.name} common_name={taxon.common_name}></Speciesprogressbar>
-            );
-
             let report_left = <Reportmanager no_flash={true}
                                              after_report={this.new_question}
                                              photo_id={this.state.correct_photo.id}
@@ -437,6 +419,30 @@ class Learn extends React.Component {
                                               region_id={this.props.region_id}
                                               taxon_com={this.state.incorrect_answer.common_name}
                                               taxon_sci={this.state.incorrect_answer.name}></Reportmanager>;
+
+
+            if (!this.state.left_is_correct) {
+                let tmp = zoom_left;
+                zoom_left = zoom_right;
+                zoom_right = tmp;
+
+                tmp = report_left;
+                report_left = report_right;
+                report_right = tmp;
+            }
+
+            let progbars = this.state.working_set.concat(this.state.current);
+            progbars = progbars.sort(function (a, b) {
+                return a.id - b.id
+            });
+
+            progbars = progbars.map((taxon) =>
+                <Speciesprogressbar
+                    key={Math.random()} score={taxon.score * 1.334}
+                    seen={taxon.seen} correct={taxon.correct}
+                    sci_name={taxon.name} common_name={taxon.common_name}></Speciesprogressbar>
+            );
+
 
             return (
                 <div id={"learn"}>
