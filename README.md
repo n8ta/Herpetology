@@ -1,11 +1,12 @@
 # Herpetology
-HerpetologyPro is a *beta* tool to teach people to identify herps based on their photos.
+HerpetologyPro is a *beta* tool to teach people to identify reptiles and amphibians in their area. The end goal is that if people
+aren't afraid of wildlife they won't harm it.
 
-I aim to make this a largely crowd sourced project with users uploading their own photos and 
+This is a largely largely crowd sourced project with users uploading their own photos and 
 contributing to the pages on each species. The live version is hosted @ [herpetology.pro](https://herpetology.pro)
-when ready for launch. Get in touch with me if you are interested in contributing to this project. Or feel free to submit a PR.
+Get in touch with me if you are interested in contributing to this project. Or feel free to submit a PR.
 
-This project is an exercise in wheel building all forms, games, models, etc, except auth are homegrown.
+This project is an exercise in wheel building for me, all forms, games, models, etc, except auth are homegrown.
 
 # Conventions
 - Code should use specie vs species to differentiate the plural, I know that's it's not technically correct but rails heavily relies on singular/plural. Same for genus vs genera etc.
@@ -64,7 +65,7 @@ This project is an exercise in wheel building all forms, games, models, etc, exc
 - Improve region picking (June 10, 2019)
 - Fix whatever in quiz#show is looping (appears to be database related, doesn't happen with sqlite but does with mysql)
   - Turned out to be duplicates the tier-species join table (20k entires crashed everything) after removing the dupes all is well
-  - https://www.n8ta.com/guides/unique-constraint-with-existing-data-rails 
+  - https://www.n8ta.com/sql/rails/2019/07/20/fixing-a-join-table-with-dupliactes.html 
 - Tag species by reigon from HerpMapper (June 7, 2019)
 - Streamline seeding into one command vs many rake tasks (June 7, 2019)
 - Start using UserSpeciesDatum model (June 1, 2019)
