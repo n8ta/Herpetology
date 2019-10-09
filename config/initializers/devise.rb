@@ -5,7 +5,7 @@
 Devise.setup do |config|
 
 
-  config.omniauth :google_oauth2, ENV['google_client_id'], ENV['google_client_secret'], {}
+  config.omniauth :google_oauth2, ENV['google_client_id'], ENV['google_client_secret'], :skip_jwt => true
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
