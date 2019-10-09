@@ -1,6 +1,6 @@
 # Herpetology
 HerpetologyPro is a *beta* tool to teach people to identify reptiles and amphibians in their area. The end goal is that if people
-aren't afraid of wildlife they won't harm it.
+aren't afraid of wildlife they won't harm it. It is a react front end reading from a ruby on rails API. AWS S3 is used for image serving.
 
 This is a largely largely crowd sourced project with users uploading their own photos and 
 contributing to the pages on each species. The live version is hosted @ [herpetology.pro](https://herpetology.pro)
