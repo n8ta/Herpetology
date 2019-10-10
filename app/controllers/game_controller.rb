@@ -163,7 +163,7 @@ class GameController < ApplicationController
     sci_index = rand(4)
     common_index = rand(4)
     hash_data['sci'].insert(sci_index, correct_specie.sci_name)
-    hash_data['common'].insert(common_index, correct_specie.common_names[0].name)
+    hash_data['common'].insert(common_index, correct_specie.common_name)
     session[:sci_index] = sci_index
     session[:common_index] = common_index
     session[:specie_id] = correct_specie.id
