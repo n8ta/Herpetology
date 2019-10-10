@@ -33,8 +33,8 @@ class Reportmanager extends React.Component {
 
     after_report() {
 
-        setTimeout(this.deactivate.bind(this),1000);
-        setTimeout(this.props.after_report,1000)
+        setTimeout(this.deactivate.bind(this), 1000);
+        setTimeout(this.props.after_report, 1000)
     }
 
     render() {
@@ -52,27 +52,33 @@ class Reportmanager extends React.Component {
                             photo_id={this.props.photo_id}
                             taxon_com={this.props.common_name}
                             taxon_sci={this.props.sci_name}/>
-                            <div className={'center'}>
-                                <button onClick={this.deactivate} className={'small cancel'}>Cancel</button>
-                            </div>
+                        <div className={'center'}>
+                            <button onClick={this.deactivate} className={'small cancel'}>Cancel</button>
+                        </div>
 
                     </React.Fragment>)
 
             } else {
                 return (
                     <React.Fragment>
-                        <div className={'center'}>
+                        <div className={'center report-manager'}>
 
-                        <Noherpreport no_flash={true} after_report={this.after_report.bind(this)} photo_id={this.props.photo_id}></Noherpreport>
-                        <Deadherpreport no_flash={true} after_report={this.after_report.bind(this)} photo_id={this.props.photo_id}></Deadherpreport>
-                        <Badregionreport no_flash={true} after_report={this.after_report.bind(this)} disabled={disabled}
-                                         taxon_id={this.props.taxon_id}
-                                         region_id={this.props.region_id}></Badregionreport>
-                        <Badidreport no_flash={true} after_report={this.after_report.bind(this)} callback_fullscreen={this.bad_id_fullscreen} disabled={disabled}
-                                     photo_id={this.props.photo_id}
-                                     taxon_com={this.props.common_name}
-                                     taxon_sci={this.props.sci_name}/>
-                        <button onClick={this.deactivate} className={'small cancel'}>Cancel</button>
+                            <Noherpreport no_flash={true} after_report={this.after_report.bind(this)}
+                                          photo_id={this.props.photo_id}></Noherpreport>
+                            <Deadherpreport no_flash={true} after_report={this.after_report.bind(this)}
+                                            photo_id={this.props.photo_id}></Deadherpreport>
+                            <Badregionreport no_flash={true} after_report={this.after_report.bind(this)}
+                                             disabled={disabled}
+                                             taxon_id={this.props.taxon_id}
+                                             region_id={this.props.region_id}></Badregionreport>
+                            <Badidreport no_flash={true} after_report={this.after_report.bind(this)}
+                                         callback_fullscreen={this.bad_id_fullscreen} disabled={disabled}
+                                         photo_id={this.props.photo_id}
+                                         taxon_com={this.props.common_name}
+                                         taxon_sci={this.props.sci_name}/>
+                            <div>
+                                <button onClick={this.deactivate} className={'small cancel'}>✗</button>
+                            </div>
                         </div>
                     </React.Fragment>
                 );

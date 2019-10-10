@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
 
   before_action :create_username
+  before_action :set_raven_context
+
 
   def create_username
     controller = request.controller_class.to_s
@@ -36,6 +38,17 @@ class ApplicationController < ActionController::Base
       flash[:alert] = "You must be a contributor to do that. To become a contributor contact Nate Tracy-Amoroso. See the github page."
       redirect_back fallback_location: '/'
     end
+  end
+
+  private
+
+  def set_raven_context
+    if current_user
+      Raven.user_context(id: current_user.id,
+                       email: current_user.email,
+                       user_class: current_user.user_class)
+    end
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
 

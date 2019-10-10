@@ -20,6 +20,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'carrierwave', '~> 1.0'
+gem "sentry-raven"
 gem 'devise'
 gem 'nokogiri'
 gem 'mysql2'
