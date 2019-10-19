@@ -16,13 +16,11 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 
 # Todo:
 - Handle google auth failure when email already exists in the system
-- Fix reports being for incorrect photos / species on learning page
 - Competitive mode tooltips
 - Learning mode tooltips
 - Learning mode reports
 - Messaging
 - Quiz on venomous as well as name
-- React component for forgot password
 - Setup email
 - Show tips on species picker after guess
 - Tip approvals
@@ -32,6 +30,9 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Learn to spell venemous...
 
 # Done: 
+- Amazon SES for password emails (October 19, 2019)
+- React component for forgot password -- just used default form from devise instead (October 19, 2019)
+- Fix reports being for incorrect photos / species on learning page (October X, 2019)
 - Fix signup path for devise (October 7, 2019)
 - Google/reddit/fb/myspace/whatever social sign ouath (September 5, 2019) Oh Ya!
 - Learning mode signup prompt after a few questions (like comp mode) (September 5, 2019)

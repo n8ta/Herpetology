@@ -1,4 +1,5 @@
 public/packs/manifest.json
+.ruby-version
 public/packs/*
 .env
 public/assets
