@@ -149,7 +149,7 @@ class GameController < ApplicationController
 
         picked.push(trial_specie)
         hash_data['sci'].push(trial_specie.sci_name)
-        hash_data['common'].push(trial_specie.common_names[0].name)
+        hash_data['common'].push(trial_specie.common_name)
       end
     end
 
