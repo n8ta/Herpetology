@@ -45,6 +45,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_deliveries = true
 
+  config.action_mailer.default_url_options = { :host => "dev.herpetology.pro:3000" }
   config.action_mailer.smtp_settings = {
       :address => ENV['aws_ses_address'],
       :port => ENV['aws_ses_port'],

@@ -76,6 +76,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { :host => "herpetology.pro" }
 
   config.action_mailer.smtp_settings = {
       :address => ENV['aws_ses_address'],
