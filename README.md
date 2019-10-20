@@ -15,6 +15,7 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
+- Restore analytics
 - Handle google auth failure when email already exists in the system
 - Competitive mode tooltips
 - Learning mode tooltips
