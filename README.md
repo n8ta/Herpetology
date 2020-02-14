@@ -88,7 +88,10 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 1. Configure rb in .env
 2. bundle install
 3. yarn install
-4. Request access to photos from herpmapper, modify their script to preface photos with a_ and d_ for alive/dead, move those folders to the /herpmapper/species directory
-5. rails db:migrate RAILS_ENV=production
-7. rails assets:precompile RAILS_ENV=production 
-8. rails s -e production
+4. rails db:migrate RAILS_ENV=production
+5. Request access to photos from herpmapper, modify their script to preface photos with a_ and d_ for alive/dead, move those folders to the /herpmapper/species directory
+6. Import photos
+7. Import  regions
+8. Import herp regions
+9. rails assets:precompile RAILS_ENV=production 
+10. rails s -e production

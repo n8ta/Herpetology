@@ -44,7 +44,6 @@ namespace :imports do
       taxon = Taxon.find_by(name: name)
 
       if taxon.nil?
-        # nil_taxons.add(name)
         next
       end
 
@@ -59,19 +58,19 @@ namespace :imports do
         begin
           taxon.regions << country
         rescue => e
-          puts e.backtrace.join("\n")
+          # puts e.backtrace.join("\n")
           rescued_country += 1
         end
         begin
           taxon.regions << state
         rescue => e
-          puts e.backtrace.join("\n")
+          # puts e.backtrace.join("\n")
           rescued_state += 1
         end
         begin
           taxon.regions << county
         rescue => e
-          puts e.backtrace.join("\n")
+          # puts e.backtrace.join("\n")
           rescued_county += 1
         end
       end

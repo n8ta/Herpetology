@@ -8,8 +8,8 @@ development:
     adapter: mysql2
     database: herpid
     encoding: utf8
-    username: root
-    password: rootrootroot
+    username: admin
+    password: admin
     host: localhost
 
 test:

@@ -5,7 +5,7 @@ namespace :imports do
     done = 0
     puts "Staring import of herp mapper photos"
     # base = '/herpmapper2/species/'
-    base = '/Users/n8ta/Desktop/herp2/species/'
+    base = '/Users/n8ta/Desktop/herp/species/'
 
     def handle_dir(species_dir,base)
       # base = '/herpmapper2/species'

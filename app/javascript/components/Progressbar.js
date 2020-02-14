@@ -11,7 +11,7 @@ class Progressbar extends React.Component {
 
         return (
             <div className={"progress-bar "+wide}>
-                <div className={'progress-bar-inner width'+this.props.width.toFixed(0)}></div>
+                <div className={'progress-bar-inner'}></div>
                 <div className={'progress-bar-text'}>{this.props.msg}</div>
             </div>
         );
