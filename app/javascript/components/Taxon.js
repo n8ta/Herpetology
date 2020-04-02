@@ -8,6 +8,7 @@ import Masteredlist from "./Masteredlist";
 class Taxon extends React.Component {
   render () {
     let taxon = this.props.taxon;
+    console.log(taxon.photos);
     return (
         <li key={taxon.id}>
           <img src={taxon.photos[0].url}/>

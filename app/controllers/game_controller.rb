@@ -1,17 +1,16 @@
 class GameController < ApplicationController
   before_action :set_taxon, only: [:pick_region, :game, :guess]
   before_action :set_region, only: [:game, :guess]
-  before_action :set_mode, only: [:game, :guess]
 
   def scoreboard
     limit = 10
     # TBH this code should be swapped out with a hash user: rank then we can check the hash for the current_user and add it if needed
     # but right now we just check for the whole hash which is sketch af.
     # I'll fix this at some point...... He said never going to touch the code again.
-    @users_total_correct = User.all.sort {|a, b| b.total_correct <=> a.total_correct}[0..limit - 1].each_with_index.map {|user, i| {'rank': i + 1, 'username': user.username, 'score': user.total_correct}}
-    @users_sci_acc = User.all.sort {|a, b| b.accuracy_scientific <=> a.accuracy_scientific}[0..limit - 1].each_with_index.map {|user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_scientific}}
-    @users_com_acc = User.all.sort {|a, b| b.accuracy_common <=> a.accuracy_common}[0..limit - 1].each_with_index.map {|user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_common}}
-    @users_reports = User.all.sort {|a, b| b.approved_reports.size <=> a.approved_reports.size}[0..limit - 1].each_with_index.map {|user, i| {'rank': i + 1, 'username': user.username, 'score': user.approved_reports.size}}
+    @users_total_correct = User.all.sort { |a, b| b.total_correct <=> a.total_correct }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.total_correct} }
+    @users_sci_acc = User.all.sort { |a, b| b.accuracy_scientific <=> a.accuracy_scientific }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_scientific} }
+    @users_com_acc = User.all.sort { |a, b| b.accuracy_common <=> a.accuracy_common }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_common} }
+    @users_reports = User.all.sort { |a, b| b.approved_reports.size <=> a.approved_reports.size }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.approved_reports.size} }
     if current_user
       # Add current user to end of scoreboard b/c that's what everyone really cares about
       cu_total_hash = {'rank': current_user.place_on_scoreboard, 'username': current_user.username, 'score': current_user.total_correct}
@@ -38,82 +37,76 @@ class GameController < ApplicationController
   end
 
   def guess
-    if params[:mode] == "quiz"
 
-      body = JSON.parse request.body.read
-      species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
-      specie_m = Taxon.all.species.find(session[:specie_id])
-      sci_correct = session[:sci_index].to_s == body['sci_guess']
-      common_correct = session[:common_index].to_s == body['common_guess']
-      old_sci_index = session[:sci_index]
-      old_common_index = session[:common_index]
-      old_photo_id = session[:photo_id]
-      hash_specie_photo = specie_hash(species)
+    body = JSON.parse request.body.read
+    species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
+    specie_m = Taxon.all.species.find(session[:specie_id])
+    sci_correct = session[:sci_index].to_s == body['sci_guess']
+    common_correct = session[:common_index].to_s == body['common_guess']
+    old_sci_index = session[:sci_index]
+    old_common_index = session[:common_index]
+    old_photo_id = session[:photo_id]
+    hash_specie_photo = specie_hash(species)
 
-      photo = hash_specie_photo[2]
+    photo = hash_specie_photo[2]
 
-      venomous = "unknown"
-      venomous == "venomous" if venomous == true
-      venomous == "nonvenomous" if venomous == false
+    venomous = "unknown"
+    venomous == "venomous" if venomous == true
+    venomous == "nonvenomous" if venomous == false
 
-      specie_data = {
-          'sci_name': specie_m.sci_name.to_s,
-          'common_name': specie_m.common_names.any? ? specie_m.common_names[0].name.to_s : nil,
-          'species_id': specie_m.id,
-          'venomous': venomous,
-          'next_options': hash_specie_photo[0],
-          'next_image_path': photo.image_path.url,
-          'correct_sci_index': old_sci_index,
-          'correct_common_index': old_common_index,
-          'sci_correct': sci_correct,
-          'common_correct': common_correct,
-          'next_photo_id': photo.id
-      }
-      datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
-      if current_user
-        if sci_correct
-          datum.sci_guess_correct
-        else
-          datum.sci_guess_incorrect
-        end
-        if common_correct
-          datum.common_guess_correct
-        else
-          datum.common_guess_incorrect
-        end
+    specie_data = {
+        'sci_name': specie_m.sci_name.to_s,
+        'common_name': specie_m.common_name ? specie_m.common_name : nil,
+        'species_id': specie_m.id,
+        'venomous': venomous,
+        'next_options': hash_specie_photo[0],
+        'next_image_path': photo.image_path.url,
+        'correct_sci_index': old_sci_index,
+        'correct_common_index': old_common_index,
+        'sci_correct': sci_correct,
+        'common_correct': common_correct,
+        'next_photo_id': photo.id,
+        'tips': specie_m.tips
+    }
+    datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
+    if current_user
+      if sci_correct
+        datum.sci_guess_correct
+      else
+        datum.sci_guess_incorrect
       end
-      return render :json => specie_data
-    elsif params[:mode] == "learn"
+      if common_correct
+        datum.common_guess_correct
+      else
+        datum.common_guess_incorrect
+      end
     end
-  end
-
-  def learn_guess
-
+    return render :json => specie_data
   end
 
   def game
-    if @mode == "quiz"
-      @regions = @region.regions
-      @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
-      options = specie_hash(@species)
-      correct_specie = options[1]
-      @photo = correct_specie.photos[rand(correct_specie.photos.size)]
-      @options = options[0]
-    elsif @mode == "learn"
-      @regions = @region.regions
-      @taxons = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
-      @taxons = @taxons.map {|tx| tx.attributes}
-      @taxons.each do |sp|
-        if (sp["venomous"] == true)
-          sp[:venomous] = "venomous"
-        elsif (sp["venomous"] == false)
-          sp[:venomous] = "nonvenomous"
-        else
-          sp[:venomous] = "unknown"
-        end
-      end
-      @species = @taxons
-    end
+    # if @mode == "quiz"
+    @regions = @region.regions
+    @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).select { |sp| sp.photos.any? }
+    options = specie_hash(@species)
+    correct_specie = options[1]
+    @photo = correct_specie.photos[rand(correct_specie.photos.size)]
+    @options = options[0]
+    # elsif @mode == "learn"
+    #   @regions = @region.regions
+    #   @taxons = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
+    #   @taxons = @taxons.map {|tx| tx.attributes}
+    #   @taxons.each do |sp|
+    #     if (sp["venomous"] == true)
+    #       sp[:venomous] = "venomous"
+    #     elsif (sp["venomous"] == false)
+    #       sp[:venomous] = "nonvenomous"
+    #     else
+    #       sp[:venomous] = "unknown"
+    #     end
+    #   end
+    #   @species = @taxons
+    # end
   end
 
 
@@ -143,10 +136,7 @@ class GameController < ApplicationController
             end
             # skip with probability 1-ratio, with ratio capped at .85
           end
-
-
         end
-
         picked.push(trial_specie)
         hash_data['sci'].push(trial_specie.sci_name)
         hash_data['common'].push(trial_specie.common_name)
@@ -173,11 +163,6 @@ class GameController < ApplicationController
 
   def set_taxon
     @taxon = Taxon.find params[:taxon_id]
-  end
-
-  def set_mode
-    @mode = params[:mode]
-    raise if (@mode != "quiz") && (@mode != "learn")
   end
 
   def set_region

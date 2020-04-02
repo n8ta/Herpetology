@@ -15,22 +15,20 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Restore analytics
+- Tip display
+- Tip approvals
+- Tip submissions
 - Handle google auth failure when email already exists in the system
 - Competitive mode tooltips
-- Learning mode tooltips
-- Learning mode reports
-- Messaging
 - Quiz on venomous as well as name
 - Setup email
 - Show tips on species picker after guess
-- Tip approvals
-- Tip submissions
 - Variable zoom on zoom-in feature 
 - Ruby version in gemfile
 - Learn to spell venemous...
 
 # Done: 
+- Upgrade to rails 6 (April 2, 2020)
 - Amazon SES for password emails (October 19, 2019)
 - React component for forgot password -- just used default form from devise instead (October 19, 2019)
 - Fix reports being for incorrect photos / species on learning page (October X, 2019)
@@ -88,10 +86,15 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 1. Configure rb in .env
 2. bundle install
 3. yarn install
-4. rails db:migrate RAILS_ENV=production
-5. Request access to photos from herpmapper, modify their script to preface photos with a_ and d_ for alive/dead, move those folders to the /herpmapper/species directory
-6. Import photos
-7. Import  regions
-8. Import herp regions
-9. rails assets:precompile RAILS_ENV=production 
-10. rails s -e production
+4. bundle exec rails db:schema:load
+5. Request access to photos from herpmapper, modify their script to preface photos with a_ and d_ for alive/dead (configure imports:herp photos to match where you placed this folder)
+6. bundle exec rails db:seed (you'll need to configure herp_photos.rake)
+6. bundle exec rake imports:taxonomy
+7. bundle exec rake imports:herp_create_regions
+8. bundle exec rake imports:herp_regions
+9. bundle exec rake imports:herp_photos
+10. bundle exec rake imports:root_taxon_photos
+11. bundle exec rake maintenance:update_taxon_validity
+12. bundle exec rake maintenance:update_regions_root_taxons_table 
+13. rails assets:precompile RAILS_ENV=production 
+14. rails s -e production

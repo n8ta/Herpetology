@@ -6,25 +6,19 @@
      cur = cur.region
    end
    region_array = region_array.reverse
-   region_array = region_array.map {|ra| "<a href='#{taxon_region_path(@taxon, ra)}'>#{ra.name}</a>"}.join(" > ")
+   region_array = region_array.map {|ra| "<a href='#{game_taxon_region_url(@taxon, ra,"game")}'>#{ra.name}</a>"}.join(" > ")
 %>
 
 <% content_for :title do %>
-  Learn to identify <%= @taxon.common_names[0].name %> in <%= @region.name %>
+  Learn to identify <%= @taxon.common_name %> in <%= @region.name %>
 <% end %>
 
 <% content_for :breadcrumb do %>
   <h2>
     <%= link_to render('statics/world'), root_path %> >
-    <%= link_to @taxon.common_names[0].name, taxon_path(@taxon) %> >
+    <%= link_to @taxon.common_name, taxon_path(@taxon) %> >
 
     <%= region_array.html_safe %> >
-    <% if @mode == "learn" %>
-      📖 &nbsp
-    <% else %>
-      ⚔ &nbsp
-    <% end %>
-
     <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s %>
       species</span>
 
@@ -39,11 +33,6 @@
   <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
 <% end %>
 
-<% if @mode == "learn" %>
-  <%= react_component('Learn2', {taxons: @species}) %>
-  <%#= react_component('Learn2', {region_id: @region.id, root_taxon_name: @taxon.root.common_name, taxons: @species, mastery_cutoff_score: 0.75, working_size: 6, factor: (3.0 / 4.0), region_name: @region.name}) %>
-<% elsif @mode == "quiz" %>
-  <%= react_component('SpeciesPicker', {region: @region, photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
-<% end %>
+<%= react_component('SpeciesPicker', {region: @region, photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
 
 

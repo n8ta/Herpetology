@@ -6,18 +6,17 @@ gem 'passenger'
 gem 'jquery-rails'
 gem 'fog-aws'
 gem 'dotenv-rails'
-gem 'webpacker', '4.0.7'
+gem 'webpacker'
 gem 'react-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'redd'
 gem 'httparty'
-gem 'rails', '~> 5.2.3'
-gem "lograge"
-gem 'sqlite3'
-gem 'sass-rails', '~> 5.0'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
-gem 'bcrypt', '~> 3.1.7'
+gem 'rails', '> 6.0'
+
+gem 'sass-rails', '> 5.0'
+gem 'turbolinks', '> 5'
+gem 'jbuilder', '> 2.5'
+gem 'bcrypt', '> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'carrierwave', '~> 1.0'
 gem "sentry-raven"
@@ -26,8 +25,12 @@ gem 'nokogiri'
 gem 'mysql2'
 gem 'puma'
 
+gem 'rack-cors'
+
 
 group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 

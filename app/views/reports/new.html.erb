@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :breadcrumb do %>
-  Report: <%= @taxon.sci_name %> -- <%= @taxon.common_names[0].name %>
+  Report: <%= @taxon.sci_name %> -- <%= @taxon.common_name.name %>
 <% end %>
 
 

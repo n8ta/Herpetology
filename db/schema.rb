@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_09_08_022216) do
 
-  create_table "bad_id_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "bad_id_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
     t.boolean "approved", default: false
     t.bigint "created_by_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["taxon_id"], name: "index_bad_id_reports_on_taxon_id"
   end
 
-  create_table "bad_region_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "bad_region_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
     t.boolean "approved", default: false
     t.bigint "created_by_id"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["taxon_id"], name: "index_bad_region_reports_on_taxon_id"
   end
 
-  create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "common_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "taxon_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["taxon_id"], name: "index_common_names_on_taxon_id"
   end
 
-  create_table "dead_herp_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "dead_herp_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
     t.boolean "approved", default: false
     t.bigint "created_by_id"
@@ -58,11 +58,12 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["photo_id"], name: "index_dead_herp_reports_on_photo_id"
   end
 
-  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.text "content"
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "content", null: false
     t.bigint "report_id"
-    t.bigint "src"
-    t.bigint "dst"
+    t.bigint "src", null: false
+    t.bigint "dst", null: false
+    t.boolean "read", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["dst"], name: "fk_rails_dafa164fa2"
@@ -70,7 +71,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["src"], name: "fk_rails_8b62b3bab8"
   end
 
-  create_table "no_herp_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "no_herp_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
     t.boolean "approved", default: false
     t.bigint "created_by_id"
@@ -81,7 +82,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["photo_id"], name: "index_no_herp_reports_on_photo_id"
   end
 
-  create_table "photos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "photos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "taxon_id", null: false
     t.string "image_path", null: false
     t.bigint "seen", default: 0, null: false
@@ -93,13 +94,13 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["taxon_id"], name: "index_photos_on_taxon_id"
   end
 
-  create_table "regions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "regions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "region_id"
     t.index ["region_id"], name: "index_regions_on_region_id"
   end
 
-  create_table "regions_root_taxons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "regions_root_taxons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "region_id"
     t.bigint "taxon_id"
     t.index ["region_id"], name: "index_regions_root_taxons_on_region_id"
@@ -107,14 +108,14 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["taxon_id"], name: "index_regions_root_taxons_on_taxon_id"
   end
 
-  create_table "regions_taxons", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "regions_taxons", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "region_id", null: false
     t.bigint "taxon_id", null: false
     t.index ["region_id"], name: "fk_rails_fa98b95512"
     t.index ["taxon_id", "region_id"], name: "index_regions_taxons_on_taxon_id_and_region_id", unique: true
   end
 
-  create_table "taxons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "taxons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "taxon_id"
     t.integer "rank"
@@ -127,7 +128,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["taxon_id"], name: "index_taxons_on_taxon_id"
   end
 
-  create_table "tips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "tips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.text "content"
     t.bigint "taxon_id"
@@ -138,7 +139,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["user_id"], name: "index_tips_on_user_id"
   end
 
-  create_table "user_taxon_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "user_taxon_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "taxon_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -152,7 +153,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["user_id"], name: "index_user_taxon_data_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email"
     t.string "encrypted_password", default: ""
     t.string "reset_password_token"
@@ -169,7 +170,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_022216) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "venom_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "venom_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
     t.boolean "approved", default: false
     t.bigint "created_by_id"

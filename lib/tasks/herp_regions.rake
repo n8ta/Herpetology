@@ -42,7 +42,6 @@ namespace :imports do
         name = split[0] + ' ' + split[1]
       end
       taxon = Taxon.find_by(name: name)
-
       if taxon.nil?
         next
       end

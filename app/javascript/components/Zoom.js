@@ -1,5 +1,6 @@
 import React from "react"
 import Venomreport from './Venomreport.js';
+import Tip from './Tip.js';
 import PropTypes from "prop-types"
 
 class Zoom extends React.Component {
@@ -12,7 +13,7 @@ class Zoom extends React.Component {
             mode: 'waiting',
             id: btoa(Math.random().toString(36)), // ~Random id so we can have two on the same page
         };
-        setTimeout(this.apply_style.bind(this),.01)
+        setTimeout(this.apply_style.bind(this), .01);
     }
 
     mouseMove(e) {
@@ -33,7 +34,10 @@ class Zoom extends React.Component {
 
     apply_style() {
         let zoom = document.getElementById('zoom_' + this.state.id);
-        if (zoom == undefined) {return};
+        if (zoom == undefined) {
+            return
+        }
+        ;
         zoom.style.backgroundImage = "url('" + this.props.url + "')";
         if (this.state && this.state.mode == 'live') {
             zoom.style.transformOrigin = this.state.origin
@@ -44,6 +48,14 @@ class Zoom extends React.Component {
     render() {
         this.apply_style();
         let venomous = "";
+        let tip = "";
+
+        if (this.props.tips && this.props.tips.length > 0) {
+            let tmp = this.props.tips[Math.floor(Math.random() * this.props.tips.length)];
+            tip = <Tip {...tmp} />
+        }
+
+
         if (this.props.no_text == true) {
 
         } else {
@@ -53,7 +65,7 @@ class Zoom extends React.Component {
             } else if (this.props.venomous == "nonvenomous") {
                 venomous = <div id='poison_icon'>Nonvenomous</div>
             } else if (this.props.venomous == "unknown") {
-                venomous = <div id='poison_icon'>We don't know if it's venomous
+                venomous = <div id='poison_icon'>
                     <Venomreport photo_id={this.props.photo_id}></Venomreport></div>
             }
         }
@@ -72,6 +84,7 @@ class Zoom extends React.Component {
 
                         </div>
                     </div>
+                    {tip}
                 </div>
             </React.Fragment>
         )
@@ -84,5 +97,6 @@ Zoom.propTypes = {
     photo_id: PropTypes.number,
     venomous: PropTypes.string,
     no_text: PropTypes.bool,
+    tips: PropTypes.array,
 };
 export default Zoom

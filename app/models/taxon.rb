@@ -10,6 +10,7 @@ class Taxon < ApplicationRecord
   has_many :taxons
   has_many :common_names
   has_many :photos
+  has_many :tips
 
   # Only used on root taxon, these are the regions for a root taxon where there are at least 5 species with photos
   has_and_belongs_to_many :valid_regions, join_table: 'regions_root_taxons', class_name: 'Region'

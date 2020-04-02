@@ -1,5 +1,5 @@
 <% content_for :title do %>
-  <%= @taxon.common_names[0].name %>
+  <%= @taxon.common_name %>
 <% end %>
 
 <% content_for :head do %>
@@ -9,7 +9,7 @@
 <% content_for :breadcrumb do %>
   <h2>
     <%= link_to root_path do %><%= render 'statics/world' %><% end %> >
-    <%= link_to @taxon.common_names[0].name, taxon_regions_path(@taxon) %>
+    <%= link_to @taxon.common_name, taxon_regions_path(@taxon) %>
   </h2>
 <% end %>
 

@@ -26,7 +26,7 @@ class Regionpicker extends React.Component {
     render() {
 
         let lis = this.state.options.map(x => <li key={x.id}><a
-            href={'/taxons/' + this.props.taxon.id + '/regions/' + x.id}>{x.name}</a></li>);
+            href={'/taxons/' + this.props.taxon.id + '/regions/' + x.id+'/game'}>{x.name}</a></li>);
         return (
             <React.Fragment>
                 <h2>Pick your Region</h2>

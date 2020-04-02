@@ -5,7 +5,7 @@ class RegionTaxonSecondJoinYkes < ActiveRecord::Migration[5.2]
       t.references :taxon, foreign_key: true
     end
     add_index 'regions_root_taxons', [:taxon_id, :region_id], unique: true
-    Rake::Task['maintence:update_regions_root_taxons_table'].invoke
+    Rake::Task['maintenance:update_regions_root_taxons_table'].invoke
   end
 
 

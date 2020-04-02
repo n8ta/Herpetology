@@ -13,9 +13,7 @@ Rails.application.routes.draw do
 
   get '/photos/:photo_id/report' => 'reports#new', as: 'new_photo_report'
 
-
   post '/google_token' => 'social#google_token', as: "google_token"
-
 
   resources :user_taxon_data, only: [:show]
 

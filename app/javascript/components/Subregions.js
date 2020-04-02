@@ -51,7 +51,7 @@ class Subregions extends React.Component {
             for (let i = 0; i < this.state.tier2s.length; i ++) {
                 let t2 = this.state.tier2s[i];
                 subregions.push(
-                    <li key={t2['id']}><a href={t2['pick_url']}>{t2['name']}</a></li>
+                    <li key={t2['id']}><a href={t2['game_url']}>{t2['name']}</a></li>
                 )
             }
             return (

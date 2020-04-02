@@ -20,7 +20,7 @@ Bundler.require(*Rails.groups)
 module Snakeid
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.0
 
     Raven.configure do |config|
       config.dsn = 'https://e579d357b1d84d1d980701708a3ac31d:8872cf2d2b3c4e2f9c74b376d0713236@sentry.io/1775125'
@@ -32,7 +32,8 @@ module Snakeid
         'X-Frame-Options' => 'DENY',
         'X-XSS-Protection' => '1; mode=block',
         'Strict-Transport-Security' => "max-age=31536000; includeSubDomains; preload",
-        'Feature-Policy' => "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'self'; sync-xhr 'none'; usb 'none'; vr 'none'"
+        'Feature-Policy' => "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'self'; sync-xhr 'none'; usb 'none'; vr 'none'",
+        'Access-Control-Allow-Origin' => "*",
     }
 
     # Settings in config/environments/* take precedence over those specified here.

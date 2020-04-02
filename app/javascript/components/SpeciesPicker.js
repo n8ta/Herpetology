@@ -131,6 +131,7 @@ class SpeciesPicker extends React.Component {
                 iterations: this.state.iterations + 1,
                 photo_id: this.state.next_photo_id,
                 species_id: undefined,
+                tips: [],
             });
         }
 
@@ -152,8 +153,6 @@ class SpeciesPicker extends React.Component {
             this.state.num_chosen += 1;
             return
         }
-
-
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
         this.setState({mode: 'loading'});
         let data = {
@@ -187,6 +186,7 @@ class SpeciesPicker extends React.Component {
                 common_correct: result['common_correct'],
                 venomous: result['venomous'],
                 next_photo_id: result['next_photo_id'],
+                tips: result['tips']
             });
             this.preload(result['next_image_path']);
         })
@@ -200,8 +200,8 @@ class SpeciesPicker extends React.Component {
         let left = '';
         let right = '';
         let form = '';
-        let left_title = "Scientific";
-        let right_title = "Common";
+        let left_title = "Scientific ? ";
+        let right_title = "Common ?";
         if (this.state.mode == 'answered') {
             next_button = <div id={'next'} className={"center"}>
                 <button className={'main happypath'} onClick={this.next}>Next <br/></button>
@@ -244,7 +244,7 @@ class SpeciesPicker extends React.Component {
                         taxon_com={this.state.common_name}
                         taxon_sci={this.state.sci_name}
                     ></Reportmanager>
-                <Zoom photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
+                <Zoom tips={this.state.tips} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>

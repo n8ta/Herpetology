@@ -91,7 +91,7 @@ class Venomreport extends React.Component {
       } else {
         return (
             <div className="center">
-              <button onClick={this.activate} className={'small'}><Alert/> Contribute Info</button>
+              <button onClick={this.activate} className={'small'}><Alert/>Contribute Info</button>
             </div>
         );
       }

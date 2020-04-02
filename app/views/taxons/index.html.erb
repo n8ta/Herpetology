@@ -1,6 +1,6 @@
-<% content_for :head  do %>
-  <meta property="og:title" content="Herpetology: Learn to identify reptiles and amphibians" />
-  <meta property="og:image" content="<%= @taxons[0].photo.url %>" />
+<% content_for :head do %>
+  <meta property="og:title" content="Herpetology: Learn to identify reptiles and amphibians"/>
+  <meta property="og:image" content="<%= @taxons[0].photo.url %>"/>
 <% end %>
 
 <% content_for :title do %>
@@ -15,6 +15,7 @@
   <% end %>
 <% end %>
 
+
 <h2>Pick your Herp</h2>
 <ul id="pick_taxons">
   <% @taxons.each do |txn| %>
@@ -23,21 +24,18 @@
         <%= image_tag txn.photo.url %>
         <div class="prebutton">
           <%= button_tag class: 'special' do %>
-            <h3><%= txn.common_names[0].name %></h3>
+            <h3><%= txn.common_name %></h3>
           <% end %>
         </div>
       </li>
     <% end %>
   <% end %>
 </ul>
+
 <div class="center">
   <% if @taxons.size != Taxon.roots.size %>
-
     <%= link_to "More", all_taxons_path, class: 'main' %>
-
   <% else %>
-
-    <%= link_to "Less", taxons_path , class: 'main' %>
-
-
-  <% end %></div>
+    <%= link_to "Less", taxons_path, class: 'main' %>
+  <% end %>
+</div>

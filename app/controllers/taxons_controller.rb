@@ -35,7 +35,10 @@ class TaxonsController < ApplicationController
 
   def photos_plenty
     if Rails.env.development?
-      sleep rand()*0.011
+      if rand() < 0.2
+        return render :head
+      end
+      sleep rand()*3
     end
     photos = @taxon.photos.where(dead: false).take(ENV['how_many_photos_is_enough_for_learning_mode'].to_i).map{|p|  {id: p.id, taxon_id: p.taxon_id, url: p.image_path.url}}
     render :json => photos

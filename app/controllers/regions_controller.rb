@@ -15,7 +15,9 @@ class RegionsController < ApplicationController
 
 
   def show
-
+    if Rails.env.development?
+      sleep rand() * 0.5
+    end
   end
 
   private

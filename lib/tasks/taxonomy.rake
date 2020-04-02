@@ -41,31 +41,17 @@ namespace :imports do
     # [name, common_name, parent]
     puts "starting root herps"
     roots.each do | root |
-      root_m = Taxon.new(name: root[0].titleize, rank: "root", taxon: Taxon.find_by(name: root[2]))
+      puts root[1]
+      root_m = Taxon.new(name: root[0].titleize, rank: "root", taxon: Taxon.find_by(name: root[2]), common_name: root[1])
       root_m.save
-      begin
-      cn_m = CommonName.new(taxon: root_m, name: root[1])
-      cn_m.save!
-      rescue => error
-        puts "bad common name "
-      end
     end
 
     puts "starting families"
 
     families.each do | fam |
       root = Taxon.find_by(name: fam[2].titleize)
-      fam_m = Taxon.new(name: fam[0].titleize, rank: "family", taxon: root, root_taxon_id: root.id)
+      fam_m = Taxon.new(name: fam[0].titleize, rank: "family", taxon: root, root_taxon_id: root.id, common_name: fam[1])
       fam_m.save
-      begin
-        cn_m = CommonName.new(taxon: fam_m, name: fam[1])
-        cn_m.save
-      rescue => error
-        puts "bad common name "
-        puts fam.inspect
-        puts "  error: " + error.to_s
-        puts "  trace: "+ error.backtrace.to_s
-      end
     end
 
     puts "starting sub families"
@@ -76,17 +62,8 @@ namespace :imports do
       while not root_m.taxon.nil?
         root_m = root_m.taxon
       end
-      fam_m = Taxon.new(name: sub_fam[0], rank: "subfamily", taxon: family, root_taxon_id: root_m.id)
+      fam_m = Taxon.new(name: sub_fam[0], rank: "subfamily", taxon: family, root_taxon_id: root_m.id, common_name: sub_fam[1])
       fam_m.save
-      begin
-        cn_m = CommonName.new(taxon: fam_m, name: sub_fam[1])
-        cn_m.save
-      rescue => error
-        puts "bad common name "
-        puts sub_fam.inspect
-        puts "  error: " + error.to_s
-        puts "  trace: "+ error.backtrace.to_s
-      end
     end
 
     puts "starting genuses"
@@ -96,19 +73,8 @@ namespace :imports do
       while not root_m.taxon.nil?
         root_m = root_m.taxon
       end
-
-      genus_m = Taxon.new(name: genus[0], rank: "genus", taxon: family_m, root_taxon_id: root_m.id)
+      genus_m = Taxon.new(name: genus[0], rank: "genus", taxon: family_m, root_taxon_id: root_m.id, common_name: genus[1])
       genus_m.save
-      begin
-        cn_m = CommonName.new(taxon: genus_m, name: genus[1])
-        cn_m.save
-      rescue => error
-        puts "bad common name "
-        puts genus.inspect
-        puts "  error: " + error.to_s
-        puts "  trace: "+ error.backtrace.to_s
-
-      end
     end
 
     puts "starting species"
@@ -120,18 +86,8 @@ namespace :imports do
         root_m = root_m.taxon
       end
 
-      specie_m = Taxon.new(name: specie[0], rank: "species", taxon: genus, root_taxon_id: root_m.id)
+      specie_m = Taxon.new(name: specie[0], rank: "species", taxon: genus, root_taxon_id: root_m.id, common_name: specie[1])
       specie_m.save
-      begin
-        cn_m = CommonName.new(taxon: specie_m, name: specie[1])
-        cn_m.save
-      rescue => error
-        puts "bad common name "
-        puts species.inspect
-        puts "  error: " + error.to_s
-        puts "  trace: "+ error.backtrace.to_s
-
-      end
     end
 
     puts "Done importing taxonomy from herpmapper (local cache)"
