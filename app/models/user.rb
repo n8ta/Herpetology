@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
+  enum user_class: ["user","contributor","admin"]
+
   def self.from_omniauth(access_token)
     data = access_token.info
     firstname = data[:first_name]
@@ -28,7 +30,7 @@ class User < ApplicationRecord
   # has_many :reports, class_name: 'Report', table_name: 'Reports', foreign_key: "created_by" # Column name on report, there a handled_by user and a created_By user
   has_many :user_taxon_data, dependent: :delete_all
 
-  enum user_class: ["user","contributor","admin"]
+
 
   def place_on_scoreboard
     User.all.sort {|a, b| b.total_correct <=> a.total_correct}.find_index(self) + 1

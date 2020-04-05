@@ -114,6 +114,7 @@ class SpeciesPicker extends React.Component {
             Cookies.set("asked_about_signup", true, {expires: 1})
         } else {
             this.setState({
+                taxon: undefined,
                 common_name: undefined,
                 sci_name: undefined,
                 mode: 'waiting',
@@ -173,11 +174,12 @@ class SpeciesPicker extends React.Component {
 
         }).then(res => res.json()).then((result) => {
             this.setState({
-                common_name: result['common_name'],
-                sci_name: result['sci_name'],
+                taxon: result.taxon,
+                common_name: result.taxon.common_name,
+                sci_name: result.taxon.name,
                 next_options: result['next_options'],
                 next_image_path: result['next_image_path'],
-                species_id: result['species_id'],
+                species_id: result.taxon.id,
                 prev_image_path: this.state.image_path,
                 sci_correct_index: result['correct_sci_index'],
                 common_correct_index: result['correct_common_index'],
@@ -239,7 +241,7 @@ class SpeciesPicker extends React.Component {
                         taxon_com={this.state.common_name}
                         taxon_sci={this.state.sci_name}
                     ></Reportsinmodal>
-                <Zoom tip={this.state.tip} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
+                <Zoom taxon={this.state.taxon} tip={this.state.tip} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>

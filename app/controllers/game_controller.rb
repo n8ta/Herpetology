@@ -55,8 +55,7 @@ class GameController < ApplicationController
     venomous == "nonvenomous" if venomous == false
 
     specie_data = {
-        'sci_name': specie_m.sci_name.to_s,
-        'common_name': specie_m.common_name ? specie_m.common_name : nil,
+        'taxon': specie_m.to_hash,
         'species_id': specie_m.id,
         'venomous': venomous,
         'next_options': hash_specie_photo[0],
@@ -66,7 +65,8 @@ class GameController < ApplicationController
         'sci_correct': sci_correct,
         'common_correct': common_correct,
         'next_photo_id': photo.id,
-        'tip': specie_m.tips.any? ? specie_m.tips.where(approved: true).sample.to_hash : nil
+
+        'tip': specie_m.tips.where(approved: true).any? ? specie_m.tips.where(approved: true).sample.to_hash : nil
     }
     datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
     if current_user

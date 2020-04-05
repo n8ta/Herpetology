@@ -14,3 +14,53 @@ button.main
 button[disabled] .alert
   svg
     fill: $light-green
+
+button:not(.special)
+  border-bottom: .3rem solid $brown
+  margin-top: 2rem
+  border: 0
+  border-radius: 1rem
+  padding: 1rem
+  color: white
+  background-color: $dark-green
+  &:not(.disabled)
+    &:hover
+      background-color: $darker-green
+    &:active
+      background-color: $brown
+      color: white
+  &.small
+    margin-top: 0
+    padding: .35rem
+    font-size: .8em
+    padding-left: .6rem
+    padding-right: .6rem
+    margin-left: .2rem
+    margin-right: .2rem
+    &.submitted
+      color: white
+      background-color: $brown
+
+
+button:not(.special).cancel
+  background-color: grey
+  &:hover
+    background-color: #6b6b6b
+  &:active
+    background-color: #4a4a4a
+
+
+button.badpath:not(.special)
+  color: $mid-green
+
+
+section
+  button:not(.special):not(.disabled)
+    border-bottom: .3rem solid $brown
+    background-color: $blue
+    &:hover
+      background-color: $dark-blue
+      border-color: black
+    &:active
+      background-color: $brown
+      border-color: $mid-green

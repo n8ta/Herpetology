@@ -2,10 +2,10 @@ import React from "react"
 import Venomreport from './Venomreport.js';
 import PropTypes from "prop-types"
 import Tipinmodal from "./Tip/Tipinmodal";
+import Submittipinmodal from "./Tip/Submittipinmodal";
 
 class Zoom extends React.Component {
     constructor(props) {
-        console.debug("zoom constructed -----===-=---");
         super(props);
         this.mouseMove = this.mouseMove.bind(this);
         this.mouseLeave = this.mouseLeave.bind(this);
@@ -53,11 +53,11 @@ class Zoom extends React.Component {
 
         if (this.props.tip && this.props.tip != undefined) {
             tip = <div className={'tip_area'}><Tipinmodal  {...this.props.tip} /></div>
+        } else {
+            tip = <div className={'tip_area'}><Submittipinmodal small={true} taxon={this.props.taxon}> </Submittipinmodal></div>
         }
 
-
         if (this.props.no_text == true) {
-
         } else {
 
             if (this.props.venomous == "venomous") {

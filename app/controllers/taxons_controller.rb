@@ -3,10 +3,10 @@ class TaxonsController < ApplicationController
 
   def search
     name = params[:name]
-    @taxons = Taxon.all.species.where("lower(name) LIKE ?",'%'+name.downcase+'%').limit 100
-    common_names = CommonName.all.where("lower(name) LIKE ?",'%'+name.downcase+'%').limit 100
-    taxons = common_names.map {|cn| cn.taxon }
-    taxons = taxons.select {|tx| tx.rank == "species" }
+    @taxons = Taxon.all.species.where("lower(name) LIKE ?", '%' + name.downcase + '%').limit 100
+    common_names = CommonName.all.where("lower(name) LIKE ?", '%' + name.downcase + '%').limit 100
+    taxons = common_names.map { |cn| cn.taxon }
+    taxons = taxons.select { |tx| tx.rank == "species" }
     @taxons = @taxons + taxons
     @taxons.uniq
     @taxons = @taxons[0..4]
@@ -15,6 +15,13 @@ class TaxonsController < ApplicationController
 
   def show
     @taxons = @taxon.taxons
+    @phylo = []
+    tmp = @taxon
+    while !tmp.nil? do
+      @phylo << tmp
+      tmp = tmp.taxon
+    end
+    @phylo.reverse!
   end
 
   def index
@@ -29,7 +36,7 @@ class TaxonsController < ApplicationController
 
   def photos_rand
     photos = @taxon.photos.where(dead: false)
-    photo = photos[rand(photos.size-1)]
+    photo = photos[rand(photos.size - 1)]
     render :json => {id: photo.id, taxon_id: photo.taxon.id, url: photo.image_path.url}
   end
 
@@ -38,9 +45,9 @@ class TaxonsController < ApplicationController
       if rand() < 0.2
         return render :head
       end
-      sleep rand()*3
+      sleep rand() * 3
     end
-    photos = @taxon.photos.where(dead: false).take(ENV['how_many_photos_is_enough_for_learning_mode'].to_i).map{|p|  {id: p.id, taxon_id: p.taxon_id, url: p.image_path.url}}
+    photos = @taxon.photos.where(dead: false).take(ENV['how_many_photos_is_enough_for_learning_mode'].to_i).map { |p| {id: p.id, taxon_id: p.taxon_id, url: p.image_path.url} }
     render :json => photos
 
   end

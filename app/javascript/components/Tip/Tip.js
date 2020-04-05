@@ -4,11 +4,16 @@ import Name from "../Name"
 
 class Tip extends React.Component {
 
+    constructor(props) {
+        super(props);
+        console.debug("Props",props);
+    }
+
+
     render() {
         return (
             <div>
-                <h3>Tip:<br/>
-                    <Name commonName={this.props.taxon.common_name} sciName={this.props.taxon.name}/>
+                <h3><Name taxon={this.props.taxon} link={true}/>
                 </h3>
                 <p>{this.props.content}</p>
             </div>

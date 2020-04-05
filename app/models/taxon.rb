@@ -28,6 +28,29 @@ class Taxon < ApplicationRecord
     self.photos.size
   end
 
+  def get_root_txn_rank
+    # for root taxons return their proper rank (not root) since we dont' have the entire tree
+    if common_name == "Snakes"
+      return "Suborder"
+    elsif common_name == "Lizards"
+      return "Suborder"
+    elsif common_name == "Turtles and Tortoises"
+      return "Order"
+    elsif common_name == "Salamanders"
+      return "Suborder"
+    elsif common_name == "Worm Lizards"
+      return "Clade"
+    elsif common_name == "Limbless Amphibians"
+      return "Order"
+    elsif common_name == "Alligators, Crocodiles, and Caimans"
+      return "Order"
+    elsif common_name == "Frogs and Toads"
+      return "Order"
+    else
+      raise("That's not a root taxon id:#{id}!")
+    end
+  end
+
   before_create :title
   before_create :only_species_have_venomous_tag
 
