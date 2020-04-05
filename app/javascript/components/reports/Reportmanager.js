@@ -4,6 +4,7 @@ import Noherpreport from "./Noherpreport.js";
 import Deadherpreport from "./Deadherpreport.js";
 import Badregionreport from "./Badregionreport.js";
 import Badidreport from "./Badidreport.js";
+import Progressbar from "../Progressbar";
 
 class Reportmanager extends React.Component {
 
@@ -21,8 +22,7 @@ class Reportmanager extends React.Component {
 
     after_report() {
         this.setState({bad_id_only: false, complete: true});
-
-        window.location = window.location;
+        setTimeout(() => {window.location = window.location;},1500)
     }
 
     render() {
@@ -49,8 +49,8 @@ class Reportmanager extends React.Component {
         } else {
             return (
                 <React.Fragment>
+                    <h3>What's the issue?</h3>
                     <div className={'center report-manager'}>
-
                         <Noherpreport after_report={this.after_report.bind(this)} no_flash={true} photo_id={this.props.photo_id}></Noherpreport>
                         <Deadherpreport after_report={this.after_report.bind(this)} no_flash={true} photo_id={this.props.photo_id}></Deadherpreport>
                         <Badregionreport after_report={this.after_report.bind(this)} no_flash={true} disabled={disabled} taxon_id={this.props.taxon_id} region_id={this.props.region_id}></Badregionreport>

@@ -20,6 +20,7 @@ export default class Modal extends React.Component {
         };
         this.modal_ref = React.createRef();
         window.modal = {
+            old_y_cord: 0, // y coord before modal was opened
             hide: this.hide.bind(this),
             show: this.show.bind(this),
             set_content_and_callback: this.set_content_and_callback.bind(this)
@@ -32,15 +33,18 @@ export default class Modal extends React.Component {
     }
 
     show() {
-        this.setState({active: true});
+        this.setState({active: true, old_y_cord: document.documentElement.scrollTop});
         this.modal_ref.current.style.display = "true";
         document.querySelector('body').style.overflow = 'hidden';
+        window.scrollTo(0,0)
     }
 
     hide() {
+        document.querySelector('body').style.overflow = 'auto';
         this.modal_ref.current.style.display = "false";
         this.setState({active: false});
         this.state.callback();
+        window.scrollTo(0, this.state.old_y_cord);
     }
 
 
