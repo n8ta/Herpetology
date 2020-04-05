@@ -22,7 +22,6 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Quiz on venomous/not as well as name
 - Setup email
 - Variable zoom on zoom-in feature 
-- Ruby version in gemfile
 - Learn to spell venemous...
 
 # Done:
