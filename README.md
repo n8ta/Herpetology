@@ -16,7 +16,7 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 
 # Todo:
 - Tip approvals
-- Tip submissions
+- Restore species->genus->... relationships the taxon_id column seems to be nil sadly.
 - Make modal more accessible
 - Handle google auth failure when email already exists in the system
 - Quiz on venomous/not as well as name
@@ -26,6 +26,7 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Learn to spell venemous...
 
 # Done:
+- Tip submissions (April 6, 2020)
 - Build out a reusable modal (April 5, 2020)
 - Show tips on species picker after guess (April 5, 2020)
 - Define go to_hash method for reuse on taxon/tip to be ingested by js components. (April 4, 2020) 
