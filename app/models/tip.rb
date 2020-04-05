@@ -1,5 +1,5 @@
 class Tip < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, {optional: :true}
   belongs_to :taxon
 
   def to_hash
