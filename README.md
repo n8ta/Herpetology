@@ -15,19 +15,20 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Tip display
 - Tip approvals
 - Tip submissions
+- Make modal more accessible
 - Handle google auth failure when email already exists in the system
-- Competitive mode tooltips
-- Quiz on venomous as well as name
+- Quiz on venomous/not as well as name
 - Setup email
-- Show tips on species picker after guess
 - Variable zoom on zoom-in feature 
 - Ruby version in gemfile
 - Learn to spell venemous...
 
-# Done: 
+# Done:
+- Build out a reusable modal (April 5, 2020)
+- Show tips on species picker after guess (April 5, 2020)
+- Define go to_hash method for reuse on taxon/tip to be ingested by js components. (April 4, 2020) 
 - Upgrade to rails 6 (April 2, 2020)
 - Amazon SES for password emails (October 19, 2019)
 - React component for forgot password -- just used default form from devise instead (October 19, 2019)
