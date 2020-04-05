@@ -1,7 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
-import SpeciesPicker from "./SpeciesPicker";
-
 
 class Menubutton extends React.Component {
     constructor(props) {
@@ -59,10 +56,5 @@ class Menubutton extends React.Component {
         );
     }
 }
-
-SpeciesPicker.propTypes = {
-    alert: PropTypes.bool,
-
-};
 
 export default Menubutton

@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Taxon from "./Taxon";
 
 class Googlebutton extends React.Component {
 

@@ -66,7 +66,7 @@ class GameController < ApplicationController
         'sci_correct': sci_correct,
         'common_correct': common_correct,
         'next_photo_id': photo.id,
-        'tips': specie_m.tips
+        'tip': specie_m.tips.any? ? specie_m.tips.where(approved: true).sample.to_hash : nil
     }
     datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
     if current_user

@@ -12,8 +12,10 @@
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <% if current_user && (current_user.user_class == "admin") %>
   <% else %>
-    <script src="https://apis.google.com/js/platform.js"></script>
-    <script src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5.js"></script>
+    <% unless Rails.env.development? %>
+      <script src="https://apis.google.com/js/platform.js"></script>
+      <script src="https://www.googletagmanager.com/gtag/js?id=UA-111016820-5.js"></script>
+    <% end %>
   <% end %>
 </head>
 
@@ -95,6 +97,7 @@
 <div id="content">
   <%= yield %>
 </div>
+<%= react_component('Modal') %>
 </body>
 
 </html>

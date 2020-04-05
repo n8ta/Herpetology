@@ -1,6 +1,6 @@
 import React from "react"
 import Zoom from './Zoom.js';
-import Reportmanager from "./reports/Reportmanager";
+import Reportsinmodal from "./reports/Reportsinmodal";
 import Signup from './Signup.js';
 
 import PropTypes from "prop-types"
@@ -131,7 +131,7 @@ class SpeciesPicker extends React.Component {
                 iterations: this.state.iterations + 1,
                 photo_id: this.state.next_photo_id,
                 species_id: undefined,
-                tips: [],
+                tip: undefined,
             });
         }
 
@@ -186,7 +186,7 @@ class SpeciesPicker extends React.Component {
                 common_correct: result['common_correct'],
                 venomous: result['venomous'],
                 next_photo_id: result['next_photo_id'],
-                tips: result['tips']
+                tip: result['tip']
             });
             this.preload(result['next_image_path']);
         })
@@ -232,19 +232,14 @@ class SpeciesPicker extends React.Component {
         }
         return (
             <div className="species">
-                    <Reportmanager
-                        after_report={function () {
-                            setTimeout(function () {
-                                window.location.reload()
-                            }, 750)
-                        }}
+                    <Reportsinmodal
                         photo_id={this.state.photo_id}
                         taxon_id={this.state.species_id}
                         region_id={this.props.region.id}
                         taxon_com={this.state.common_name}
                         taxon_sci={this.state.sci_name}
-                    ></Reportmanager>
-                <Zoom tips={this.state.tips} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
+                    ></Reportsinmodal>
+                <Zoom tip={this.state.tip} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>
@@ -268,7 +263,7 @@ class SpeciesPicker extends React.Component {
 SpeciesPicker.propTypes = {
     options: PropTypes.object,
     image_path: PropTypes.string,
-    photo_id: PropTypes.string,
+    photo_id: PropTypes.number,
     region: PropTypes.object,
 };
 

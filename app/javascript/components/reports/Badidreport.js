@@ -1,7 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import SpeciesPicker from "../SpeciesPicker";
-import Alert from "../Alert";
+import Alert from "../svgs/Alert";
+
 class Badidreport extends React.Component {
     constructor(props) {
         super(props);
@@ -62,7 +63,6 @@ class Badidreport extends React.Component {
 
         }).then(res => res.json()).then((result) => {
             setTimeout(this.props.after_report,1500);
-
         });
 
     }

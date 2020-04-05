@@ -12,16 +12,17 @@ class Taxon < ApplicationRecord
   has_many :photos
   has_many :tips
 
+
   # Only used on root taxon, these are the regions for a root taxon where there are at least 5 species with photos
   has_and_belongs_to_many :valid_regions, join_table: 'regions_root_taxons', class_name: 'Region'
 
   enum rank: [:root, :family, :subfamily, :genus, :species]
 
-  scope :species, -> {where(rank: :species)}
-  scope :genera, -> {where(rank: :genus)}
-  scope :families, -> {where(rank: :family)}
-  scope :subfamilies, -> {where(rank: :subfamilies)}
-  scope :roots, -> {where(rank: :root)}
+  scope :species, -> { where(rank: :species) }
+  scope :genera, -> { where(rank: :genus) }
+  scope :families, -> { where(rank: :family) }
+  scope :subfamilies, -> { where(rank: :subfamilies) }
+  scope :roots, -> { where(rank: :root) }
 
   def num_photos
     self.photos.size
@@ -38,6 +39,19 @@ class Taxon < ApplicationRecord
 
   def root
     taxon.nil? ? self : self.taxon.root
+  end
+
+  def to_hash
+    return {
+        id: id,
+        name: name,
+        taxon_id: taxon_id,
+        rank: rank,
+        root_taxon_id: root_taxon_id,
+        photographed: photographed,
+        venomous: venomous,
+        common_name: common_name,
+    }
   end
 
   def title

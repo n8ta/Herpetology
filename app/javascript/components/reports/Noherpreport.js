@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Alert from "../Alert";
+import Alert from "../svgs/Alert";
 
 class Noherpreport extends React.Component {
     constructor(props) {

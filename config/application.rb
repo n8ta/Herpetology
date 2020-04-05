@@ -22,6 +22,7 @@ module Snakeid
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+
     Raven.configure do |config|
       config.dsn = 'https://e579d357b1d84d1d980701708a3ac31d:8872cf2d2b3c4e2f9c74b376d0713236@sentry.io/1775125'
     end

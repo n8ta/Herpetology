@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Report from "../Report";
-import Alert from "../Alert";
+import Alert from "../svgs/Alert";
 
 class Deadherpreport extends React.Component {
     constructor(props) {

@@ -1,23 +1,26 @@
 import React from "react"
 import Venomreport from './Venomreport.js';
-import Tip from './Tip.js';
 import PropTypes from "prop-types"
+import Tipinmodal from "./Tip/Tipinmodal";
 
 class Zoom extends React.Component {
     constructor(props) {
+        console.debug("zoom constructed -----===-=---");
         super(props);
         this.mouseMove = this.mouseMove.bind(this);
         this.mouseLeave = this.mouseLeave.bind(this);
         this.apply_style = this.apply_style.bind(this);
         this.state = {
             mode: 'waiting',
-            id: btoa(Math.random().toString(36)), // ~Random id so we can have two on the same page
         };
+        this.container_ref = React.createRef();
+        this.main_ref = React.createRef();
+        this.image_ref = React.createRef();
         setTimeout(this.apply_style.bind(this), .01);
     }
 
     mouseMove(e) {
-        let cont = document.getElementById('zoom_container_' + this.state.id);
+        let cont = this.container_ref.current;
         let pageX = e.clientX - cont.getBoundingClientRect().left;
         let pageY = e.clientY - cont.getBoundingClientRect().top;
         let origin = pageX + 'px ' + pageY + 'px';
@@ -33,14 +36,12 @@ class Zoom extends React.Component {
     }
 
     apply_style() {
-        let zoom = document.getElementById('zoom_' + this.state.id);
-        if (zoom == undefined) {
-            return
-        }
-        ;
-        zoom.style.backgroundImage = "url('" + this.props.url + "')";
+        let main = this.main_ref.current;
+        if (main == null) { return }
+
+        main.style.backgroundImage = "url('" + this.props.url + "')";
         if (this.state && this.state.mode == 'live') {
-            zoom.style.transformOrigin = this.state.origin
+            main.style.transformOrigin = this.state.origin
         }
     }
 
@@ -50,9 +51,8 @@ class Zoom extends React.Component {
         let venomous = "";
         let tip = "";
 
-        if (this.props.tips && this.props.tips.length > 0) {
-            let tmp = this.props.tips[Math.floor(Math.random() * this.props.tips.length)];
-            tip = <Tip {...tmp} />
+        if (this.props.tip && this.props.tip != undefined) {
+            tip = <div className={'tip_area'}><Tipinmodal  {...this.props.tip} /></div>
         }
 
 
@@ -61,11 +61,11 @@ class Zoom extends React.Component {
         } else {
 
             if (this.props.venomous == "venomous") {
-                venomous = <div id='poison_icon'>Venomous</div>
+                venomous = <div className='poison_icon'>Venomous</div>
             } else if (this.props.venomous == "nonvenomous") {
-                venomous = <div id='poison_icon'>Nonvenomous</div>
+                venomous = <div className='poison_icon'>Nonvenomous</div>
             } else if (this.props.venomous == "unknown") {
-                venomous = <div id='poison_icon'>
+                venomous = <div className='poison_icon'>
                     <Venomreport photo_id={this.props.photo_id}></Venomreport></div>
             }
         }
@@ -75,13 +75,13 @@ class Zoom extends React.Component {
             <React.Fragment>
                 <div className={'zoom_outer'}>
                     {venomous}
-                    <div className={'zoom_inner'} id={'zoom_container_' + this.state.id} onMouseLeave={this.mouseLeave}
+                    <div className={'zoom_inner'} ref={this.container_ref} onMouseLeave={this.mouseLeave}
                          onMouseMove={this.mouseMove}>
-                        <div className={'zoom'} id={'zoom_' + this.state.id}>
+                        <div className={'zoom'} ref={this.main_ref} >
                             <img alt='Photo of an unknown herp' className={'zoom_image'}
-                                 id={'zoom_image_' + this.state.id}
-                                 src={this.props.url}/>
-
+                                 src={this.props.url}
+                                 ref={this.image_ref}
+                            />
                         </div>
                     </div>
                     {tip}
@@ -97,6 +97,6 @@ Zoom.propTypes = {
     photo_id: PropTypes.number,
     venomous: PropTypes.string,
     no_text: PropTypes.bool,
-    tips: PropTypes.array,
+    tip: PropTypes.object,
 };
 export default Zoom
