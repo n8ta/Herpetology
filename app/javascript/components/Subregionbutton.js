@@ -41,10 +41,10 @@ class Subregionbutton extends React.Component {
     let msg  ="";
     let active = "";
     if (this.state.mode == "is-active") {
-      msg = "Hide Subregions"
+      msg = this.props.hide_msg;
       active = "active"
     } else {
-      msg = "Show Subregions";
+      msg = this.props.show_msg;
     }
       return (
           <a href="#" onClick={this.toggle} className="dropdown_link">{msg} <span className={active}> <Chevron></Chevron></span></a>

@@ -62,7 +62,7 @@ class Badidreport extends React.Component {
             credentials: 'same-origin',
 
         }).then(res => res.json()).then((result) => {
-            setTimeout(this.props.after_report,1500);
+            this.props.after_report();
         });
 
     }
@@ -79,7 +79,7 @@ class Badidreport extends React.Component {
             let name = this.state.search_results[i]['name'];
             let comm = this.state.search_results[i]['common_name'];
             let id = this.state.search_results[i]['id'];
-            options.push(<a href='#' onClick={function () {this.select(id)}.bind(this)} key={name}> {name} - {comm}</a>)
+            options.push(<div key={i}><a href='#' onClick={function () {this.select(id)}.bind(this)} key={name}> {name} - {comm}</a></div>)
         }
 
         if (this.state.active == false && this.state.submitted == false) {
@@ -101,7 +101,7 @@ class Badidreport extends React.Component {
                 </form>)
         } else {
             return (
-                    <div id={'bad_id_report'}>
+                <div id={'bad_id_report'}>
                     <div className="center">
                         <button className={'small submitted'}>Submitted, this will not count against your stats.
                         </button>

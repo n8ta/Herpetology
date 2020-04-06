@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     collection do
       get 'all' => 'taxons#index_all', as: 'all'
       get 'search/:name' => 'taxons#search', as: 'search'
+      get 'search' => 'taxons#search'
     end
     member do
       get 'photos/rand' => 'taxons#photos_rand', as: 'rand'

@@ -202,8 +202,16 @@ class SpeciesPicker extends React.Component {
         let left = '';
         let right = '';
         let form = '';
-        let left_title = "Scientific ? ";
-        let right_title = "Common ?";
+        let left_title = "Scientific ☐ ";
+        let right_title = "Common ☐";
+
+        if (this.state.sci_chosen != undefined) {
+            left_title = "Scientific ☑  ";
+        }
+        if (this.state.common_chosen != undefined) {
+            right_title = "Common ☑ ";
+        }
+
         if (this.state.mode == 'answered') {
             next_button = <div id={'next'} className={"center"}>
                 <button className={'main happypath'} onClick={this.next}>Next <br/></button>
@@ -243,6 +251,7 @@ class SpeciesPicker extends React.Component {
                     ></Reportsinmodal>
                 <Zoom taxon={this.state.taxon} tip={this.state.tip} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
+                <span className={'instructions center'}>Pick the scientific and common names that match the photo</span>
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>
                         <h4>{left_title}</h4>

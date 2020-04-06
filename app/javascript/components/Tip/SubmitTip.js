@@ -43,9 +43,9 @@ export default class SubmitTip extends React.Component {
         }).then(res => res.json()).then((result) => {
             console.debug("RECV: ", result);
             if (result.approved == true) {
-                this.setState({mode: "approved",lower_text: "Thank you, your tip has been automatically approved."})
+                this.setState({mode: "approved", lower_text: "Thank you, your tip has been automatically approved."})
             } else {
-                this.setState({mode: "submitted",lower_text: "Thank you! Your tip is pending approval."})
+                this.setState({mode: "submitted", lower_text: "Thank you! Your tip is pending approval."})
             }
         }).catch((res) => {
             this.setState({mode: "failed", lower_text: "Error submitting, please copy your tip and reload."});
@@ -57,7 +57,7 @@ export default class SubmitTip extends React.Component {
     }
 
     check_valid = () => {
-        this.setState({valid: this.content.current.value.length > 45});
+        this.setState({valid: this.content.current.value.length > 35});
     };
 
     dots(num_dots) {
@@ -74,19 +74,21 @@ export default class SubmitTip extends React.Component {
 
         let button_text = this.state.button_text;
         if (this.state.mode == "waiting") {
-            button_text=button_text.concat(this.dots(this.state.dots))
+            button_text = button_text.concat(this.dots(this.state.dots))
         }
 
         return (
             <div>
                 <form id={"submit_tip"}>
 
-                    <p>Your tip for identifying the <span className={'space'}></span> <Name
-                        commonName={this.props.taxon.common_name} sciName={this.props.taxon.name}/></p>
+                    <h3>Enter a tip for identifying:<br/>
+                        <Name taxon={this.props.taxon} link={true}/>
+                    </h3>
                     <div className={'text_area_holder'}>
                         <textarea onKeyDown={this.check_valid} placeholder={"Enter your tip here"}
                                   ref={this.content}></textarea>
                     </div>
+                    <p>35 character minimum</p>
 
                     <div className={'center'}>
                         <button disabled={(!this.state.valid) && this.state.mode == "ready"}

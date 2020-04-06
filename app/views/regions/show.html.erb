@@ -1,0 +1,38 @@
+<% content_for :title do %>
+  Learn to identify <%= @taxon.common_name %> (<%= @taxon.name %>) in <%= @region.name %>
+<% end %>
+
+
+<% region_array = []
+   cur = @region
+   while cur != nil
+     region_array << cur
+     cur = cur.region
+   end
+   region_array = region_array.reverse
+   region_array = region_array.map {|ra| "<a href='#{game_taxon_region_url(@taxon, ra,"game")}'>#{ra.name}</a>"}.join(" > ")
+%>
+
+<% content_for :breadcrumb do %>
+  <h2>
+    <%= link_to render('statics/world'), root_path %> >
+    <%= link_to @taxon.common_name, taxon_path(@taxon) %> >
+
+    <%= region_array.html_safe %> >
+    <%= link_to "Game", game_taxon_region_path(@taxon, @region, "game") %>
+    <%= " " + @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s + " species" %>
+
+    <% if @taxon.valid_regions.where(region: @region).any? %>
+      <%= react_component('Subregionbutton', {hide_msg: "Hide Subregions", show_msg: "Show Subregions"}) %>
+    <% end %>
+  </h2>
+<% end %>
+
+
+<h2><%= @taxon.common_name %> (<%= @taxon.name %>) of <%= @region.name %> </h2>
+
+<ol>
+  <% @region.taxons.species.where(root_taxon_id: @taxon.root.id, photographed: true).select { |sp| sp.photos.any? }.each do |txn| %>
+    <li><%= react_component("Name", {taxon: txn.to_hash, link: true}) %></li>
+  <% end %>
+</ol>

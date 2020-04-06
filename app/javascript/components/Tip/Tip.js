@@ -13,7 +13,8 @@ class Tip extends React.Component {
     render() {
         return (
             <div>
-                <h3><Name taxon={this.props.taxon} link={true}/>
+                <h3>Tip for<br/>
+                    <Name taxon={this.props.taxon} link={true}/>
                 </h3>
                 <p>{this.props.content}</p>
             </div>

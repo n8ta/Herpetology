@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import Report from "../Report";
 import Alert from "../svgs/Alert";
 
-class Badregionreport extends React.Component {
+export default class Badregionreport extends React.Component {
   constructor(props) {
     super(props);
     let auth_token = document.querySelector("meta[name='csrf-token']").content;
@@ -34,13 +34,7 @@ class Badregionreport extends React.Component {
     }).then(res => res.json()).then((result) => {
       this.props.after_report()
     });
-
-
-
-
-
   }
-
 
   render() {
 
@@ -61,7 +55,6 @@ class Badregionreport extends React.Component {
   }
 }
 
-export default Badregionreport
 
 Badregionreport.propTypes = {
   taxon_id: PropTypes.number,

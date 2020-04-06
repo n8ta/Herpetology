@@ -85,6 +85,9 @@ class GameController < ApplicationController
   end
 
   def game
+    if @taxon.rank != "root"
+      return redirect_to game_taxon_region_url(@taxon.root, @region)
+    end
     # if @mode == "quiz"
     @regions = @region.regions
     @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).select { |sp| sp.photos.any? }

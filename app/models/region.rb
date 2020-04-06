@@ -33,4 +33,5 @@ class Region < ApplicationRecord
     res = self.regions.select {|reg| reg.taxons.species.includes(:photos).where(root_taxon_id: taxon.id).select { |sp| sp.photos.any? }.size > 5 }
     return res
   end
+
 end

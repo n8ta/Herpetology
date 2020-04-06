@@ -3,14 +3,18 @@ class TaxonsController < ApplicationController
 
   def search
     name = params[:name]
-    @taxons = Taxon.all.species.where("lower(name) LIKE ?", '%' + name.downcase + '%').limit 100
-    common_names = CommonName.all.where("lower(name) LIKE ?", '%' + name.downcase + '%').limit 100
-    taxons = common_names.map { |cn| cn.taxon }
-    taxons = taxons.select { |tx| tx.rank == "species" }
-    @taxons = @taxons + taxons
-    @taxons.uniq
-    @taxons = @taxons[0..4]
-    render 'index', formats: [:json]
+    if name != ""
+      @taxons = Taxon.all.species.where("lower(name) LIKE ?", '%' + name.downcase + '%').limit 100
+      common_names = CommonName.all.where("lower(name) LIKE ?", '%' + name.downcase + '%').limit 100
+      taxons = common_names.map { |cn| cn.taxon }
+      taxons = taxons.select { |tx| tx.rank == "species" }
+      @taxons = @taxons + taxons
+      @taxons.uniq
+      @taxons = @taxons[0..4]
+    else
+      @taxons = []
+    end
+    render 'search', formats: [:json]
   end
 
   def show
@@ -64,6 +68,7 @@ class TaxonsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_taxon
+    return if params[:id] == "search" || params[:all] == "search"
     @taxon = Taxon.find(params[:id])
   end
 

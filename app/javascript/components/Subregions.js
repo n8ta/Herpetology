@@ -13,7 +13,13 @@ class Subregions extends React.Component {
 
     load() {
         let auth_token = document.querySelector("meta[name='csrf-token']").content;
-        fetch( '/taxons/' + this.props.taxon_id + '/regions/' + this.props.id+'.json', {
+        let url = "";
+        if (this.props.id) {
+            url = '/taxons/' + this.props.taxon_id + '/regions/' + this.props.id+'.json'
+        } else {
+            url = '/taxons/' + this.props.taxon_id + '.json'
+        }
+        fetch( url, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -23,10 +29,18 @@ class Subregions extends React.Component {
             },
             credentials: 'same-origin',
         }).then(res => res.json()).then((result) => {
-            this.setState({
-                mode: 'ready',
-                tier2s: result['subregions']
-            });
+            if (this.props.id) {
+                this.setState({
+                    mode: 'ready',
+                    tier2s: result['subregions']
+                });
+            } else {
+                this.setState({
+                    mode: 'ready',
+                    tier2s: result.countries,
+                });
+            }
+
 
         }).catch(this.failed);
     }
@@ -48,16 +62,24 @@ class Subregions extends React.Component {
             );
         } else {
             let subregions = [];
+            let key = "";
             for (let i = 0; i < this.state.tier2s.length; i ++) {
                 let t2 = this.state.tier2s[i];
+
                 subregions.push(
-                    <li key={t2['id']}><a href={t2['game_url']}>{t2['name']}</a></li>
+                    <tr key={t2['id']}>
+                        <td><a href={t2['game_url']}>Game</a></td>
+                        <td><a href={t2['url']}>Info</a></td>
+                        <td>{t2['name']}</td>
+                    </tr>
                 )
             }
             return (
-                <ul className='tier-list'>
+                <table id={"tier-list"}>
+                    <tbody>
                     {subregions}
-                </ul>
+                    </tbody>
+                </table>
             )
         }
     }

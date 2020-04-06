@@ -20,6 +20,7 @@ export default class Reportsinmodal extends React.Component {
 
     deactivate() {
         console.debug("Done!");
+        window.modal.set_content_and_callback("",this.deactivate);
         this.setState({active: false});
     }
 

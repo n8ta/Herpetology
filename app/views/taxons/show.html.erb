@@ -2,11 +2,30 @@
   Learn about <%= @taxon.common_name %> (<%= @taxon.name %>)
 <% end %>
 
+<% region_array = []
+   cur = @region
+   while cur != nil
+     region_array << cur
+     cur = cur.region
+   end
+   region_array = region_array.reverse
+   region_array = region_array.map {|ra| "<a href='#{game_taxon_region_url(@taxon, ra,"game")}'>#{ra.name}</a>"}.join(" > ")
+%>
+
 <% content_for :breadcrumb do %>
   <h2>
     <%= link_to render('statics/world'), root_path %> >
-    <%= link_to @taxon.common_name, taxon_path(@taxon) %> >
+    <%= link_to @taxon.common_name, taxon_path(@taxon) %>
+    <% if @taxon.regions.countries.any? %>
+      <%= react_component('Subregionbutton', {hide_msg: "Hide Regions", show_msg: "Show Regions", game: false}) %>
+    <% else %>> No regions
+    <% end %>
+
   </h2>
+<% end %>
+
+<% content_for :subregions do %>
+  <%= react_component('Subregions', {taxon_id: @taxon.id, id: nil}) %>
 <% end %>
 
 <div id="taxon_show">

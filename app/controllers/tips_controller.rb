@@ -21,9 +21,9 @@ class TipsController < ApplicationController
     sleep 2.seconds
     @tip = Tip.new(tip_params)
     @tip.taxon = Taxon.find(params[:taxon_id])
-    # if current_user.admin_or_contributor?
-    #   @tip.approved = true
-    # end
+    if current_user.admin_or_contributor?
+      @tip.approved = true
+    end
     @tip.user = current_user
 
     respond_to do |format|

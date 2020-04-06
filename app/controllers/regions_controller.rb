@@ -1,23 +1,17 @@
 class RegionsController < ApplicationController
   before_action :set_region, only: [:show, :edit, :update, :destroy]
-  before_action :set_taxon, only: [:index]
+  before_action :set_taxon, only: [:index, :show]
 
   # GET /regions
   # GET /regions.json
 
   def index
-    if @taxon.taxon != nil
-      flash[:alert] = "Can only use root taxons like Snakes or Frogs and Lizards"
-      redirect_to '/'
-    end
     @regions = @taxon.valid_regions.countries
   end
 
 
   def show
-    if Rails.env.development?
-      sleep rand() * 0.5
-    end
+    @taxon = @taxon.root
   end
 
   private

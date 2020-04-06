@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
+  has_many :tips
+
   enum user_class: ["user","contributor","admin"]
 
   def self.from_omniauth(access_token)

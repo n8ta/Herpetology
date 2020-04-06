@@ -6,7 +6,7 @@
      cur = cur.region
    end
    region_array = region_array.reverse
-   region_array = region_array.map {|ra| "<a href='#{game_taxon_region_url(@taxon, ra,"game")}'>#{ra.name}</a>"}.join(" > ")
+   region_array = region_array.map { |ra| "<a href='#{game_taxon_region_url(@taxon, ra, "game")}'>#{ra.name}</a>" }.join(" > ")
 %>
 
 <% content_for :title do %>
@@ -19,18 +19,18 @@
     <%= link_to @taxon.common_name, taxon_path(@taxon) %> >
 
     <%= region_array.html_safe %> >
-    <span class="subhead"><%= @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s %>
-      species</span>
+    Game,
+    <%= link_to @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s + " species", taxon_region_path(@taxon, @region) %>
 
     <% if @taxon.valid_regions.where(region: @region).any? %>
-      <%= react_component('Subregionbutton') %>
+      <%= react_component('Subregionbutton', {hide_msg: "Hide Subregions", show_msg: "Show Subregions"}) %>
     <% end %>
   </h2>
 <% end %>
 
 
 <% content_for :subregions do %>
-  <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
+  <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id, game: true}) %>
 <% end %>
 
 <%= react_component('SpeciesPicker', {region: @region, photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
