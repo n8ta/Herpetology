@@ -2,7 +2,6 @@
   Learn to identify <%= @taxon.common_name %> (<%= @taxon.name %>) in <%= @region.name %>
 <% end %>
 
-
 <% region_array = []
    cur = @region
    while cur != nil
@@ -10,8 +9,7 @@
      cur = cur.region
    end
    region_array = region_array.reverse
-   region_array = region_array.map {|ra| "<a href='#{game_taxon_region_url(@taxon, ra,"game")}'>#{ra.name}</a>"}.join(" > ")
-%>
+   region_array = region_array.map {|ra| "<a href='#{game_taxon_region_url(@taxon, ra,"game")}'>#{ra.name}</a>"}.join(" > ") %>
 
 <% content_for :breadcrumb do %>
   <h2>
@@ -28,6 +26,9 @@
   </h2>
 <% end %>
 
+<% content_for :subregions do %>
+  <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
+<% end %>
 
 <h2><%= @taxon.common_name %> (<%= @taxon.name %>) of <%= @region.name %> </h2>
 

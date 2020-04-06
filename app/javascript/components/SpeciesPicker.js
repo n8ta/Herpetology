@@ -242,16 +242,9 @@ class SpeciesPicker extends React.Component {
         }
         return (
             <div className="species">
-                    <Reportsinmodal
-                        photo_id={this.state.photo_id}
-                        taxon_id={this.state.species_id}
-                        region_id={this.props.region.id}
-                        taxon_com={this.state.common_name}
-                        taxon_sci={this.state.sci_name}
-                    ></Reportsinmodal>
+                <span className={'instructions center'}>Pick the scientific and common names that match the photo</span>
                 <Zoom taxon={this.state.taxon} tip={this.state.tip} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
-                <span className={'instructions center'}>Pick the scientific and common names that match the photo</span>
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>
                         <h4>{left_title}</h4>
@@ -262,6 +255,13 @@ class SpeciesPicker extends React.Component {
                         {right}
                     </div>
                 </div>
+                <Reportsinmodal
+                    photo_id={this.state.photo_id}
+                    taxon_id={this.state.species_id}
+                    region_id={this.props.region.id}
+                    taxon_com={this.state.common_name}
+                    taxon_sci={this.state.sci_name}
+                ></Reportsinmodal>
                 {next_button}
 
                 <br/>
