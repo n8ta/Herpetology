@@ -9,7 +9,7 @@
      cur = cur.region
    end
    region_array = region_array.reverse
-   region_array = region_array.map {|ra| "<a href='#{game_taxon_region_url(@taxon, ra,"game")}'>#{ra.name}</a>"}.join(" > ") %>
+   region_array = region_array.map { |ra| "<a href='#{game_taxon_region_url(@taxon, ra, "game")}'>#{ra.name}</a>" }.join(" > ") %>
 
 <% content_for :breadcrumb do %>
   <h2>
@@ -30,10 +30,17 @@
   <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id}) %>
 <% end %>
 
-<h2><%= @taxon.common_name %> (<%= @taxon.name %>) of <%= @region.name %> </h2>
 
+<h2><%= @taxon.common_name %> (<%= @taxon.name %>) of <%= @region.name %> </h2>
+<p class="center">Use the X button to report if a species isn't present in the <%= @region.name %></p>
 <ol>
-  <% @region.taxons.species.where(root_taxon_id: @taxon.root.id, photographed: true).select { |sp| sp.photos.any? }.each do |txn| %>
-    <li><%= react_component("Name", {taxon: txn.to_hash, link: true}) %></li>
+  <% @region.taxons.species.includes(:bad_region_reports).where(root_taxon_id: @taxon.root.id, photographed: true).select { |sp| sp.photos.any? }.each do |txn| %>
+    <li>
+      <% if txn.bad_region_reports.where(approved: false, region: @region).any? %>
+        (Reported)  <%= react_component("Name", {taxon: txn.to_hash, link: true}) %>
+      <% else %>
+        <%= link_to  "(X)", "/reports?type=BadRegionReport&taxon_id=#{txn.id}&region_id=#{@region.id}", method: "create"%>&nbsp&nbsp&nbsp<%= react_component("Name", {taxon: txn.to_hash, link: true}) %>
+      <% end %>
+    </li>
   <% end %>
 </ol>

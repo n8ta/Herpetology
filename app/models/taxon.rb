@@ -11,7 +11,8 @@ class Taxon < ApplicationRecord
   has_many :common_names
   has_many :photos
   has_many :tips
-
+  has_many :bad_region_reports
+  has_many :bad_id_reports
 
   # Only used on root taxon, these are the regions for a root taxon where there are at least 5 species with photos
   has_and_belongs_to_many :valid_regions, join_table: 'regions_root_taxons', class_name: 'Region'

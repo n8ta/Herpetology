@@ -63,9 +63,8 @@ class ReportsController < ApplicationController
       @report = DeadHerpReport.new(dead_herp_params)
     when "BadIdReport"
       begin
-      bdp = bad_id_params
+        bdp = bad_id_params
       rescue => e
-        x= 10
       end
       @report = BadIdReport.new(bdp)
     when "VenomReport"
@@ -78,21 +77,32 @@ class ReportsController < ApplicationController
     when "BadRegionReport"
       @report = BadRegionReport.new(bad_region_params)
     end
-
-    @report.created_by_id = current_user.id if current_user
-    respond_to do |format|
-      if @report.save
-        puts "Saved report"
-        puts @report.inspect
-        format.json {render json: {msg: 'Created report'}, status: :created}
-      else
-        format.json {render json: @report.errors, status: :unprocessable_entity}
+    if current_user
+      @report.created_by_id = current_user.id
+      if current_user.admin_or_contributor?
+        @report.approve(current_user)
       end
     end
 
-    unless params[:no_flash]
-      flash[:notice] = "Report created, if you come across the same issue again there is no need to report it twice it will be handled."
+
+    respond_to do |format|
+      if @report.save
+        unless params[:no_flash]
+          if @report.approved
+            flash[:notice] = "Report successfully created, and automatically accepted, thank you!"
+          else
+            flash[:notice] = "Report successfully created, thank you!"
+          end
+        end
+        format.json { render json: {msg: 'Successfully created report'}, status: :created }
+        format.html { redirect_back fallback_location: "/" }
+      else
+        format.json { render json: @report.errors, status: :unprocessable_entity }
+        format.html { redirect_back fallback_location: "/" }
+      end
     end
+
+
   end
 
   private
@@ -144,8 +154,8 @@ class ReportsController < ApplicationController
     params.require(:region_id)
     params.require(:taxon_id)
     prms = Hash.new
-    prms[:region_id] = params[:region_id]
-    prms[:taxon_id] = params[:taxon_id]
+    prms[:region_id] = params[:region_id].to_i
+    prms[:taxon_id] = params[:taxon_id].to_i
     return prms
   end
 

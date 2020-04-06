@@ -1,29 +1,32 @@
+<% content_for :title do %>
+  Handle user submitted tips
+<% end %>
+
 <h1>Tips</h1>
 
-<table>
-  <thead>
+<% if @tips.any? %>
+  <table id="tip_table">
+    <thead>
     <tr>
       <th>User</th>
       <th>Content</th>
       <th>Taxon</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @tips.each do |tip| %>
       <tr>
-        <td><%= tip.user %></td>
+        <td><%= tip.user.username %></td>
         <td><%= tip.content %></td>
-        <td><%= tip.taxon %></td>
-        <td><%= link_to 'Show', tip %></td>
-        <td><%= link_to 'Edit', edit_tip_path(tip) %></td>
-        <td><%= link_to 'Destroy', tip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= tip.taxon.common_name %> (<%= tip.taxon.name %>)</td>
+        <td><%= link_to 'Approve', "/tips/#{tip.id}?handled=true&approved=true", method: :patch %><br/>
+          <%= link_to 'Reject', "/tips/#{tip.id}?handled=true&approved=false", method: :patch %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Tip', new_tip_path %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="center">No tips pending approval.</p>
+<% end %>

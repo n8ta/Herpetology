@@ -46,7 +46,11 @@
         <% end %>
       </h4></li>
       <% if current_user && current_user.admin_or_contributor? %>
-        <li><h4><%= link_to reports_path do %>Reports(<%= Report.pending.size %>)
+        <li><h4><%= link_to reports_path do %> Reports(<%= Report.pending.size %>)
+          <% end %></h4></li>
+      <% end %>
+      <% if current_user && current_user.admin_or_contributor? %>
+        <li><h4><%= link_to tips_path do %> Tips(<%= Tip.pending.size %>)
           <% end %></h4></li>
       <% end %>
       <li>

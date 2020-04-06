@@ -1,10 +1,10 @@
 class TipsController < ApplicationController
   before_action :require_login
-  before_action :admin_only, only: [:destroy, :update, :edit, :new]
+  before_action :contributor_only, only: [:index, :destroy, :update, :edit, :new]
   before_action :set_tip, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tips = Tip.all
+    @tips = Tip.all.pending
   end
 
   def show
@@ -18,11 +18,11 @@ class TipsController < ApplicationController
   end
 
   def create
-    sleep 2.seconds
     @tip = Tip.new(tip_params)
     @tip.taxon = Taxon.find(params[:taxon_id])
     if current_user.admin_or_contributor?
       @tip.approved = true
+      @tip.handled = true
     end
     @tip.user = current_user
 
@@ -39,11 +39,11 @@ class TipsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @tip.update(tip_params)
-        format.html { redirect_to @tip, notice: 'Tip was successfully updated.' }
+      if @tip.update(handled: params[:handled], approved: params[:approved])
+        format.html { redirect_back fallback_location: "/tips" }
         format.json { render :show, status: :ok, location: @tip }
       else
-        format.html { render :edit }
+        format.html { redirect_back fallback_location: "/tips" }
         format.json { render json: @tip.errors, status: :unprocessable_entity }
       end
     end

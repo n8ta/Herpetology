@@ -15,7 +15,6 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Taxon is the general term for domain,kindgom,phylum,class,family,order,genus,species, and the plural is taxons
 
 # Todo:
-- Tip approvals
 - Restore species->genus->... relationships the taxon_id column seems to be nil sadly.
 - Make modal more accessible
 - Handle google auth failure when email already exists in the system
@@ -25,6 +24,8 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 - Learn to spell venemous...
 
 # Done:
+- Create taxon / region info pages (April 7, 2020)
+- Tip approvals (April 7, 2020)
 - Tip submissions (April 6, 2020)
 - Build out a reusable modal (April 5, 2020)
 - Show tips on species picker after guess (April 5, 2020)
