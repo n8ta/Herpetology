@@ -22,6 +22,4 @@ production:
   encoding: utf8
   username: <%= ENV['sql_user'] %>
   password: <%= ENV['sql_pass'] %>
-  #  socket: ENV['sql_socket']
-  host: 127.0.0.1
-  port: 3306
+  socket:  <%= ENV['sql_socket'] %>
