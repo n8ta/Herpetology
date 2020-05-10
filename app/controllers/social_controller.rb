@@ -20,6 +20,6 @@ class SocialController < ApplicationController
   def set_return_url
     url = params[:url]
     session[:return_url] = url
-    render :json => ("Set to: "+url).to_json
+    render :json => ("Set to: "+url.to_s).to_json
   end
 end
