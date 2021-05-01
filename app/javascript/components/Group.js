@@ -7,6 +7,9 @@ const READY = 'READY' // Waiting on sure to make the choice
 const AWAITING_SERVER = 'AWAITING_SERVER' // User has made the choice waiting for server
 const ACKED = 'ACKED' // Server has replied
 
+const VISIBLE = 'VISIBLE'
+const HIDDEN = 'HIDDEN'
+
 const str = (bool) => {
     return bool ? "venomous" : "harmless"
 }
@@ -18,10 +21,15 @@ class Group extends React.Component {
             name: props.name,
             id: props.id,
             mode: LOADING,
+            warning: VISIBLE
         }
         this.get_next()
     }
 
+
+    hide = () => {
+        this.setState({warning: HIDDEN})
+    }
     answer = (venomous) => {
         console.info(venomous)
         this.setState({
@@ -64,15 +72,30 @@ class Group extends React.Component {
         let message = <div></div>;
         if (this.state.mode === ACKED) {
             if (this.state.correct) {
-                message = <div>🎉 You are Correct 🎉<br/>the {this.state.prior.common_name} is {str(this.state.prior.venomous)}</div>;
+                message = <div>🎉 You are Correct
+                    🎉<br/>the {this.state.prior.common_name} is {str(this.state.prior.venomous)}</div>;
             } else {
-                message = <div>😥 Incorrect.... 😥<br/>the {this.state.prior.common_name} is {str(this.state.prior.venomous)}</div>;
+                message =
+                    <div>😥 Incorrect.... 😥<br/>the {this.state.prior.common_name} is {str(this.state.prior.venomous)}
+                    </div>;
             }
         } else {
             message = "Take your best guess"
         }
 
 
+        if (this.state.warning === VISIBLE) {
+            return (<div>
+                <h3 className={'text-center'} style={{marginBottom: 0}}>
+                    ⚠️
+                    Warning some photos are of dead snakes. We attempt to hide these but haven't tagged them all yet.
+                    ⚠️
+                </h3>
+                <div className={'center'}>
+                    <button onClick={this.hide}>Continue</button>
+                </div>
+            </div>)
+        }
         if (this.state.mode === LOADING) {
             return (
                 <div>
@@ -84,7 +107,7 @@ class Group extends React.Component {
             return (
                 <div>
                     <h1>{this.state.name}</h1>
-                    <p style={{marginBottom: 0}} className={'text-center'}>{message}</p>
+                    <p className={'text-center'} style={{marginBottom: 0}}>{message}</p>
                     <div className={'center'}>
                         <button disabled={this.state.mode !== READY} onClick={() => this.answer(true)}>Venomous</button>
                         &nbsp;
@@ -107,12 +130,22 @@ class Group extends React.Component {
     }
 }
 
-Group.propTypes = {
-    name: PropTypes.string,
-    id: PropTypes.number,
-    photo: PropTypes.string,
-    mode: PropTypes.string,
-    species: PropTypes.object
-};
+Group.propTypes =
+    {
+        name: PropTypes.string,
+        id
+:
+PropTypes.number,
+    photo
+:
+PropTypes.string,
+    mode
+:
+PropTypes.string,
+    species
+:
+PropTypes.object
+}
+;
 
 export default Group

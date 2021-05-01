@@ -4,5 +4,4 @@ class Photo < ApplicationRecord
 
   validates :taxon_id, presence: true
   validates :image_path, presence: true
-
 end

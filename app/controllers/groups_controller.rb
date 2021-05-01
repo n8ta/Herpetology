@@ -26,7 +26,8 @@ class GroupsController < ApplicationController
   def get_next
     species = @group.taxons.filter { |t| t.num_photos > 0 }
     specie = species[rand(species.size)]
-    photo = specie.photos[rand(specie.photos.size)]
+    photos = specie.photos.where(dead: false)
+    photo = photos[rand(photos.size)]
     {
       url: photo.image_path.url,
       id: photo.id
