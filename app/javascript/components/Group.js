@@ -88,8 +88,7 @@ class Group extends React.Component {
             return (<div>
                 <h3 className={'text-center'} style={{marginBottom: 0}}>
                     ⚠️
-                    Warning some photos are of dead snakes. We attempt to hide these but haven't tagged them all yet.
-                    ⚠️
+                    This site is actively being worked on. Some snakes are incorrectly tagged as venomous / non-venomous right now.
                 </h3>
                 <div className={'center'}>
                     <button onClick={this.hide}>Continue</button>
