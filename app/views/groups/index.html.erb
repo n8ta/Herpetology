@@ -1,0 +1,26 @@
+<% content_for :title do %>
+  Groups of Herps
+<% end %>
+
+<% content_for :breadcrumb do %>
+  <% if current_user %>
+    Hi <%= current_user.username %>, welcome back.
+  <% else %>
+    <h2>
+    Practice identifying snakes!
+    </h2>
+  <% end %>
+<% end %>
+
+
+<ul>
+  <% @groups.all.each do |group| %>
+    <li><%= link_to group.name, "/groups/#{group.id}" %></li>
+    <ul>
+      <% group.taxons.each do |taxon| %>
+        <li><%= taxon.common_name %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</ul>

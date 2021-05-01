@@ -1,0 +1,15 @@
+<% content_for :title do %>
+  Groups of Herps
+<% end %>
+
+<% content_for :breadcrumb do %>
+  <% if current_user %>
+    Hi <%= current_user.username %>, welcome back.
+  <% else %>
+    <h2>
+      <%= link_to "Home", "/" %> > <%= @group.name %>
+    </h2>
+  <% end %>
+<% end %>
+
+<%= react_component('Group', { name: @group.name, id: @group.id }) %>

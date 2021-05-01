@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_06_040640) do
+ActiveRecord::Schema.define(version: 2021_04_30_235821) do
 
   create_table "bad_id_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "handled", default: false, null: false
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 2020_04_06_040640) do
     t.datetime "updated_at", null: false
     t.bigint "photo_id", null: false
     t.index ["photo_id"], name: "index_dead_herp_reports_on_photo_id"
+  end
+
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "groups_taxons", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "taxon_id", null: false
   end
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|

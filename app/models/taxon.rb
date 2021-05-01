@@ -5,6 +5,7 @@ class Taxon < ApplicationRecord
   belongs_to :taxon, optional: true
   belongs_to :taxon, class_name: 'Taxon', :foreign_key => :root_taxon_id, optional: true
 
+  has_and_belongs_to_many :groups
   has_and_belongs_to_many :regions # Regions the taxon has been seen on herpmapper
 
   has_many :taxons

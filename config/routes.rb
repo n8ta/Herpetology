@@ -17,7 +17,14 @@ Rails.application.routes.draw do
 
   resources :user_taxon_data, only: [:show]
 
-  root :to => 'taxons#index'
+  root :to => 'groups#show#1'
+
+  resources :groups, only: [:index, :show] do
+    member do
+      get 'next' => 'groups#next'
+      post 'next' => 'groups#post_next'
+    end
+  end
 
   resources :reports do
     member do
@@ -26,7 +33,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :photos, only: [:edit, :show, :update, :destroy]
+  resources :photos, only: [:edit, :show, :update, :destroy, :show]
 
   get '/scoreboard' => 'game#scoreboard', as: 'scoreboard'
 
@@ -42,7 +49,7 @@ Rails.application.routes.draw do
       get 'photos/rand' => 'taxons#photos_rand', as: 'rand'
       get 'photos/plenty' => 'taxons#photos_plenty', as: 'plenty'
     end
-    resources :regions, only: [:show, :index] do
+      resources :regions, only: [:show, :index] do
       member do
         get ':mode' => 'game#game', as: 'game'
         post ':mode' => 'game#guess', as: 'guess'

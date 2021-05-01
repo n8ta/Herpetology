@@ -161,7 +161,7 @@ class GameController < ApplicationController
     session[:common_index] = common_index
     session[:specie_id] = correct_specie.id
     session[:photo_id] = photo.id
-    return [hash_data, correct_specie, photo] # hash, Species model
+    [hash_data, correct_specie, photo] # hash, Species model
   end
 
   def set_taxon
