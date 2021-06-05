@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :user_taxon_data, only: [:show]
 
-  root :to => 'groups#show#1'
+  root :to => 'taxons#index'
 
   resources :groups, only: [:index, :show] do
     member do
