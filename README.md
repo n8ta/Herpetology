@@ -16,7 +16,7 @@ This project is an exercise in wheel building for me, all forms, games, models, 
 
 # Todo:
 - Restore species->genus->... relationships the taxon_id column seems to be nil sadly.
-- Make modal more accessible
+- Make modal more accessiblew
 - Handle google auth failure when email already exists in the system
 - Quiz on venomous/not as well as name
 - Setup email

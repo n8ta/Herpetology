@@ -2,19 +2,19 @@
   "name": "snakeid",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.9.4",
-    "@rails/webpacker": "^5.0.0",
+    "@babel/preset-react": "^7.13.13",
+    "@rails/webpacker": "^5.4.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "jquery": "^3.4.1",
+    "jquery": "^3.6.0",
     "jquery-ujs": "^1.2.2",
     "prop-types": "^15.7.2",
-    "rails-ujs": "^5.2.4-2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "rails-ujs": "^5.2.6",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react_ujs": "^2.5.0",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.4.1"
+    "webpack-dev-server": "^3.11.2"
   }
 }

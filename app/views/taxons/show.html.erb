@@ -42,51 +42,5 @@
     <% end %>
   </div>
 
-  <section>
-    <% if @taxon.tips.where(approved: true).any? %>
-      <h2>Tips for IDing</h2>
-      <ol>
-        <% @taxon.tips.where(approved: true).each do |tip| %>
-          <li><%= tip.content %>
-            <% if current_user.admin? %>
-              <%= link_to 'X', tip, method: :delete, data: {confirm: 'Are you sure?'} %>
-            <% end %>
-          </li>
-        <% end %>
-      </ol>
-    <% else %>
-      <h2>No tips for <%= @taxon.name %></h2>
-    <% end %>
-    <% if @taxon.rank == "species" %>
-      <% if current_user %>
-        <%= react_component('Tip/Submittipinmodal', {taxon: @taxon.to_hash}) %>
-      <% else %>
-      <p> You must be logged in to submit tips.</p>
-      <% end %>
-    <% end %>
-  </section>
-
-<!--  <section>-->
-<!--    <h2>Taxonomy</h2>-->
-<!--    <div class="taxon_table_holder">-->
-<!--      <table>-->
-<!--        <thead>-->
-<!--        <th>Category</th>-->
-<!--        <th>Name</th>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-        <%# @phylo.each do |txn| %>
-<!--          <tr>-->
-<!--            <td><%#= txn.rank == "root" ? txn.get_root_txn_rank : txn.rank.to_s.capitalize %></td>-->
-<!--            <td><%#= react_component('Name', {taxon: txn.to_hash, link: true}) %></td>-->
-<!--          </tr>-->
-        <%# end %>
-<!--        </tbody>-->
-
-<!--      </table>-->
-<!--    </div>-->
-<!--    <p class="note center">We don't show taxonomy past <%#= @taxon.root.get_root_txn_rank %> <br/>for <%#= @taxon.name %>-->
-<!--      since we're focused on herps.</p>-->
-<!--  </section>-->
 
 </div>

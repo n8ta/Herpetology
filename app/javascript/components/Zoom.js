@@ -1,8 +1,6 @@
 import React from "react"
 import Venomreport from './Venomreport.js';
 import PropTypes from "prop-types"
-import Tipinmodal from "./Tip/Tipinmodal";
-import Submittipinmodal from "./Tip/Submittipinmodal";
 
 class Zoom extends React.Component {
     constructor(props) {
@@ -49,13 +47,6 @@ class Zoom extends React.Component {
     render() {
         this.apply_style();
         let venomous = "";
-        let tip = "";
-
-        if (this.props.tip && this.props.tip != undefined) {
-            tip = <div className={'tip_area'}><Tipinmodal  {...this.props.tip} /></div>
-        } else {
-            tip = <div className={'tip_area'}><Submittipinmodal small={true} taxon={this.props.taxon}> </Submittipinmodal></div>
-        }
 
         if (this.props.no_text == true) {
         } else {
@@ -84,7 +75,6 @@ class Zoom extends React.Component {
                             />
                         </div>
                     </div>
-                    {tip}
                 </div>
             </React.Fragment>
         )
@@ -97,6 +87,5 @@ Zoom.propTypes = {
     photo_id: PropTypes.number,
     venomous: PropTypes.string,
     no_text: PropTypes.bool,
-    tip: PropTypes.object,
 };
 export default Zoom

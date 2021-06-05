@@ -132,7 +132,6 @@ class SpeciesPicker extends React.Component {
                 iterations: this.state.iterations + 1,
                 photo_id: this.state.next_photo_id,
                 species_id: undefined,
-                tip: undefined,
             });
         }
 
@@ -188,7 +187,6 @@ class SpeciesPicker extends React.Component {
                 common_correct: result['common_correct'],
                 venomous: result['venomous'],
                 next_photo_id: result['next_photo_id'],
-                tip: result['tip']
             });
             this.preload(result['next_image_path']);
         })
@@ -243,7 +241,7 @@ class SpeciesPicker extends React.Component {
         return (
             <div className="species">
                 <span className={'instructions center'}>Pick the scientific and common names that match the photo</span>
-                <Zoom taxon={this.state.taxon} tip={this.state.tip} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
+                <Zoom taxon={this.state.taxon} photo_id={this.state.photo_id} url={this.state.image_path} venomous={this.state.venomous}/>
                 {form}
                 <div className={['two-col', this.state.mode].join(' ')}>
                     <div>

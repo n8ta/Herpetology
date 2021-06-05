@@ -11,7 +11,6 @@ class Taxon < ApplicationRecord
   has_many :taxons
   has_many :common_names
   has_many :photos
-  has_many :tips
   has_many :bad_region_reports
   has_many :bad_id_reports
 

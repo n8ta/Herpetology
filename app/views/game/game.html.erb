@@ -16,12 +16,10 @@
 <% content_for :breadcrumb do %>
   <h2>
     <%= link_to render('statics/world'), root_path %> >
-    <%= link_to @taxon.common_name, taxon_path(@taxon) %> >
+    <%= link_to @taxon.common_name, taxon_regions_path(@taxon, @region) %> >
 
     <%= region_array.html_safe %> >
-    Game,
-    <%= link_to @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).size.to_s + " species", taxon_region_path(@taxon, @region) %>
-
+    Game
     <% if @taxon.valid_regions.where(region: @region).any? %>
       <%= react_component('Subregionbutton', {hide_msg: "Hide Subregions", show_msg: "Show Subregions"}) %>
     <% end %>

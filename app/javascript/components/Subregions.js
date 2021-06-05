@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import {jsonFetch} from "./fetch";
 
 class Subregions extends React.Component {
     constructor(props) {
@@ -12,23 +13,13 @@ class Subregions extends React.Component {
 
 
     load() {
-        let auth_token = document.querySelector("meta[name='csrf-token']").content;
         let url = "";
         if (this.props.id) {
             url = '/taxons/' + this.props.taxon_id + '/regions/' + this.props.id+'.json'
         } else {
             url = '/taxons/' + this.props.taxon_id + '.json'
         }
-        fetch( url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': auth_token,
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            credentials: 'same-origin',
-        }).then(res => res.json()).then((result) => {
+        jsonFetch('GET', url, (result) => {
             if (this.props.id) {
                 this.setState({
                     mode: 'ready',
@@ -40,9 +31,7 @@ class Subregions extends React.Component {
                     tier2s: result.countries,
                 });
             }
-
-
-        }).catch(this.failed);
+        })
     }
 
     failed() {
@@ -68,9 +57,7 @@ class Subregions extends React.Component {
 
                 subregions.push(
                     <tr key={t2['id']}>
-                        <td><a href={t2['game_url']}>Game</a></td>
-                        <td><a href={t2['url']}>Info</a></td>
-                        <td>{t2['name']}</td>
+                        <td><a href={t2['game_url']}>{t2['name']}</a></td>
                     </tr>
                 )
             }

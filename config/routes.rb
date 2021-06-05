@@ -37,7 +37,6 @@ Rails.application.routes.draw do
 
   get '/scoreboard' => 'game#scoreboard', as: 'scoreboard'
 
-  resources :tips
 
   resources :taxons, only: [:show, :index] do
     collection do

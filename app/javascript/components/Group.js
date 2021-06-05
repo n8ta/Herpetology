@@ -36,7 +36,7 @@ class Group extends React.Component {
             mode: AWAITING_SERVER,
             guess: venomous,
         })
-        jsonFetch('POST', "/groups/" + this.state.id + "/next",
+        g('POST', "/groups/" + this.state.id + "/next",
             (result) => {
                 this.setState({
                     correct: result.specie.venomous === venomous,
@@ -88,7 +88,11 @@ class Group extends React.Component {
             return (<div>
                 <h3 className={'text-center'} style={{marginBottom: 0}}>
                     ⚠️
-                    This site is actively being worked on. Some snakes are incorrectly tagged as venomous / non-venomous right now.
+                    This site is actively being worked on. Some snakes are incorrectly tagged as venomous / non-venomous
+                    right now.
+                    <br/>
+                    There are also some photos of dead snakes. We do our best to remove them but there are many many
+                    photos.
                 </h3>
                 <div className={'center'}>
                     <button onClick={this.hide}>Continue</button>
@@ -132,19 +136,11 @@ class Group extends React.Component {
 Group.propTypes =
     {
         name: PropTypes.string,
-        id
-:
-PropTypes.number,
-    photo
-:
-PropTypes.string,
-    mode
-:
-PropTypes.string,
-    species
-:
-PropTypes.object
-}
+        id: PropTypes.number,
+        photo: PropTypes.string,
+        mode: PropTypes.string,
+        species: PropTypes.object,
+    }
 ;
 
 export default Group

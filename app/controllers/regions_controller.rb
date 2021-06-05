@@ -10,9 +10,9 @@ class RegionsController < ApplicationController
   end
 
 
-  def show
-    @taxon = @taxon.root
-  end
+  # def show
+  #   @taxon = @taxon.root
+  # end
 
   private
 
