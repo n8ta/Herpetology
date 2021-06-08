@@ -7,6 +7,12 @@ class User < ApplicationRecord
   validates :email, presence: true
 
   enum user_class: ["user","contributor","admin"]
+  has_many :bad_id_reports
+  has_many :bad_region_reports
+  has_many :dead_herp_reports
+  has_many :no_herp_reports
+  has_many :venom_reports
+
 
   def self.from_omniauth(access_token)
     data = access_token.info
@@ -26,24 +32,7 @@ class User < ApplicationRecord
     Report.all_reports.select{ |rep| rep.created_by_id == self.id && rep.approved == true }
   end
 
-
-  # has_many :reports, class_name: 'Report', table_name: 'Reports', foreign_key: "created_by" # Column name on report, there a handled_by user and a created_By user
   has_many :user_taxon_data, dependent: :delete_all
-
-
-
-  def place_on_scoreboard
-    User.all.sort {|a, b| b.total_correct <=> a.total_correct}.find_index(self) + 1
-  end
-  def place_on_sci_scoreboard
-    User.all.sort {|a, b| b.accuracy_scientific <=> a.accuracy_scientific}.find_index(self) + 1
-  end
-  def place_on_common_scoreboard
-    User.all.sort {|a, b| b.accuracy_common <=> a.accuracy_common}.find_index(self) + 1
-  end
-  def place_report_scoreboard
-    User.all.sort {|a, b| b.approved_reports.size <=> a.approved_reports.size }.find_index(self) + 1
-  end
 
   def admin?
     user_class == "admin"

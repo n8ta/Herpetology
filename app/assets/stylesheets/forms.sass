@@ -9,36 +9,6 @@
 .hidden
   display: none
 
-.loading_anim
-  margin-top: -2rem
-  position: relative
-  background: #BCE27F
-  margin-bottom: 2rem
-
-
-.loading_anim:after
-  content: ''
-  position: absolute
-  top: 50%
-  left: 50%
-  width: 15px
-  height: 15px
-  z-index: 999
-  border-radius: 50%
-  background: $brown
-  animation-name: loading_anim
-  animation-duration: .6s
-  animation-direction: alternate
-  animation-timing-function: ease-in-out
-  animation-iteration-count: infinite
-
-
-@keyframes loading_anim
-  0%
-    transform: translate(-72.5px, -7.5px)
-  100%
-    transform: translate(58.5px, -7.5px)
-
 #bad_id_report
   min-height: 25rem
   #report_taxon_input

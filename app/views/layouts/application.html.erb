@@ -39,10 +39,6 @@
       <li><h4><a href="/">Home</a></h4></li>
       <li><h4><%= link_to scoreboard_path do %>
           Scoreboard
-          <% if current_user %>
-            (<%= current_user.place_on_scoreboard.ordinalize %>)
-          <% end %>
-
         <% end %>
       </h4></li>
       <% if current_user && current_user.admin_or_contributor? %>

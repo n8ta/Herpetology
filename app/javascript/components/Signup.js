@@ -46,14 +46,12 @@ class Signup extends React.Component {
 
         }).then(res => res.json()).then((result) => {
             if (result['valid'] == true) {
-                this.setState({username_valid: 'valid', username_error: '', username_class: ''})
+                this.setState({username_valid: 'valid', username_error: ''})
             } else {
-                this.setState({username_valid: '', username_error: 'Username taken', username_class: ''})
+                this.setState({username_valid: '', username_error: 'Username taken'})
             }
             this.handleChange();
         });
-
-        this.setState({username_class: 'loading_anim'});
 
 
         if (username.value != "") {
@@ -107,7 +105,6 @@ class Signup extends React.Component {
     }
 
     handleChange() {
-        let email = document.getElementById('user_email');
         let username = document.getElementById('user_username');
         let user_password = document.getElementById('user_password');
         let user_password_confirmation = document.getElementById('user_password_confirmation');
@@ -209,7 +206,6 @@ class Signup extends React.Component {
                                        autoFocus="autofocus" autoComplete="username" type="text"
                                        name="user[username]"
                                        id="user_username"/>
-                                <div className={this.state.username_class}></div>
 
                                 <div className={'warning'}>{this.state.username_error}</div>
                             </div>

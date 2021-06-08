@@ -1,6 +1,6 @@
 class VenomReport < Report
   belongs_to :taxon
-
+  belongs_to :user
   validates :venomous, presence: true
   enum venomous: ["venomous", "nonvenomous", "unknown"]
 

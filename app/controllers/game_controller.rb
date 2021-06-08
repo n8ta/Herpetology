@@ -2,45 +2,6 @@ class GameController < ApplicationController
   before_action :set_taxon, only: [:pick_region, :game, :guess]
   before_action :set_region, only: [:game, :guess]
 
-  def scoreboard
-    limit = 10
-    # TBH this code should be swapped out with a hash user: rank then we can check the hash for the current_user and add it if needed
-    # but right now we just check for the whole hash which is sketch af.
-    # I'll fix this at some point...... He said never going to touch the code again.
-
-    @users_total_correct = User.all.joins(:user_taxon_data)
-                               .select("users.username, (sum(user_taxon_data.sci_correct) + sum(user_taxon_data.common_correct)) as score")
-                               .order("score").group("users.id")
-                               .limit(10).to_a
-
-    @users_sci_acc = User.all.sort { |a, b| b.accuracy_scientific <=> a.accuracy_scientific }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_scientific} }
-    @users_com_acc = User.all.sort { |a, b| b.accuracy_common <=> a.accuracy_common }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_common} }
-    @users_reports = User.all.sort { |a, b| b.approved_reports.size <=> a.approved_reports.size }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.approved_reports.size} }
-    if current_user
-      # Add current user to end of scoreboard b/c that's what everyone really cares about
-      cu_total_hash = {'rank': current_user.place_on_scoreboard, 'username': current_user.username, 'score': current_user.total_correct}
-      # current_user, hash of their rank, username, and score for display on the scoreboard
-      unless @users_total_correct.include?(cu_total_hash)
-        @users_total_correct << cu_total_hash
-      end
-      cu_sci_hash = {'rank': current_user.place_on_sci_scoreboard, 'username': current_user.username, 'score': current_user.accuracy_scientific}
-      # current user hash of scientific scoreboard rank
-      unless @users_sci_acc.include?(cu_sci_hash)
-        @users_sci_acc << cu_sci_hash
-      end
-      cu_com_hash = {'rank': current_user.place_on_common_scoreboard, 'username': current_user.username, 'score': current_user.accuracy_common}
-      # current_user hash of common name scoreboard rank
-      unless @users_com_acc.include?(cu_com_hash)
-        @users_com_acc << cu_com_hash
-      end
-      cu_report_hash = {'rank': current_user.place_report_scoreboard, 'username': current_user.username, 'score': current_user.approved_reports.size}
-      # current_user hash of report score
-      unless @users_reports.include?(cu_report_hash)
-        @users_reports << cu_report_hash
-      end
-    end
-  end
-
   def guess
 
     body = JSON.parse request.body.read
@@ -59,16 +20,16 @@ class GameController < ApplicationController
     venomous == "nonvenomous" if venomous == false
 
     specie_data = {
-        'taxon': specie_m.to_hash,
-        'species_id': specie_m.id,
-        'venomous': venomous,
-        'next_options': hash_specie_photo[0],
-        'next_image_path': photo.image_path.url,
-        'correct_sci_index': old_sci_index,
-        'correct_common_index': old_common_index,
-        'sci_correct': sci_correct,
-        'common_correct': common_correct,
-        'next_photo_id': photo.id,
+      'taxon': specie_m.to_hash,
+      'species_id': specie_m.id,
+      'venomous': venomous,
+      'next_options': hash_specie_photo[0],
+      'next_image_path': photo.image_path.url,
+      'correct_sci_index': old_sci_index,
+      'correct_common_index': old_common_index,
+      'sci_correct': sci_correct,
+      'common_correct': common_correct,
+      'next_photo_id': photo.id,
     }
     datum = UserTaxonDatum.find_or_create_by(user: current_user, taxon: specie_m)
     if current_user
@@ -99,9 +60,7 @@ class GameController < ApplicationController
     @options = options[0]
   end
 
-
   private
-
 
   def specie_hash(species)
     if species.length < 6
@@ -110,7 +69,7 @@ class GameController < ApplicationController
     len = species.length
     correct_specie = species[rand(len)]
     picked = [correct_specie]
-    hash_data = {'sci' => [], 'common' => []}
+    hash_data = { 'sci' => [], 'common' => [] }
     i = 0
     while (picked.length < 5) and (i < 100)
       i += 1
@@ -132,7 +91,6 @@ class GameController < ApplicationController
         hash_data['common'].push(trial_specie.common_name)
       end
     end
-
 
     photos = correct_specie.photos.where(hidden: false)
     unless current_user && current_user.show_dead_photos == true

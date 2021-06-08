@@ -9,21 +9,21 @@
 
 <h2>Most correct IDs</h2>
 
-<%= render :partial =>'game/list', locals: {users: @users_total_correct} %>
+<%= render :partial =>'scoreboard/list', locals: {users: @users_total_correct} %>
 
 
 <h2>Scientific Accuracy</h2>
 <p class="center">If you have a perfect accuracy but less than 100 IDs it will be counted as 0 to prevent users IDing one herp and leaving</p>
 
-<%= render :partial =>'game/list', locals: {users: @users_sci_acc} %>
+<%= render :partial =>'scoreboard/list', locals: {users: @users_sci_acc} %>
 
 
 <h2>Common Accuracy</h2>
 
-<%= render :partial =>'game/list', locals: {users: @users_com_acc} %>
+<%= render :partial =>'scoreboard/list', locals: {users: @users_com_acc} %>
 
 <h2>Most Contributions to the Site</h2>
-<%= render :partial =>'game/list', locals: {users: @users_reports} %>
+<%= render :partial =>'scoreboard/list', locals: {users: @users_reports} %>
 
 
 <br/>

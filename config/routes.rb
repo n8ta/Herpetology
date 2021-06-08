@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 
   resources :photos, only: [:edit, :show, :update, :destroy, :show]
 
-  get '/scoreboard' => 'game#scoreboard', as: 'scoreboard'
+  get '/scoreboard' => 'scoreboard#index', as: 'scoreboard'
 
 
   resources :taxons, only: [:show, :index] do
