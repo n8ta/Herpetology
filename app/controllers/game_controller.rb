@@ -12,7 +12,6 @@ class GameController < ApplicationController
                                .select("users.username, (sum(user_taxon_data.sci_correct) + sum(user_taxon_data.common_correct)) as score")
                                .order("score").group("users.id")
                                .limit(10)
-    raise
 
     @users_sci_acc = User.all.sort { |a, b| b.accuracy_scientific <=> a.accuracy_scientific }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_scientific} }
     @users_com_acc = User.all.sort { |a, b| b.accuracy_common <=> a.accuracy_common }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_common} }
