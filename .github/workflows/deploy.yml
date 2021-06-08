@@ -6,4 +6,4 @@ jobs:
     steps:
       - run: 'echo "${{ secrets.ID_RSA }}" > id_rsa'
       - run: chmod 400 ./id_rsa
-      - run: ssh -o "StrictHostKeyChecking=no" -i ./id_rsa herp@18.222.56.243 ~/cicd.sh
+      - run: ssh -o "StrictHostKeyChecking=no" -i ./id_rsa herp@18.222.56.243 /home/herp/cicd.sh
