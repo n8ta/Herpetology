@@ -7,7 +7,13 @@ class GameController < ApplicationController
     # TBH this code should be swapped out with a hash user: rank then we can check the hash for the current_user and add it if needed
     # but right now we just check for the whole hash which is sketch af.
     # I'll fix this at some point...... He said never going to touch the code again.
-    @users_total_correct = User.all.sort { |a, b| b.total_correct <=> a.total_correct }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.total_correct} }
+
+    @users_total_correct = User.all.joins(:user_taxon_data)
+                               .select("users.username, (sum(user_taxon_data.sci_correct) + sum(user_taxon_data.common_correct)) as score")
+                               .order("score").group("users.id")
+                               .limit(10)
+    raise
+
     @users_sci_acc = User.all.sort { |a, b| b.accuracy_scientific <=> a.accuracy_scientific }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_scientific} }
     @users_com_acc = User.all.sort { |a, b| b.accuracy_common <=> a.accuracy_common }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.accuracy_common} }
     @users_reports = User.all.sort { |a, b| b.approved_reports.size <=> a.approved_reports.size }[0..limit - 1].each_with_index.map { |user, i| {'rank': i + 1, 'username': user.username, 'score': user.approved_reports.size} }
@@ -45,7 +51,6 @@ class GameController < ApplicationController
     common_correct = session[:common_index].to_s == body['common_guess']
     old_sci_index = session[:sci_index]
     old_common_index = session[:common_index]
-    old_photo_id = session[:photo_id]
     hash_specie_photo = specie_hash(species)
 
     photo = hash_specie_photo[2]
@@ -79,35 +84,20 @@ class GameController < ApplicationController
         datum.common_guess_incorrect
       end
     end
-    return render :json => specie_data
+    render :json => specie_data
   end
 
   def game
     if @taxon.rank != "root"
       return redirect_to game_taxon_region_url(@taxon.root, @region)
     end
-    # if @mode == "quiz"
+
     @regions = @region.regions
     @species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true).select { |sp| sp.photos.any? }
     options = specie_hash(@species)
     correct_specie = options[1]
     @photo = correct_specie.photos[rand(correct_specie.photos.size)]
     @options = options[0]
-    # elsif @mode == "learn"
-    #   @regions = @region.regions
-    #   @taxons = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
-    #   @taxons = @taxons.map {|tx| tx.attributes}
-    #   @taxons.each do |sp|
-    #     if (sp["venomous"] == true)
-    #       sp[:venomous] = "venomous"
-    #     elsif (sp["venomous"] == false)
-    #       sp[:venomous] = "nonvenomous"
-    #     else
-    #       sp[:venomous] = "unknown"
-    #     end
-    #   end
-    #   @species = @taxons
-    # end
   end
 
 
