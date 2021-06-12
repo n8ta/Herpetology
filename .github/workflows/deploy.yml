@@ -1,9 +1,9 @@
-name: deploy-to-roku
+name: deploy-to-kyoshi
 on: [push]
 jobs:
-  deploy-to-roku:
+  deploy-to-kyoshi:
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "${{ secrets.ID_RSA }}" > id_rsa'
       - run: chmod 400 ./id_rsa
-      - run: ssh -o "StrictHostKeyChecking=no" -i ./id_rsa herp@18.222.56.243 source ~/.profile && /home/herp/cicd.sh
+      - run: ssh -o "StrictHostKeyChecking=no" -i ./id_rsa cicd@herpetology.pro && /home/cicd/herp
