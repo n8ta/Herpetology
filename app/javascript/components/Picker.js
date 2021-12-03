@@ -4,7 +4,7 @@ import Zoom from "./Zoom";
 import Signup from "./Signup";
 import Reportsinmodal from "./reports/Reportsinmodal";
 import {jsonFetch} from "./fetch";
-import Image from "./Image"
+import VenomPlusImage from "./VenomPlusImage"
 
 function preload(image_path) {
     let image = new Image();
@@ -169,7 +169,7 @@ const Picker = ({options, image_path, photo_id, region_id}) => {
     return (
         <div className="species">
             <span className={'instructions center'}>Pick the scientific and common names that match the photo</span>
-            <Image url={imagePath} photo_id={photo} venomous={venomous}/>
+            <VenomPlusImage url={imagePath} photo_id={photo} venomous={venomous}/>
             <div className={['two-col', mode].join(' ')}>
                 <div>
                     <Title name={"Scientific"} selected={selected[Types.SCI]} mode={mode} correct={correct[Types.SCI]}/>

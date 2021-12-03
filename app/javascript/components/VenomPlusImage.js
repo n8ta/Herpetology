@@ -1,7 +1,7 @@
 import React from "react";
 import Venomreport from "./Venomreport";
 
-const Image = React.memo(({url, photo_id, venomous}) => {
+const VenomPlusImage = React.memo(({url, photo_id, venomous}) => {
     let venom = "";
 
 
@@ -25,6 +25,6 @@ const Image = React.memo(({url, photo_id, venomous}) => {
         </div>
     )
 });
-Image.displayName = "Image";
+VenomPlusImage.displayName = "Image";
 
-export default Image;
+export default VenomPlusImage;
