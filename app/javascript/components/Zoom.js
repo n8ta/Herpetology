@@ -35,7 +35,9 @@ class Zoom extends React.Component {
 
     apply_style() {
         let main = this.main_ref.current;
-        if (main == null) { return }
+        if (main == null) {
+            return
+        }
 
         main.style.backgroundImage = "url('" + this.props.url + "')";
         if (this.state && this.state.mode == 'live') {
@@ -62,21 +64,18 @@ class Zoom extends React.Component {
         }
 
         return (
-
-            <React.Fragment>
-                <div className={'zoom_outer'}>
-                    {venomous}
-                    <div className={'zoom_inner'} ref={this.container_ref} onMouseLeave={this.mouseLeave}
-                         onMouseMove={this.mouseMove}>
-                        <div className={'zoom'} ref={this.main_ref} >
-                            <img alt='Photo of an unknown herp' className={'zoom_image'}
-                                 src={this.props.url}
-                                 ref={this.image_ref}
-                            />
-                        </div>
+            <div className={'zoom_outer'}>
+                {venomous}
+                <div className={'zoom_inner'} ref={this.container_ref} onMouseLeave={this.mouseLeave}
+                     onMouseMove={this.mouseMove}>
+                    <div className={'zoom'} ref={this.main_ref}>
+                        <img alt='Photo of an unknown herp' className={'zoom_image'}
+                             src={this.props.url}
+                             ref={this.image_ref}
+                        />
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         )
             ;
     }

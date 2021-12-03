@@ -1,7 +1,7 @@
 name: deploy-to-korra
 on: [push]
 jobs:
-  deploy-to-kyoshi:
+  deploy-to-korra:
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "${{ secrets.ID_RSA }}" > id_rsa'
