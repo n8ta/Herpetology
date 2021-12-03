@@ -4,6 +4,7 @@ import Reportsinmodal from "./reports/Reportsinmodal";
 import Signup from './Signup.js';
 
 import PropTypes from "prop-types"
+import {jsonFetch} from "./fetch";
 
 class SpeciesPicker extends React.Component {
     constructor(props) {
@@ -33,8 +34,6 @@ class SpeciesPicker extends React.Component {
             this.state.asked_about_signup = true;
         }
         Cookies.set("asked_about_signup");
-
-
     }
 
     gen_options() {
@@ -96,12 +95,6 @@ class SpeciesPicker extends React.Component {
         return options
     }
 
-    preload(image_path) {
-        let image = new Image();
-        image.onload;
-        image.src = image_path;
-    }
-
     cancel_signup() {
         ga('send', 'event', 'compete', 'signup', 'false');
         this.next()
@@ -159,6 +152,7 @@ class SpeciesPicker extends React.Component {
             'common_guess': this.state.common_chosen || index, // SetState is async so we may not have it in the state yet, so if it's undefined use the index
             'sci_guess': this.state.sci_chosen || index,
         };
+
         fetch(window.location, {
             method: 'POST',
             headers: {

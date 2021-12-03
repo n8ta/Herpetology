@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import SpeciesPicker from "../SpeciesPicker";
 import Alert from "../svgs/Alert";
 
 class Badidreport extends React.Component {

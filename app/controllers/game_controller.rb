@@ -7,7 +7,7 @@ class GameController < ApplicationController
     body = JSON.parse request.body.read
     species = @region.taxons.species.where(root_taxon_id: @taxon.id, photographed: true)
     specie_m = Taxon.all.species.find(session[:specie_id])
-    sci_correct = session[:sci_index].to_s == body['sci_guess']
+    sci_correct = session[:sci_index].to_s.to_i == body['sci_guess'].to_i
     common_correct = session[:common_index].to_s == body['common_guess']
     old_sci_index = session[:sci_index]
     old_common_index = session[:common_index]

@@ -31,6 +31,7 @@
   <%= react_component('Subregions', {taxon_id: @taxon.id, id: @region.id, game: true}) %>
 <% end %>
 
-<%= react_component('SpeciesPicker', {region: @region, photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
+<%#= react_component('SpeciesPicker', {region: @region, photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
+<%= react_component('Picker', {region: @region, photo_id: @photo.id, image_path: @photo.image_path.url, options: @options}) %>
 
 

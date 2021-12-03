@@ -66,7 +66,7 @@ class Deadherpreport extends React.Component {
 
 export default Deadherpreport
 
-Report.propTypes = {
-    photo_id: PropTypes.number,
-    after_report: PropTypes.func,
-};
+// Report.propTypes = {
+//     photo_id: PropTypes.number,
+//     // after_report: PropTypes.func,
+// };

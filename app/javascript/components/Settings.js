@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import SpeciesPicker from "./SpeciesPicker";
 
 class Settings extends React.Component {
     constructor(props) {
