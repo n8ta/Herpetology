@@ -15,9 +15,13 @@ class Badidreport extends React.Component {
 
 
 
-    updateDataList() {
-        let search = document.getElementById('report_taxon_input');
-        fetch('/taxons/search/' + encodeURI(search.value), {
+    updateDataList(e) {
+        let search = e.target.value;
+        if (!search || (search && search.length === 0)) {
+            this.setState({specie_error: '', search_results: []})
+            return;
+        }
+        fetch('/taxons/search/' + encodeURI(search), {
             method: 'get',
             headers: {
                 'Accept': 'application/json',
@@ -93,7 +97,7 @@ class Badidreport extends React.Component {
                 <form id='bad_id_report' className={'centered_md_col'}>
                     <div className={'warning top'}>{this.state.specie_error}</div>
                     <label htmlFor={'report_taxon_input'}>Enter then click the correct species</label>
-                    <input type='text' onKeyDown={this.updateDataList} id="report_taxon_input" name="report[taxon]"/>
+                    <input type='text' onKeyUp={this.updateDataList} id="report_taxon_input" name="report[taxon]"/>
                     <div id={'report_suggestions'}>
                         {options}
                     </div>
